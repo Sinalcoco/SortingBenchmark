@@ -2,9 +2,10 @@ import processing.core.PApplet;
 
 public class Visualizer {
 	PApplet processing;
-	public final int COMPARE_COLOR;
-	public final int STORAGE_COLOR;
-	public final int MOVE_COLOR;
+	public final int COMPARE_COLOR = ActionColor.GREEN.hexValue();
+	public final int STORAGE_COLOR = ActionColor.BLUE.hexValue();
+	public final int MOVE_COLOR = ActionColor.RED.hexValue();
+	public final int HIGHLIGHT_COLOR = ActionColor.YELLOW.hexValue();
 
 	public final static int BORDER_THICKNESS = 5;
 
@@ -31,9 +32,6 @@ public class Visualizer {
 		RECT_WIDTH = (float) myWidth / theAmountOfValues - RECT_SPACING;
 		SCALE = ((float) myHeight) / (myWidth / (RECT_WIDTH + RECT_SPACING) + 1);
 		processing = theParent;
-		COMPARE_COLOR = processing.color(0, 255, 0);
-		STORAGE_COLOR = processing.color(210, 90, 20);
-		MOVE_COLOR = processing.color(255, 0, 0);
 	}
 
 	public Visualizer(PApplet theParent, int theX, int theY, int theWidth, int theHeight, int theAmountOfValues) {

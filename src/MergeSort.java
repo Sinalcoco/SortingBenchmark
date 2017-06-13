@@ -35,7 +35,7 @@ public class MergeSort extends SortingAlgorithm
         // Copy both parts into the helper array
         for (int i = low; i <= high; i++) {
             //helper[i] = numbers[i];
-            helper.move(i, ArrayType.MAIN, i, ArrayType.OUTPUT);
+            helper.move(i, OutOfPlaceAlgorithmHelper.ArrayType.MAIN, i, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT);
         }
 
         int i = low;
@@ -45,13 +45,13 @@ public class MergeSort extends SortingAlgorithm
         // to the original array
         while (i <= middle && j <= high) {
             //if (helper[i] <= helper[j]) {
-              if (helper.compare(i, ArrayType.OUTPUT, j, ArrayType.OUTPUT) <= 0) {
+              if (helper.compare(i, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT, j, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT) <= 0) {
                 //numbers[k] = helper[i];
-                helper.move(i, ArrayType.OUTPUT, k, ArrayType.MAIN);
+                helper.move(i, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT, k, OutOfPlaceAlgorithmHelper.ArrayType.MAIN);
                 i++;
             } else {
                 //numbers[k] = helper[j];
-                helper.move(j, ArrayType.OUTPUT, k, ArrayType.MAIN);
+                helper.move(j, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT, k, OutOfPlaceAlgorithmHelper.ArrayType.MAIN);
                 j++;
             }
             k++;
@@ -59,13 +59,13 @@ public class MergeSort extends SortingAlgorithm
         // Copy the rest of the left side of the array into the target array
         while (i <= middle) {
             //numbers[k] = helper[i];
-            helper.move(i, ArrayType.OUTPUT, k, ArrayType.MAIN);
+            helper.move(i, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT, k, OutOfPlaceAlgorithmHelper.ArrayType.MAIN);
             k++;
             i++;
         }
         while (j <= high) {
             //numbers[k] = helper[i];
-            helper.move(j, ArrayType.OUTPUT, k, ArrayType.MAIN);
+            helper.move(j, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT, k, OutOfPlaceAlgorithmHelper.ArrayType.MAIN);
             k++;
             j++;
         }

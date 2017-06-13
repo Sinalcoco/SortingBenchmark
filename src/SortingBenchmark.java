@@ -16,7 +16,6 @@ public class SortingBenchmark extends PApplet {
 	boolean advance = true;
 	int run = 20;
 
-
 	enum State {
 		WAIT, GO
 	}

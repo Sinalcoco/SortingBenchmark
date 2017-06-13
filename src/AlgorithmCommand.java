@@ -1,7 +1,7 @@
 
 class AlgorithmCommand {
 	enum Action {
-		MOVE, COMPARE, SWAP;
+		MOVE, COMPARE, SWAP, HIGHLIGHT;
 	}
 
 	enum Direction {

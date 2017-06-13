@@ -4,7 +4,12 @@ import processing.core.PApplet;
 
 class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
+	enum ArrayType {
+		MAIN, OUTPUT
+	}
+
 	private int[] output;
+	private Visualizer valuesView;
 	private Visualizer outputView;
 	private int oViewX, oViewY, oViewWidth, oViewHeight;
 
@@ -110,7 +115,44 @@ class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 		}
 	}
 
+	public synchronized void move(int fromIndex, ArrayType fromArray, int toIndex, ArrayType toArray) {
+		moves++;
+		AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
+		commands.add(new AlgorithmCommand(AlgorithmCommand.Action.MOVE, fromIndex, toIndex, direction));
+		state = SortingBenchmark.State.WAIT;
+		try {
+			while (state != SortingBenchmark.State.GO) {
+				wait();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void setNewArray(int[] theArray) {
 		initialize(theArray, viewX, viewY, viewWidth, (viewHeight - Visualizer.BORDER_THICKNESS));
+	}
+
+	@Override
+	void drawInfo() {
+		valuesView.drawName(algorithmName);
+		valuesView.drawComparisons(comparisons);
+		valuesView.drawMoves(moves);
+	}
+
+	protected AlgorithmCommand.Direction calculateDirection(ArrayType fromArray, ArrayType toArray) {
+		if (fromArray == toArray) {
+			if (fromArray == ArrayType.MAIN) {
+				return AlgorithmCommand.Direction.IN_MAIN;
+			} else {
+				return AlgorithmCommand.Direction.IN_OUTPUT;
+			}
+		} else {
+			if (fromArray == ArrayType.MAIN) {
+				return AlgorithmCommand.Direction.MAIN_TO_OUTPUT;
+			} else {
+				return AlgorithmCommand.Direction.OUTPUT_TO_MAIN;
+			}
+		}
 	}
 }
