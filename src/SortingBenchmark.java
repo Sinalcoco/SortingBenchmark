@@ -10,11 +10,12 @@ public class SortingBenchmark extends PApplet {
 
 	ArrayList<SortingAlgorithm> sorters;
 
-	final int AMOUNT_OF_VALUES = 200;
+	final int AMOUNT_OF_VALUES = 80;
 	final boolean ascending = false;
 	final boolean frameByFrame = false;
 	boolean advance = true;
-	int run = 4;
+	int run = 20;
+
 
 	enum State {
 		WAIT, GO
@@ -22,11 +23,11 @@ public class SortingBenchmark extends PApplet {
 
 	public void settings() {
 		size(1200, 600);
+		//fullScreen();
 	}
 
 	public void setup() {
-		// fullScreen();
-		frameRate(500);
+		frameRate(50);
 		noStroke();
 
 		int[] values;
@@ -34,9 +35,9 @@ public class SortingBenchmark extends PApplet {
 			values = randomIntArray(run);
 		} else {
 			run = AMOUNT_OF_VALUES;
-			//values = randomIntArray(run);
-			 values = sortedIntArray(run);
-			// values = invertedIntArray(run);
+			values = randomIntArray(run);
+			//values = sortedIntArray(run);
+			//values = invertedIntArray(run);
 		}
 		sorters = new ArrayList<SortingAlgorithm>();
 
@@ -62,6 +63,10 @@ public class SortingBenchmark extends PApplet {
 		AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(this, values, 2 * width / 3, height / 3, width / 3,
 				height / 3);
 		sorters.add(new HeapSort(heapHelper));
+
+		AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(this, values, width / 3, 2 * height / 3, width / 3,
+				height / 3);
+		sorters.add(new QuickSort(quickHelper));
 
 		for (SortingAlgorithm s : sorters)
 			s.start();
