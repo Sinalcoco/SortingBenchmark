@@ -2,8 +2,7 @@ package de.dhbw.sort;
 
 import java.util.ArrayList;
 
-import de.dhbw.sort.algorithms.InsertionSort;
-import de.dhbw.sort.algorithms.QuickSort;
+import de.dhbw.sort.algorithms.*;
 import processing.core.PApplet;
 
 public class SortingBenchmark extends PApplet {
@@ -20,7 +19,7 @@ public class SortingBenchmark extends PApplet {
 	boolean advance = true;
 	int run = 20;
 
-	enum State {
+	public enum State {
 		WAIT, GO
 	}
 

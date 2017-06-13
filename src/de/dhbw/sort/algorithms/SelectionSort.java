@@ -1,4 +1,4 @@
-package de.dhbw.sort;
+package de.dhbw.sort.algorithms;
 
 //FEHLERHAFT //<>// //<>//
 public class SelectionSort extends SortingAlgorithm
@@ -9,7 +9,7 @@ public class SelectionSort extends SortingAlgorithm
   public SelectionSort(AbstractAlgorithmHelper theHelper)
   {
     helper = theHelper;
-    helper.setName("de.dhbw.sort.SelectionSort");
+    helper.setName("de.dhbw.sort.algorithms.SelectionSort");
   }
 
   public void initialize()

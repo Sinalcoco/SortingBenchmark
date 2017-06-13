@@ -1,5 +1,6 @@
 package de.dhbw.sort;
 
+import de.dhbw.sort.algorithms.AbstractAlgorithmHelper;
 import processing.core.PApplet;
 
 public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
@@ -12,11 +13,11 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 		valuesView = new Visualizer(processing, viewX, viewY, viewWidth, viewHeight, values.length);
 	}
 	
-	protected void drawValues() {
+	public void drawValues() {
 		valuesView.drawArray(values);
 	}
 	
-	protected void processCommands() {
+	public void processCommands() {
 		if (commands.size() > 0) {
 			ready = false;
 			AlgorithmCommand command = commands.get(0);
@@ -41,7 +42,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 			ready = true;
 	}
 
-	protected void drawInfo() {
+	public void drawInfo() {
 		valuesView.drawName(algorithmName);
 		valuesView.drawComparisons(comparisons);
 		valuesView.drawMoves(moves);

@@ -1,5 +1,8 @@
 package de.dhbw.sort;
 
+import de.dhbw.sort.algorithms.AbstractAlgorithmHelper;
+import de.dhbw.sort.algorithms.SortingAlgorithm;
+
 public class CocktailShaker extends SortingAlgorithm //<>// //<>// //<>//
 {
   int leftBorder, rightBorder, consecutiveSorted;

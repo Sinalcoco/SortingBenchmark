@@ -1,11 +1,11 @@
-package de.dhbw.sort;
+package de.dhbw.sort.algorithms;
 
 public class HeapSort extends SortingAlgorithm {
 	int currentIndex;
 
 	public HeapSort(AbstractAlgorithmHelper theHelper) {
 		helper = theHelper;
-		helper.setName("de.dhbw.sort.HeapSort");
+		helper.setName("de.dhbw.sort.algorithms.HeapSort");
 	}
 
 	public void initialize() {

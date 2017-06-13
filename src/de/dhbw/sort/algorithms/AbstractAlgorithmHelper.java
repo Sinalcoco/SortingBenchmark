@@ -1,7 +1,10 @@
-package de.dhbw.sort;
+package de.dhbw.sort.algorithms;
 
 import java.util.ArrayList;
 
+import de.dhbw.sort.ActionColor;
+import de.dhbw.sort.AlgorithmCommand;
+import de.dhbw.sort.SortingBenchmark;
 import processing.core.PApplet;
 
 
@@ -55,11 +58,11 @@ public abstract class AbstractAlgorithmHelper {
 		drawInfo();
 	}
 
-	abstract void drawValues();
+	public abstract void drawValues();
 	
-	abstract void processCommands();
+	public abstract void processCommands();
 	
-	abstract void drawInfo();
+	public abstract void drawInfo();
 	
 	public void highlight(int theIndex, ActionColor theColor)
 	{

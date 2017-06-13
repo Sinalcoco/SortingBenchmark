@@ -1,8 +1,5 @@
 package de.dhbw.sort.algorithms;
 
-import de.dhbw.sort.AbstractAlgorithmHelper;
-import de.dhbw.sort.SortingAlgorithm;
-
 public class QuickSort extends SortingAlgorithm {
 
 	public QuickSort(AbstractAlgorithmHelper theHelper) {

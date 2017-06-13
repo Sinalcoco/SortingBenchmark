@@ -1,4 +1,4 @@
-package de.dhbw.sort;
+package de.dhbw.sort.algorithms;
 
 public abstract class SortingAlgorithm extends Thread
 {

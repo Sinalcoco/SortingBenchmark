@@ -1,8 +1,5 @@
 package de.dhbw.sort.algorithms;
 
-import de.dhbw.sort.SortingAlgorithm;
-import de.dhbw.sort.AbstractAlgorithmHelper;
-
 public class InsertionSort extends SortingAlgorithm
 {
   int currentIndex;

@@ -1,7 +1,7 @@
 package de.dhbw.sort;
 
-class AlgorithmCommand {
-	enum Action {
+public class AlgorithmCommand {
+	public enum Action {
 		MOVE, COMPARE, SWAP, HIGHLIGHT;
 	}
 
@@ -14,7 +14,7 @@ class AlgorithmCommand {
 	int secondValue;
 	Direction direction;
 
-	AlgorithmCommand(Action theType, int theFirstValue, int theSecondValue) {
+	public AlgorithmCommand(Action theType, int theFirstValue, int theSecondValue) {
 		this(theType, theFirstValue, theSecondValue, Direction.IN_MAIN);
 	}
 

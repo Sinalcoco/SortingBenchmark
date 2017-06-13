@@ -1,4 +1,4 @@
-package de.dhbw.sort;
+package de.dhbw.sort.algorithms;
 
 public class BubbleSort extends SortingAlgorithm
 {
@@ -6,7 +6,7 @@ public class BubbleSort extends SortingAlgorithm
   public BubbleSort(AbstractAlgorithmHelper theHelper)
   {
     helper = theHelper;
-    helper.setName("de.dhbw.sort.BubbleSort");
+    helper.setName("de.dhbw.sort.algorithms.BubbleSort");
   }
   
   public void initialize()

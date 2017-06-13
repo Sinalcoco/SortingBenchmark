@@ -2,11 +2,12 @@ package de.dhbw.sort;
 
 import java.util.ArrayList;
 
+import de.dhbw.sort.algorithms.AbstractAlgorithmHelper;
 import processing.core.PApplet;
 
-class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
+public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
-	enum ArrayType {
+	public enum ArrayType {
 		MAIN, OUTPUT
 	}
 
@@ -45,12 +46,12 @@ class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 		state = SortingBenchmark.State.WAIT;
 	}
 
-	protected void drawValues() {
+	public void drawValues() {
 		valuesView.drawArray(values);
 		outputView.drawArray(output);
 	}
 
-	protected void processCommands() {
+	public void processCommands() {
 		if (commands.size() > 0) {
 			ready = false;
 			AlgorithmCommand command = commands.get(0);
@@ -136,7 +137,7 @@ class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 	}
 
 	@Override
-	void drawInfo() {
+	public void drawInfo() {
 		valuesView.drawName(algorithmName);
 		valuesView.drawComparisons(comparisons);
 		valuesView.drawMoves(moves);

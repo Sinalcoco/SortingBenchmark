@@ -1,4 +1,6 @@
-package de.dhbw.sort;
+package de.dhbw.sort.algorithms;
+
+import de.dhbw.sort.OutOfPlaceAlgorithmHelper;
 
 public class MergeSort extends SortingAlgorithm
 {
@@ -7,7 +9,7 @@ public class MergeSort extends SortingAlgorithm
   {
     helper = theHelper;
     super.helper = theHelper;
-    helper.setName("de.dhbw.sort.MergeSort");
+    helper.setName("de.dhbw.sort.algorithms.MergeSort");
   }
 
   public void initialize()
