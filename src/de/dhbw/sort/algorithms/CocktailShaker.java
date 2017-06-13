@@ -1,4 +1,4 @@
-package de.dhbw.sort;
+package de.dhbw.sort.algorithms;
 
 import de.dhbw.sort.algorithms.AbstractAlgorithmHelper;
 import de.dhbw.sort.algorithms.SortingAlgorithm;
