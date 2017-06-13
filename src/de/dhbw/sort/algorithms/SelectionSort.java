@@ -1,5 +1,7 @@
 package de.dhbw.sort.algorithms;
 
+import de.dhbw.sort.util.AbstractAlgorithmHelper;
+
 //FEHLERHAFT //<>// //<>//
 public class SelectionSort extends SortingAlgorithm
 {

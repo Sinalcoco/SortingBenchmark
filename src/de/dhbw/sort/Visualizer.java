@@ -1,5 +1,6 @@
 package de.dhbw.sort;
 
+import de.dhbw.sort.util.ActionColor;
 import processing.core.PApplet;
 
 public class Visualizer {

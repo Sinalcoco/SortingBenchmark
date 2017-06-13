@@ -1,7 +1,6 @@
 package de.dhbw.sort.algorithms;
 
-import de.dhbw.sort.algorithms.AbstractAlgorithmHelper;
-import de.dhbw.sort.algorithms.SortingAlgorithm;
+import de.dhbw.sort.util.AbstractAlgorithmHelper;
 
 public class CocktailShaker extends SortingAlgorithm //<>// //<>// //<>//
 {

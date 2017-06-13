@@ -1,4 +1,4 @@
-package de.dhbw.sort;
+package de.dhbw.sort.util;
 
 public enum ActionColor {
 	RED(0xFFFF0000), GREEN(0xFF00FF00), BLUE(0xFF0000FF), YELLOW(0xFF00FFFF);

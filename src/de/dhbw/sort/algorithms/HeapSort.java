@@ -1,5 +1,7 @@
 package de.dhbw.sort.algorithms;
 
+import de.dhbw.sort.util.AbstractAlgorithmHelper;
+
 public class HeapSort extends SortingAlgorithm {
 	int currentIndex;
 

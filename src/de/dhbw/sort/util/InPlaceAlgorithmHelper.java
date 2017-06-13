@@ -1,6 +1,6 @@
-package de.dhbw.sort;
+package de.dhbw.sort.util;
 
-import de.dhbw.sort.algorithms.AbstractAlgorithmHelper;
+import de.dhbw.sort.Visualizer;
 import processing.core.PApplet;
 
 public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {

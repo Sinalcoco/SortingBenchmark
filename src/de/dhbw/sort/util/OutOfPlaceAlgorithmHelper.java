@@ -1,8 +1,9 @@
-package de.dhbw.sort;
+package de.dhbw.sort.util;
 
 import java.util.ArrayList;
 
-import de.dhbw.sort.algorithms.AbstractAlgorithmHelper;
+import de.dhbw.sort.SortingBenchmark;
+import de.dhbw.sort.Visualizer;
 import processing.core.PApplet;
 
 public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {

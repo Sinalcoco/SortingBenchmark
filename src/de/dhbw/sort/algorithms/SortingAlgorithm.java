@@ -1,5 +1,7 @@
 package de.dhbw.sort.algorithms;
 
+import de.dhbw.sort.util.AbstractAlgorithmHelper;
+
 public abstract class SortingAlgorithm extends Thread
 {
   private boolean done = false;

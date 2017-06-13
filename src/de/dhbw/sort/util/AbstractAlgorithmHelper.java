@@ -1,9 +1,7 @@
-package de.dhbw.sort.algorithms;
+package de.dhbw.sort.util;
 
 import java.util.ArrayList;
 
-import de.dhbw.sort.ActionColor;
-import de.dhbw.sort.AlgorithmCommand;
 import de.dhbw.sort.SortingBenchmark;
 import processing.core.PApplet;
 

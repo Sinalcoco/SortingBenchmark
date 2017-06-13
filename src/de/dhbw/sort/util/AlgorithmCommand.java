@@ -1,4 +1,4 @@
-package de.dhbw.sort;
+package de.dhbw.sort.util;
 
 public class AlgorithmCommand {
 	public enum Action {

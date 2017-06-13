@@ -3,6 +3,9 @@ package de.dhbw.sort;
 import java.util.ArrayList;
 
 import de.dhbw.sort.algorithms.*;
+import de.dhbw.sort.util.AbstractAlgorithmHelper;
+import de.dhbw.sort.util.InPlaceAlgorithmHelper;
+import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 import processing.core.PApplet;
 
 public class SortingBenchmark extends PApplet {

@@ -1,6 +1,6 @@
 package de.dhbw.sort.algorithms;
 
-import de.dhbw.sort.OutOfPlaceAlgorithmHelper;
+import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 
 public class MergeSort extends SortingAlgorithm
 {
