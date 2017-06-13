@@ -128,7 +128,18 @@ public abstract class AbstractAlgorithmHelper {
 		algorithmName = theName;
 	}
 
-	public void setNewArray(int[] theArray) {
-		initialize(processing, theArray, viewX, viewY, viewWidth, viewHeight);
+	public abstract void setNewArray(int [] theArray);
+	
+
+	public int getComparisons() {
+		return comparisons;
+	}
+
+	public int getMoves() {
+		return moves;
+	}
+
+	public String getName() {
+		return algorithmName;
 	}
 }

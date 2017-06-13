@@ -47,4 +47,8 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 		valuesView.drawComparisons(comparisons);
 		valuesView.drawMoves(moves);
 	}
+	public void setNewArray(int[] theArray) {
+		initialize(processing, theArray, viewX, viewY, viewWidth, viewHeight);
+		valuesView = new Visualizer(processing, viewX, viewY, viewWidth, viewHeight, values.length);
+	}
 }

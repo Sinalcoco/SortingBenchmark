@@ -6,6 +6,7 @@ import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
 import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
+import de.dhbw.sort.util.Statistics;
 import processing.core.PApplet;
 
 public class SortingBenchmark extends PApplet {
@@ -14,10 +15,11 @@ public class SortingBenchmark extends PApplet {
 		PApplet.main("de.dhbw.sort.SortingBenchmark");
 	}
 
+	Statistics stats;
 	ArrayList<SortingAlgorithm> sorters;
 
 	final int AMOUNT_OF_VALUES = 80;
-	final boolean ascending = false;
+	final boolean ascending = true;
 	final boolean frameByFrame = false;
 	boolean advance = true;
 	int run = 20;
@@ -44,6 +46,9 @@ public class SortingBenchmark extends PApplet {
 			//values = sortedIntArray(run);
 			//values = invertedIntArray(run);
 		}
+		
+		stats = new Statistics();
+		
 		sorters = new ArrayList<SortingAlgorithm>();
 
 		AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(this, values, 0, 0, width / 3, height / 3);
@@ -111,11 +116,13 @@ public class SortingBenchmark extends PApplet {
 					run++;
 					int[] values = randomIntArray(run);
 					for (int i = 0; i < sorters.size(); i++) {
-
 						AbstractAlgorithmHelper h = sorters.get(i).helper();
+						int operations = h.getMoves() + h.getComparisons();
+						stats.addData(run - 1, h.getName(), operations);
 						h.setNewArray(values);
 						sorters.get(i).reset();
 					}
+					stats.printStatistic(run-1);
 				}
 			}
 		}
