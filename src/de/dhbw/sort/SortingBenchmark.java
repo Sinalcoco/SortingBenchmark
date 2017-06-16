@@ -25,13 +25,14 @@ public class SortingBenchmark extends PApplet {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        final int AMOUNT = visualizer.getGridNumber();
         while (true) {
-            for (int i = 0; i < visualizer.getGridNumber(); i++) {
+            for (int i = 0; i < AMOUNT; i++) {
                 PGraphics s = visualizer.getScreen(i);
 
                 s.beginDraw();
                 //Wähle irgendeine schöne Farbe
-                s.fill(i * 75 + 25,255 - 50 * i, i / 75 * 255);
+                s.fill(i * (255 / AMOUNT), 255 - (255 / AMOUNT) * i, i / AMOUNT * 255);
                 s.rect(0, 0, s.width, s.height);
 
                 String text = Float.toString(visualizer.random(10));
