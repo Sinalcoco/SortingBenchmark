@@ -26,7 +26,7 @@ public class SortingBenchmark extends PApplet {
             e.printStackTrace();
         }
         while (true) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < visualizer.getGridNumber(); i++) {
                 PGraphics s = visualizer.getScreen(i);
 
                 s.beginDraw();

@@ -95,4 +95,5 @@ public class Visualizer {
 	public void drawMoves(int theAmount) {
 		processing.text("Moves: " + theAmount, x + INFO_X_OFFSET, y + INFO_Y_OFFSET + INFO_BETWEEN_OFFSET * 2);
 	}
+
 }

@@ -110,4 +110,7 @@ public class Visualizer extends PApplet {
                     }
             }
     }
+    public int getGridNumber(){
+        return grid2*grid1;
+    }
 }
