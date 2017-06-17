@@ -16,6 +16,7 @@ public class Visualizer extends PApplet {
 	private int columnCount = 3;
 	private int fWidth;
 	private int fHeight;
+	private boolean [] screenValid;
 
 	private PGraphics[] gs;
 
@@ -29,11 +30,13 @@ public class Visualizer extends PApplet {
 		this.fHeight = height / columnCount;
 
 		gs = new PGraphics[rowCount * columnCount];
+		screenValid = new boolean[gs.length];
 		fullScreen = -1;
 
 	}
 
 	public PGraphics getScreen(int index) {
+		screenValid[index] = true;
 		return gs[index];
 	}
 
@@ -47,6 +50,10 @@ public class Visualizer extends PApplet {
 		}
 	}
 
+	private void initScreen(int theIndex) {
+		gs[theIndex] = createGraphics(fWidth, fHeight);
+	}
+	
 	public void setup() {
 		//Momentan würde ich das vergrößern des Hauptfensters verbieten
 		//surface.setResizable(true);
@@ -67,11 +74,14 @@ public class Visualizer extends PApplet {
 			System.out.println("Array index is: " + fullScreen);
 
 			gs[fullScreen] = createGraphics(width, height);
+			screenValid[fullScreen] = false;
 
 		} else {
 			// War schon eins Vollbild setze die ansicht wieder zurück
+			
+			initScreen(fullScreen);
+			screenValid[fullScreen] = false;
 			fullScreen = -1;
-			initScreens();
 		}
 	}
 
@@ -89,5 +99,9 @@ public class Visualizer extends PApplet {
 
 	public int getGridNumber() {
 		return gs.length;
+	}
+
+	public boolean isValid(int i) {
+		return screenValid[i];
 	}
 }
