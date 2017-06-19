@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import de.dhbw.sort.SortingBenchmark;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 
 public abstract class AbstractAlgorithmHelper {
@@ -23,9 +24,14 @@ public abstract class AbstractAlgorithmHelper {
 	protected SortingBenchmark.State state;
 
 	protected PApplet processing;
+	protected PGraphics grafics;
 
 	protected AbstractAlgorithmHelper(PApplet theParent) {
 		processing = theParent;
+	};
+	
+	public void setPGrafics(PGraphics grafics){
+		this.grafics = grafics;
 	};
 
 	public AbstractAlgorithmHelper(PApplet theParent, int[] theArray, int theX, int theY, int theWidth, int theHeight) {
@@ -142,4 +148,5 @@ public abstract class AbstractAlgorithmHelper {
 	public String getName() {
 		return algorithmName;
 	}
+	
 }

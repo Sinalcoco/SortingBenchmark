@@ -43,7 +43,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 	}
 
 	public void drawInfo() {
-		valuesView.drawName(algorithmName);
+		this.grafics.text("ABC",0,0);
 		valuesView.drawComparisons(comparisons);
 		valuesView.drawMoves(moves);
 	}
