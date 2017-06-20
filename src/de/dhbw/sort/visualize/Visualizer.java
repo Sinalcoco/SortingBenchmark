@@ -19,7 +19,6 @@ public class Visualizer extends PApplet {
     private boolean[] screenValid;
     private Graphics[] screens;
 
-    private PGraphics[] gs;
 
     public Visualizer(int width, int height, int rowCount, int columnCount) {
         this.width = width;
@@ -30,14 +29,12 @@ public class Visualizer extends PApplet {
         this.fWidth = width / rowCount;
         this.fHeight = height / columnCount;
 
-        gs = new PGraphics[rowCount * columnCount];
+
         screens = new Graphics[rowCount * columnCount];
-        screenValid = new boolean[gs.length];
+        screenValid = new boolean[screens.length];
         fullScreen = -1;
 
-        screens = new Graphics[rowCount*columnCount];
-
-
+        screens = new Graphics[rowCount * columnCount];
 
 
     }
@@ -47,28 +44,26 @@ public class Visualizer extends PApplet {
         return screens[index];
     }
 
-    public void addAlgorithemHelper(AbstractAlgorithmHelper helper) {
-    }
 
     public void initScreens() {
 
-        for (int i = 0; i < gs.length; i++)
-            {
-                gs[i] = createGraphics(fWidth, fHeight);
-            }
+
         for (int i = 0; i < screens.length; i++)
             {
-                screens[i] = new Graphics(gs[i]);
+                initScreen(i);
             }
     }
 
     private void initScreen(int theIndex) {
-        gs[theIndex] = createGraphics(fWidth, fHeight);
+
+
+        screens[theIndex] = new Graphics(createGraphics(fWidth, fHeight), this.createGraphics(width, height));
     }
 
     public void setup() {
         //Momentan w�rde ich das vergr��ern des Hauptfensters verbieten
         //surface.setResizable(true);
+        frameRate(30);
         initScreens();
     }
 
@@ -86,36 +81,46 @@ public class Visualizer extends PApplet {
                 System.out.println("Y index is: " + (mouseY / fWidth));
                 System.out.println("Array index is: " + fullScreen);
 
-                gs[fullScreen] = createGraphics(width, height);
                 screenValid[fullScreen] = false;
 
             } else
             {
                 // War schon eins Vollbild setze die ansicht wieder zurueck
 
-                initScreen(fullScreen);
                 screenValid[fullScreen] = false;
                 fullScreen = -1;
             }
     }
 
     public void draw() {
+
         // Wenn keines im fullScreen Modus ist zeichne einfach alle normal
         if (fullScreen == -1)
             {
-                for (int i = 0; i < gs.length; i++)
+                for (int i = 0; i < screens.length; i++)
                     {
-                        image(gs[i], (i % rowCount) * (fWidth), (i / rowCount) * (fHeight));
+
+                        if (screens[i].isFinished())
+                            {
+
+                                image(screens[i].getGraphics(false), (i % rowCount) * (fWidth),
+                                      (i / rowCount) * (fHeight));
+                                screens[i].finished(false);
+                            }
                     }
             } else
             {
                 // Sonst zeichne einfach nur das eine
-                image(gs[fullScreen], 0, 0);
+                if (screens[fullScreen].isFinished())
+                    {
+                        image(screens[fullScreen].getGraphics(true), 0, 0);
+                        screens[fullScreen].finished(false);
+                    }
             }
     }
 
     public int getGridNumber() {
-        return gs.length;
+        return screens.length;
     }
 
     public boolean isValid(int i) {

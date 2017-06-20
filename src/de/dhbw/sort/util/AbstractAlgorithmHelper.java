@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import de.dhbw.sort.SortingBenchmark;
 import de.dhbw.sort.visualize.Graphics;
 import processing.core.PApplet;
-import processing.core.PGraphics;
 
 
 public abstract class AbstractAlgorithmHelper {
@@ -24,27 +23,27 @@ public abstract class AbstractAlgorithmHelper {
 
 	protected SortingBenchmark.State state;
 
-	protected PApplet processing;
+	protected Graphics screen;
 	protected Graphics grafics;
 
-	protected AbstractAlgorithmHelper(PApplet theParent) {
-		processing = theParent;
+    protected double height;
+    protected int width;
+	protected AbstractAlgorithmHelper(Graphics screen) {
+       this.screen = screen;
 	};
 	
 	public void setPGrafics(Graphics grafics){
 		this.grafics = grafics;
 	};
 
-	public AbstractAlgorithmHelper(PApplet theParent, int[] theArray, int theX, int theY, int theWidth, int theHeight) {
-		initialize(theParent, theArray, theX, theY, theWidth, theHeight);
+	public AbstractAlgorithmHelper(Graphics screen, int[] theArray) {
+		initialize(screen, theArray);
 	}
 
-	protected void initialize(PApplet theParent, int[] theArray, int theX, int theY, int theWidth, int theHeight) {
-		processing = theParent;
-		viewX = theX;
-		viewY = theY;
-		viewWidth = theWidth;
-		viewHeight = theHeight;
+	protected void initialize(Graphics screen, int[] theArray) {
+        this.screen = screen;
+
+
 		values = new int[theArray.length];
 		PApplet.arrayCopy(theArray, values);
 
@@ -53,6 +52,17 @@ public abstract class AbstractAlgorithmHelper {
 		commands = new ArrayList<AlgorithmCommand>();
 		ready = true;
 		state = SortingBenchmark.State.WAIT;
+        int big = 0;
+        for (int a : values)
+            {
+                if (a > big)
+                    {
+                        big = a;
+                    }
+            }
+
+        width = screen.getWidth() / values.length;
+        height = screen.getHeight() / big;
 	}
 
 	public void processChange() {

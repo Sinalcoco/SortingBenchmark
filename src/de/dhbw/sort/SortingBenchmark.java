@@ -5,17 +5,27 @@ import java.util.ArrayList;
 import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
-import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
+//import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 import de.dhbw.sort.util.Statistics;
 import de.dhbw.sort.visualize.*;
 import processing.core.PGraphics;
 import de.dhbw.sort.visualize.Visualizer;
 import processing.core.PApplet;
 
-public class SortingBenchmark extends PApplet {
+public class SortingBenchmark {
+    private static de.dhbw.sort.visualize.Visualizer visualizer;
+
+    private static Statistics stats;
+    private static ArrayList<SortingAlgorithm> sorters;
+    private static final int AMOUNT_OF_VALUES = 10;
+    private static final boolean ascending = false;
+    private static final boolean frameByFrame = false;
+    private static boolean advance = true;
+    private static int run = 20;
 
     public static void main(String[] args) {
-        de.dhbw.sort.visualize.Visualizer visualizer = new Visualizer(1200, 600, 3, 3);
+
+        visualizer = new Visualizer(1200, 600, 3, 3);
         PApplet.runSketch(new String[]{""}, visualizer);
         try
             {
@@ -33,81 +43,6 @@ public class SortingBenchmark extends PApplet {
         Statistics stats = new Statistics(visualizer.getScreen(STATS_ID));
         int counter = 0;
 
-        InPlaceAlgorithmHelper inPlaceAlgorithmHelper = new InPlaceAlgorithmHelper(visualizer, new int[]{
-                2, 5, 6, 5, 8, 7, 4, 9, 23, 6, 9, 4
-        }, 0, 0, 100, 20);
-
-            inPlaceAlgorithmHelper.setPGrafics(visualizer.getScreen(0));
-/*
-            while (true){
-
-
-
-            }
-
-*/
-        while (true)
-            {
-                counter++;
-                try
-                    {
-                        // Es muss gewartet werden, bis PApplet die setup() Methode von
-                        // Visualizer aufgerufen hat.
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e)
-                    {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                if (!visualizer.isValid(STATS_ID))
-                    {
-                        stats.setScreen(visualizer.getScreen(STATS_ID));
-                    }
-                for (int i = 1; i < AMOUNT; i++)
-                    {
-                        if (i == STATS_ID)
-                            {
-                                continue;
-                            }
-
-                        Graphics s = visualizer.getScreen(i);
-
-                        s.getGraphics().beginDraw();
-                        // Wähle irgendeine schöne Farbe
-                        s.getGraphics().fill(i * (255 / AMOUNT), 255 - (255 / AMOUNT) * i, i / AMOUNT * 255);
-                        s.getGraphics().rect(0, 0, s.getGraphics().width, s.getGraphics().height);
-                        int value = counter * counter + (int) visualizer.random(50);
-                        String text = Float.toString(value);
-                        // Der Text soll schwarz sein
-                        s.getGraphics().fill(0);
-                        // Die Positionierung ist einfach Pi mal Daumen.
-                        s.getGraphics().text(text, s.getGraphics().width / 2 - text.length() * 3, s.getGraphics().height / 2);
-
-                        s.getGraphics().endDraw();
-
-
-                        stats.addData(counter, "Algorithm " + i, value);
-                    }
-            }
-    }
-
-    Statistics stats;
-    ArrayList<SortingAlgorithm> sorters;
-
-    final int AMOUNT_OF_VALUES = 80;
-    final boolean ascending = true;
-    final boolean frameByFrame = false;
-    boolean advance = true;
-    int run = 20;
-
-    public enum State {
-        WAIT, GO
-    }
-
-    public void setup() {
-        frameRate(50);
-        noStroke();
 
         int[] values;
         if (ascending)
@@ -125,94 +60,79 @@ public class SortingBenchmark extends PApplet {
 
         sorters = new ArrayList<SortingAlgorithm>();
 
-        AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(this, values, 0, 0, width / 3, height / 3);
+        AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(0), values);
         sorters.add(new BubbleSort(bubbleHelper));
 
-        AbstractAlgorithmHelper cocktailHelper = new InPlaceAlgorithmHelper(this, values, width / 3, 0, width / 3,
-                                                                            height / 3);
-        sorters.add(new CocktailShaker(cocktailHelper));
-
-        AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(this, values, 2 * width / 3, 0, width / 3,
-                                                                             height / 3);
+        AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(1), values);
         sorters.add(new InsertionSort(insertionHelper));
-
-        AbstractAlgorithmHelper selectionHelper = new InPlaceAlgorithmHelper(this, values, 0, height / 3, width / 3,
-                                                                             height / 3);
-        sorters.add(new SelectionSort(selectionHelper));
-
-        OutOfPlaceAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(this, values, 0, 2 * height / 3,
-                                                                              width / 3, height / 3);
-        sorters.add(new MergeSort(mergeHelper));
-
-        AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(this, values, 2 * width / 3, height / 3,
-                                                                        width / 3, height / 3);
-        sorters.add(new HeapSort(heapHelper));
-
-        AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(this, values, width / 3, 2 * height / 3,
-                                                                         width / 3, height / 3);
-        sorters.add(new QuickSort(quickHelper));
+        //        AbstractAlgorithmHelper cocktailHelper = new InPlaceAlgorithmHelper(this, values, width / 3, 0,
+        // width / 3,
+        //                                                                            height / 3);
+        //        sorters.add(new CocktailShaker(cocktailHelper));
+        //
+        //        AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(this, values, 2 * width / 3,
+        // 0, width / 3,
+        //                                                                             height / 3);
+        //        sorters.add(new InsertionSort(insertionHelper));
+        //
+        //        AbstractAlgorithmHelper selectionHelper = new InPlaceAlgorithmHelper(this, values, 0, height / 3,
+        // width / 3,
+        //                                                                             height / 3);
+        //        sorters.add(new SelectionSort(selectionHelper));
+        //
+        //        OutOfPlaceAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(this, values, 0, 2 * height / 3,
+        //                                                                              width / 3, height / 3);
+        //        sorters.add(new MergeSort(mergeHelper));
+        //
+        //        AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(this, values, 2 * width / 3, height
+        // / 3,
+        //                                                                        width / 3, height / 3);
+        //        sorters.add(new HeapSort(heapHelper));
+        //
+        //        AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(this, values, width / 3, 2 *
+        // height / 3,
+        //                                                                         width / 3, height / 3);
+        //        sorters.add(new QuickSort(quickHelper));
 
         for (SortingAlgorithm s : sorters)
             {
                 s.start();
+                s.helper().processChange();
             }
+
+        while (true)
+            {
+
+                for (SortingAlgorithm s : sorters)
+                    {
+                        s.helper().processChange();
+                        try
+                            {
+                                Thread.sleep(0);
+                            } catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        s.helper().setState(State.GO);
+                    }
+
+            }
+    }
+
+
+    public enum State {
+        WAIT, GO
+    }
+
+    public void setup() {
+
+
     }
 
     public void keyPressed() {
         advance = true;
     }
 
-    public void draw() {
-        if (!frameByFrame || advance)
-            {
-                advance = false;
-                background(0);
-                boolean allReady = true;
-
-                for (SortingAlgorithm s : sorters)
-                    {
-
-                        s.helper().processChange();
-                        if (!s.helper().ready())
-                            {
-                                allReady = false;
-                            }
-                    }
-                if (allReady)
-                    {
-                        for (SortingAlgorithm s : sorters)
-                            {
-                                s.helper().setState(State.GO);
-                            }
-                    }
-                if (ascending && run < AMOUNT_OF_VALUES)
-                    {
-                        boolean allDone = true;
-                        for (SortingAlgorithm s : sorters)
-                            {
-                                if (!s.done())
-                                    {
-                                        allDone = false;
-                                        break;
-                                    }
-                            }
-                        if (allDone)
-                            {
-                                run++;
-                                int[] values = randomIntArray(run);
-                                for (int i = 0; i < sorters.size(); i++)
-                                    {
-                                        AbstractAlgorithmHelper h = sorters.get(i).helper();
-                                        int operations = h.getMoves() + h.getComparisons();
-                                        stats.addData(run - 1, h.getName(), operations);
-                                        h.setNewArray(values);
-                                        sorters.get(i).reset();
-                                    }
-                                stats.printStatistic(run - 1);
-                            }
-                    }
-            }
-    }
 
     public int[] invertedIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
@@ -232,14 +152,14 @@ public class SortingBenchmark extends PApplet {
         return array;
     }
 
-    public int[] randomIntArray(int amountOfInts) {
+    public static int[] randomIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
         for (int i = 1; i <= array.length; i++)
             {
-                int index = (int) random(array.length);
+                int index = (int) (Math.random() * array.length);
                 while (array[index] != 0)
                     {
-                        index = (int) random(array.length);
+                        index = (int) (Math.random() * array.length);
                     }
                 array[index] = i;
             }
