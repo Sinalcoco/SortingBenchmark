@@ -43,7 +43,10 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 	}
 
 	public void drawInfo() {
+		this.grafics.beginDraw();
 		this.grafics.text("ABC",0,0);
+		this.grafics.background(255);
+		this.grafics.endDraw();
 		valuesView.drawComparisons(comparisons);
 		valuesView.drawMoves(moves);
 	}

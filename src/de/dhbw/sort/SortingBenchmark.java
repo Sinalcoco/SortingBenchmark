@@ -39,6 +39,13 @@ public class SortingBenchmark extends PApplet {
 
             inPlaceAlgorithmHelper.setPGrafics(visualizer.getScreen(0));
 
+            while (true){
+
+                
+
+            }
+
+
         while (true)
             {
                 counter++;
