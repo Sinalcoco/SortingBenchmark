@@ -43,12 +43,10 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 	}
 
 	public void drawInfo() {
-		this.grafics.beginDraw();
-		this.grafics.text("ABC",0,0);
-		this.grafics.background(255);
-		this.grafics.endDraw();
-		valuesView.drawComparisons(comparisons);
-		valuesView.drawMoves(moves);
+		this.grafics.getGraphics().beginDraw();
+		this.grafics.getGraphics().text("ABC",0,0);
+		this.grafics.getGraphics().endDraw();
+
 	}
 	public void setNewArray(int[] theArray) {
 		initialize(processing, theArray, viewX, viewY, viewWidth, viewHeight);

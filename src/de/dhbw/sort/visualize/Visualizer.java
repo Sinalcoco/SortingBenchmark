@@ -17,6 +17,7 @@ public class Visualizer extends PApplet {
     private int fWidth;
     private int fHeight;
     private boolean[] screenValid;
+    private Graphics[] screens;
 
     private PGraphics[] gs;
 
@@ -30,14 +31,20 @@ public class Visualizer extends PApplet {
         this.fHeight = height / columnCount;
 
         gs = new PGraphics[rowCount * columnCount];
+        screens = new Graphics[rowCount * columnCount];
         screenValid = new boolean[gs.length];
         fullScreen = -1;
 
+        screens = new Graphics[rowCount*columnCount];
+
+
+
+
     }
 
-    public PGraphics getScreen(int index) {
+    public Graphics getScreen(int index) {
         screenValid[index] = true;
-        return gs[index];
+        return screens[index];
     }
 
     public void addAlgorithemHelper(AbstractAlgorithmHelper helper) {
@@ -48,6 +55,10 @@ public class Visualizer extends PApplet {
         for (int i = 0; i < gs.length; i++)
             {
                 gs[i] = createGraphics(fWidth, fHeight);
+            }
+        for (int i = 0; i < screens.length; i++)
+            {
+                screens[i] = new Graphics(gs[i]);
             }
     }
 

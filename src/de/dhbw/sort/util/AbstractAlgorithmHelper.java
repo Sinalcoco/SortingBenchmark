@@ -3,6 +3,7 @@ package de.dhbw.sort.util;
 import java.util.ArrayList;
 
 import de.dhbw.sort.SortingBenchmark;
+import de.dhbw.sort.visualize.Graphics;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -24,13 +25,13 @@ public abstract class AbstractAlgorithmHelper {
 	protected SortingBenchmark.State state;
 
 	protected PApplet processing;
-	protected PGraphics grafics;
+	protected Graphics grafics;
 
 	protected AbstractAlgorithmHelper(PApplet theParent) {
 		processing = theParent;
 	};
 	
-	public void setPGrafics(PGraphics grafics){
+	public void setPGrafics(Graphics grafics){
 		this.grafics = grafics;
 	};
 

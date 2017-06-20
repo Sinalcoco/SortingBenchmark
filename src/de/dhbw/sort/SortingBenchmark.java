@@ -38,14 +38,14 @@ public class SortingBenchmark extends PApplet {
         }, 0, 0, 100, 20);
 
             inPlaceAlgorithmHelper.setPGrafics(visualizer.getScreen(0));
-
+/*
             while (true){
 
-                
+
 
             }
 
-
+*/
         while (true)
             {
                 counter++;
@@ -71,20 +71,20 @@ public class SortingBenchmark extends PApplet {
                                 continue;
                             }
 
-                        PGraphics s = visualizer.getScreen(i);
+                        Graphics s = visualizer.getScreen(i);
 
-                        s.beginDraw();
+                        s.getGraphics().beginDraw();
                         // Wähle irgendeine schöne Farbe
-                        s.fill(i * (255 / AMOUNT), 255 - (255 / AMOUNT) * i, i / AMOUNT * 255);
-                        s.rect(0, 0, s.width, s.height);
+                        s.getGraphics().fill(i * (255 / AMOUNT), 255 - (255 / AMOUNT) * i, i / AMOUNT * 255);
+                        s.getGraphics().rect(0, 0, s.getGraphics().width, s.getGraphics().height);
                         int value = counter * counter + (int) visualizer.random(50);
                         String text = Float.toString(value);
                         // Der Text soll schwarz sein
-                        s.fill(0);
+                        s.getGraphics().fill(0);
                         // Die Positionierung ist einfach Pi mal Daumen.
-                        s.text(text, s.width / 2 - text.length() * 3, s.height / 2);
+                        s.getGraphics().text(text, s.getGraphics().width / 2 - text.length() * 3, s.getGraphics().height / 2);
 
-                        s.endDraw();
+                        s.getGraphics().endDraw();
 
 
                         stats.addData(counter, "Algorithm " + i, value);
