@@ -1,8 +1,10 @@
 package de.dhbw.sort.visualize;
 
+import de.dhbw.sort.SortingBenchmark;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 /**
  * Created by jbi on 13.06.2017.
@@ -44,6 +46,9 @@ public class Visualizer extends PApplet {
         return screens[index];
     }
 
+//    public Graphics getNextScreen(){
+//
+//    }
 
     public void initScreens() {
 
@@ -63,7 +68,7 @@ public class Visualizer extends PApplet {
     public void setup() {
         //Momentan w�rde ich das vergr��ern des Hauptfensters verbieten
         //surface.setResizable(true);
-        frameRate(30);
+        frameRate(1);
         initScreens();
     }
 
@@ -93,31 +98,27 @@ public class Visualizer extends PApplet {
     }
 
     public void draw() {
-
         // Wenn keines im fullScreen Modus ist zeichne einfach alle normal
-        if (fullScreen == -1)
-            {
-                for (int i = 0; i < screens.length; i++)
+                if (fullScreen == -1)
                     {
+                        for (int i = 0; i < screens.length; i++)
 
-                        if (screens[i].isFinished())
                             {
-
+                                screens[i].generateNextFrame();
                                 image(screens[i].getGraphics(false), (i % rowCount) * (fWidth),
-                                      (i / rowCount) * (fHeight));
-                                screens[i].finished(false);
+                                              (i / rowCount) * (fHeight));
                             }
-                    }
-            } else
-            {
-                // Sonst zeichne einfach nur das eine
-                if (screens[fullScreen].isFinished())
+                    } else
                     {
+                        // Sonst zeichne einfach nur das eine
+                        //                System.out.println(screens[fullScreen].isRenderd());
+                        //                if (!screens[fullScreen].isRenderd())
+                        //                    {
+                        screens[fullScreen].generateNextFrame();
                         image(screens[fullScreen].getGraphics(true), 0, 0);
-                        screens[fullScreen].finished(false);
-                    }
-            }
-    }
+                        //                        screens[fullScreen].setRenderd(true);
+                        //                    }
+    }}
 
     public int getGridNumber() {
         return screens.length;

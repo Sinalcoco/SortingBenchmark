@@ -1,82 +1,95 @@
 package de.dhbw.sort.util;
 
-import de.dhbw.sort.Visualizer;
 import de.dhbw.sort.visualize.Graphics;
+
+import java.util.Arrays;
 
 public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     private Graphics valuesView;
+    private int grafMoves = 0;
+    private int gravComp = 0;
 
 
     public InPlaceAlgorithmHelper(Graphics screen, int[] theArray) {
         super(screen, theArray);
-
+        screen.setHelper(this);
     }
 
     @Override
     public void drawValues() {
         screen.fill(255, 255, 255);
-        screen.drawBackground(0,0,0);
-        for (int i = 0; i < values.length; i++)
+        screen.drawBackground(0, 0, 0);
+        for (int i = 0; i < graphicsValues.length; i++)
             {
 
-                        screen.fill(255,255,255);
-                        screen.drawRect(i * width, (int) (screen.getHeight() - (height * values[i])), width,
-                                        (int) (height * values[i]));
+                screen.fill(255, 255, 255);
+                screen.drawRect(i * width, (int) (screen.getHeight() - (height * graphicsValues[i])), width,
+                                (int) (height * graphicsValues[i]));
 
 
             }
     }
 
 
-    public void processCommands() {
-
-
-        if (commands.size() > 0)
+    public void nextFrame() {
+        drawValues();
+        drawInfo();
+        int firstIndex;
+        int secondIndex;
+        if ( mov.peek() != null )
             {
-                ready = false;
-                AlgorithmCommand command = commands.get(0);
-                switch (command.type())
+                switch (mov.poll())
                     {
+
                         case COMPARE:
+                            gravComp++;
+                            firstIndex = indexes.poll();
+                            secondIndex = indexes.poll();
+
                             screen.fill(0, 255, 0);
-                            screen.drawRect(command.first() * width,
-                                            (int) (screen.getHeight() - (height * values[command.first()])), width,
-                                            (int) (height * values[command.first()]));
-                            screen.drawRect(command.second() * width,
-                                            (int) (screen.getHeight() - (height * values[command.second()])), width,
-                                            (int) (height * values[command.second()]));
+                            screen.drawRect(firstIndex * width,
+                                            (int) (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                                            (int) (height * graphicsValues[firstIndex]));
+                            screen.drawRect(secondIndex * width,
+                                            (int) (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                                            (int) (height * graphicsValues[secondIndex]));
                             break;
                         case SWAP:
+                            grafMoves += 3;
+                            firstIndex = indexes.poll();
+                            secondIndex = indexes.poll();
+
                             screen.fill(255, 0, 0);
-                            screen.drawRect(command.first() * width,
-                                            (int) (screen.getHeight() - (height * values[command.first()])), width,
-                                            (int) (height * values[command.first()]));
-                            screen.drawRect(command.second() * width,
-                                            (int) (screen.getHeight() - (height * values[command.second()])), width,
-                                            (int) (height * values[command.second()]));
-                            int temp = values[command.first()];
-                            values[command.first()] = values[command.second()];
-                            values[command.second()] = temp;
+                            screen.drawRect(firstIndex * width,
+                                            (int) (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                                            (int) (height * graphicsValues[firstIndex]));
+                            screen.drawRect(secondIndex * width,
+                                            (int) (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                                            (int) (height * graphicsValues[secondIndex]));
+
+                            int temp = graphicsValues[firstIndex];
+                            graphicsValues[firstIndex] = graphicsValues[secondIndex];
+                            graphicsValues[secondIndex] = temp;
                             break;
-                        case HIGHLIGHT:
-                            //                            valuesView.drawRect(command.first(), values, command.second
-                            // ());
+                        case MOVE:
+                            break;
+                        default:
+                            break;
+
+
                     }
-                commands.remove(0);
+
             }
-        if (commands.size() == 0)
-            {
-                screen.finished(true);
-                ready = true;
-            }
+
+
     }
 
     public void drawInfo() {
-        screen.fill(255,255,255);
+        screen.fill(255, 255, 255);
         screen.text(algorithmName, 0, 10);
-        screen.text("Comparisons: " + comparisons, 0, 20);
-        screen.text("Moves: " + moves, 0, 30);
+        screen.text("Comparisons: " + gravComp, 0, 20);
+        screen.text("Moves: " + grafMoves, 0, 30);
 
     }
 

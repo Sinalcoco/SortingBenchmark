@@ -59,64 +59,42 @@ public class SortingBenchmark {
         // stats = new Statistics();
 
         sorters = new ArrayList<SortingAlgorithm>();
-
         AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(0), values);
         sorters.add(new BubbleSort(bubbleHelper));
 
         AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(1), values);
         sorters.add(new InsertionSort(insertionHelper));
-        //        AbstractAlgorithmHelper cocktailHelper = new InPlaceAlgorithmHelper(this, values, width / 3, 0,
-        // width / 3,
-        //                                                                            height / 3);
-        //        sorters.add(new CocktailShaker(cocktailHelper));
-        //
-        //        AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(this, values, 2 * width / 3,
-        // 0, width / 3,
-        //                                                                             height / 3);
-        //        sorters.add(new InsertionSort(insertionHelper));
-        //
-        //        AbstractAlgorithmHelper selectionHelper = new InPlaceAlgorithmHelper(this, values, 0, height / 3,
-        // width / 3,
-        //                                                                             height / 3);
-        //        sorters.add(new SelectionSort(selectionHelper));
-        //
-        //        OutOfPlaceAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(this, values, 0, 2 * height / 3,
-        //                                                                              width / 3, height / 3);
-        //        sorters.add(new MergeSort(mergeHelper));
-        //
-        //        AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(this, values, 2 * width / 3, height
-        // / 3,
-        //                                                                        width / 3, height / 3);
-        //        sorters.add(new HeapSort(heapHelper));
-        //
-        //        AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(this, values, width / 3, 2 *
-        // height / 3,
-        //                                                                         width / 3, height / 3);
-        //        sorters.add(new QuickSort(quickHelper));
+
+
+        AbstractAlgorithmHelper cocktailHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(2), values);
+        sorters.add(new CocktailShaker(cocktailHelper));
+
+
+        AbstractAlgorithmHelper selektionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(3),values);
+        sorters.add(new SelectionSort(selektionHelper));
+
+        AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(5),values);
+        sorters.add(new HeapSort(heapHelper));
+
+        AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6),values);
+        sorters.add(new QuickSort(quickHelper));
 
         for (SortingAlgorithm s : sorters)
             {
                 s.start();
-                s.helper().processChange();
+                s.helper().nextFrame();
             }
 
-        while (true)
-            {
+        //        while (true)
+        //            {
+        //                        for (SortingAlgorithm s : sorters)
+        //                            {
+        //                                s.helper().nextFrame();
+        //
+        //
+        //                            }
+        //            }
 
-                for (SortingAlgorithm s : sorters)
-                    {
-                        s.helper().processChange();
-                        try
-                            {
-                                Thread.sleep(0);
-                            } catch (InterruptedException e)
-                            {
-                                e.printStackTrace();
-                            }
-                        s.helper().setState(State.GO);
-                    }
-
-            }
     }
 
 
