@@ -1,145 +1,159 @@
 package de.dhbw.sort.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import de.dhbw.sort.SortingBenchmark;
+import de.dhbw.sort.visualize.Graphics;
 import processing.core.PApplet;
 
 
 public abstract class AbstractAlgorithmHelper {
-	protected int[] values;
+    protected int[] values;
+    protected int[] graphicsValues = values;
 
-	protected int comparisons;
-	protected int moves;
+    protected int comparisons;
+    protected int moves;
 
-	protected ArrayList<AlgorithmCommand> commands;
+    protected ArrayList<AlgorithmCommand> commands;
 
-	protected boolean ready;
+    protected boolean ready;
 
-	protected String algorithmName;
+    protected String algorithmName;
 
-	protected int viewX, viewY, viewWidth, viewHeight;
+    protected int viewX, viewY, viewWidth, viewHeight;
 
-	protected SortingBenchmark.State state;
+    protected SortingBenchmark.State state;
 
-	protected PApplet processing;
+    protected Graphics screen;
+    protected Graphics grafics;
 
-	protected AbstractAlgorithmHelper(PApplet theParent) {
-		processing = theParent;
-	};
+    protected double height;
+    protected int width;
 
-	public AbstractAlgorithmHelper(PApplet theParent, int[] theArray, int theX, int theY, int theWidth, int theHeight) {
-		initialize(theParent, theArray, theX, theY, theWidth, theHeight);
-	}
-
-	protected void initialize(PApplet theParent, int[] theArray, int theX, int theY, int theWidth, int theHeight) {
-		processing = theParent;
-		viewX = theX;
-		viewY = theY;
-		viewWidth = theWidth;
-		viewHeight = theHeight;
-		values = new int[theArray.length];
-		PApplet.arrayCopy(theArray, values);
-
-		comparisons = 0;
-		moves = 0;
-		commands = new ArrayList<AlgorithmCommand>();
-		ready = true;
-		state = SortingBenchmark.State.WAIT;
-	}
-
-	public void processChange() {
-		drawValues();
-
-		processCommands();
-
-		drawInfo();
-	}
-
-	public abstract void drawValues();
-	
-	public abstract void processCommands();
-	
-	public abstract void drawInfo();
-	
-	public void highlight(int theIndex, ActionColor theColor)
-	{
-		commands.add(new AlgorithmCommand(AlgorithmCommand.Action.HIGHLIGHT, theIndex, theColor.hashCode()));
-	}
-
-	public synchronized int compare(int firstIndex, int secondIndex) {
-
-		state = SortingBenchmark.State.WAIT;
-		comparisons++;
-		commands.add(new AlgorithmCommand(AlgorithmCommand.Action.COMPARE, firstIndex, secondIndex));
-		try {
-			while (state != SortingBenchmark.State.GO) {
-				wait();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return (values[firstIndex] - values[secondIndex]);
-	}
-
-	public synchronized void move(int fromIndex, int toIndex) {
-		moves++;
-		commands.add(new AlgorithmCommand(AlgorithmCommand.Action.MOVE, fromIndex, toIndex));
-		state = SortingBenchmark.State.WAIT;
-		try {
-			while (state != SortingBenchmark.State.GO) {
-				wait();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public synchronized void swap(int firstIndex, int secondIndex) {
-		state = SortingBenchmark.State.WAIT;
-		// store(firstIndex);
-		// store(secondIndex);
-		moves += 2;
-		commands.add(new AlgorithmCommand(AlgorithmCommand.Action.SWAP, firstIndex, secondIndex));
-		try {
-			while (state != SortingBenchmark.State.GO) {
-				wait();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    protected LinkedBlockingQueue<Moves> mov = new LinkedBlockingQueue();
+    protected LinkedBlockingQueue<Integer> indexes = new LinkedBlockingQueue();
 
 
-	public int arrayLength() {
-		return values.length;
-	}
+    protected AbstractAlgorithmHelper(Graphics screen) {
+        this.screen = screen;
+    }
 
-	public boolean ready() {
-		return ready;
-	}
+    ;
 
-	public synchronized void setState(SortingBenchmark.State theState) {
-		state = theState;
-		notify();
-	}
+    public void setPGrafics(Graphics grafics) {
+        this.grafics = grafics;
+    }
 
-	public void setName(String theName) {
-		algorithmName = theName;
-	}
+    ;
 
-	public abstract void setNewArray(int [] theArray);
-	
+    public AbstractAlgorithmHelper(Graphics screen, int[] theArray) {
+        initialize(screen, theArray);
+    }
 
-	public int getComparisons() {
-		return comparisons;
-	}
+    protected void initialize(Graphics screen, int[] theArray) {
+        this.screen = screen;
 
-	public int getMoves() {
-		return moves;
-	}
 
-	public String getName() {
-		return algorithmName;
-	}
+        values = new int[theArray.length];
+        graphicsValues = new int[theArray.length];
+        PApplet.arrayCopy(theArray, values);
+        PApplet.arrayCopy(theArray, graphicsValues);
+
+        comparisons = 0;
+        moves = 0;
+        commands = new ArrayList<AlgorithmCommand>();
+        ready = true;
+        state = SortingBenchmark.State.WAIT;
+        int big = 0;
+        for (int a : values)
+            {
+                if (a > big)
+                    {
+                        big = a;
+                    }
+            }
+
+        width = screen.getWidth() / values.length;
+        height = screen.getHeight() / big;
+    }
+
+
+
+    public abstract void drawValues();
+
+    public abstract void nextFrame();
+
+    public abstract void drawInfo();
+
+    public void highlight(int theIndex, ActionColor theColor) {
+        commands.add(new AlgorithmCommand(AlgorithmCommand.Action.HIGHLIGHT, theIndex, theColor.hashCode()));
+    }
+
+    public synchronized int compare(int firstIndex, int secondIndex) {
+        comparisons++;
+        mov.add(Moves.COMPARE);
+        indexes.add(firstIndex);
+        indexes.add(secondIndex);
+
+        return (values[firstIndex] - values[secondIndex]);
+    }
+
+    public synchronized void move(int fromIndex, int toIndex) {
+        moves++;
+        mov.add(Moves.MOVE);
+        indexes.add(fromIndex);
+        indexes.add(toIndex);
+
+        //TODO do move stuff in array
+
+
+    }
+
+    public synchronized void swap(int firstIndex, int secondIndex) {
+        moves += 3;
+        mov.add(Moves.SWAP);
+        indexes.add(firstIndex);
+        indexes.add(secondIndex);
+
+        int temp = values[firstIndex];
+        values[firstIndex] = values[secondIndex];
+        values[secondIndex] = temp;
+
+    }
+
+
+    public int arrayLength() {
+        return values.length;
+    }
+
+    public boolean ready() {
+        return ready;
+    }
+
+    public synchronized void setState(SortingBenchmark.State theState) {
+        state = theState;
+        notify();
+    }
+
+    public void setName(String theName) {
+        algorithmName = theName;
+    }
+
+    public abstract void setNewArray(int[] theArray);
+
+
+    public int getComparisons() {
+        return comparisons;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
+
+    public String getName() {
+        return algorithmName;
+    }
+
 }
