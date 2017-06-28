@@ -1,162 +1,240 @@
-//package de.dhbw.sort.util;
-//
-//import java.util.ArrayList;
-//
-//import de.dhbw.sort.SortingBenchmark;
-//import de.dhbw.sort.Visualizer;
-//import processing.core.PApplet;
-//
-//public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
-//
-//	public enum ArrayType {
-//		MAIN, OUTPUT
-//	}
-//
-//	private int[] output;
-//	private Visualizer valuesView;
-//	private Visualizer outputView;
-//	private int oViewX, oViewY, oViewWidth, oViewHeight;
-//
-//	public OutOfPlaceAlgorithmHelper(PApplet theParent, int[] theArray, int theX, int theY, int theWidth,
-//			int theHeight) {
-//		super(theParent);
-//		this.initialize(theArray, theX, theY, theWidth, theHeight / 2);
-//	}
-//
-//	protected void initialize(int[] theArray, int theX, int theY, int theWidth, int theHeight) {
-//		viewX = theX;
-//		viewY = theY;
-//		viewWidth = theWidth;
-//		viewHeight = theHeight + Visualizer.BORDER_THICKNESS;
-//		oViewX = theX;
-//		oViewY = theY + theHeight;
-//		oViewWidth = theWidth;
-//		oViewHeight = theHeight;
-//
-//		values = new int[theArray.length];
-//		PApplet.arrayCopy(theArray, values);
-//		output = new int[values.length];
-//
-//		valuesView = new Visualizer(screen, viewX, viewY, viewWidth, viewHeight, values.length, 1);
-//		outputView = new Visualizer(screen, oViewX, oViewY, oViewWidth, oViewHeight, values.length, 1);
-//
-//		comparisons = 0;
-//		moves = 0;
-//		commands = new ArrayList<AlgorithmCommand>();
-//		ready = true;
-//		state = SortingBenchmark.State.WAIT;
-//	}
-//
-//	public void drawValues() {
-//		valuesView.drawArray(values);
-//		outputView.drawArray(output);
-//	}
-//
-//	public void processCommands() {
-//		if (commands.size() > 0) {
-//			ready = false;
-//			AlgorithmCommand command = commands.get(0);
-//			switch (command.type()) {
-//			case COMPARE:
-//				switch (command.direction()) {
-//				case IN_MAIN:
-//					valuesView.drawRect(command.first(), values, valuesView.COMPARE_COLOR);
-//					valuesView.drawRect(command.second(), values, valuesView.COMPARE_COLOR);
-//					break;
-//				case IN_OUTPUT:
-//					outputView.drawRect(command.first(), output, outputView.COMPARE_COLOR);
-//					outputView.drawRect(command.second(), output, outputView.COMPARE_COLOR);
-//					break;
-//				case MAIN_TO_OUTPUT:
-//					break;
-//				case OUTPUT_TO_MAIN:
-//					break;
-//				}
-//				break;
-//			case SWAP:
-//				valuesView.drawRect(command.first(), values, valuesView.MOVE_COLOR);
-//				valuesView.drawRect(command.second(), values, valuesView.MOVE_COLOR);
-//				int temp = values[command.first()];
-//				values[command.first()] = values[command.second()];
-//				values[command.second()] = temp;
-//				break;
-//			case MOVE:
-//				if (command.direction() == AlgorithmCommand.Direction.MAIN_TO_OUTPUT) {
-//					output[command.second()] = values[command.first()];
-//					values[command.first()] = 0;
-//				} else if (command.direction() == AlgorithmCommand.Direction.OUTPUT_TO_MAIN) {
-//					values[command.second()] = output[command.first()];
-//					output[command.first()] = 0;
-//				}
-//				break;
-//			}
-//			commands.remove(0);
-//		}
-//		if (commands.size() == 0)
-//			ready = true;
-//	}
-//
-//	public synchronized int compare(int firstIndex, ArrayType fromArray, int secondIndex, ArrayType toArray) {
-//		AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
-//
-//		state = SortingBenchmark.State.WAIT;
-//		comparisons++;
-//		commands.add(new AlgorithmCommand(AlgorithmCommand.Action.COMPARE, firstIndex, secondIndex, direction));
-//		try {
-//			while (state != SortingBenchmark.State.GO) {
-//				wait();
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		switch (direction) {
-//		case IN_MAIN:
-//			return (values[firstIndex] - values[secondIndex]);
-//		case IN_OUTPUT:
-//			return (output[firstIndex] - output[secondIndex]);
-//		default:
-//			return 0;
-//		}
-//	}
-//
-//	public synchronized void move(int fromIndex, ArrayType fromArray, int toIndex, ArrayType toArray) {
-//		moves++;
-//		AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
-//		commands.add(new AlgorithmCommand(AlgorithmCommand.Action.MOVE, fromIndex, toIndex, direction));
-//		state = SortingBenchmark.State.WAIT;
-//		try {
-//			while (state != SortingBenchmark.State.GO) {
-//				wait();
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	public void setNewArray(int[] theArray) {
-//		initialize(theArray, viewX, viewY, viewWidth, (viewHeight - Visualizer.BORDER_THICKNESS));
-//	}
-//
-//	@Override
-//	public void drawInfo() {
-//		valuesView.drawName(algorithmName);
-//		valuesView.drawComparisons(comparisons);
-//		valuesView.drawMoves(moves);
-//	}
-//
-//	protected AlgorithmCommand.Direction calculateDirection(ArrayType fromArray, ArrayType toArray) {
-//		if (fromArray == toArray) {
-//			if (fromArray == ArrayType.MAIN) {
-//				return AlgorithmCommand.Direction.IN_MAIN;
-//			} else {
-//				return AlgorithmCommand.Direction.IN_OUTPUT;
-//			}
-//		} else {
-//			if (fromArray == ArrayType.MAIN) {
-//				return AlgorithmCommand.Direction.MAIN_TO_OUTPUT;
-//			} else {
-//				return AlgorithmCommand.Direction.OUTPUT_TO_MAIN;
-//			}
-//		}
-//	}
-//}
+package de.dhbw.sort.util;
+
+import java.util.ArrayList;
+
+import de.dhbw.sort.SortingBenchmark;
+import de.dhbw.sort.util.AlgorithmCommand.Direction;
+import de.dhbw.sort.visualize.Graphics;
+import processing.core.PApplet;
+
+public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
+
+	public enum ArrayType {
+		MAIN, OUTPUT
+	}
+
+	private int[] output;
+	private int[] graphicsOutput;
+    private int graphMoves = 0;
+    private int graphComp = 0;
+
+	public OutOfPlaceAlgorithmHelper(Graphics theScreen, int[] theArray) {
+		super(theScreen, theArray);
+		reset();
+		screen.setHelper(this);
+	}
+
+	public void drawValues() {
+		 screen.fill(255, 255, 255);
+	        screen.drawBackground(0, 0, 0);
+	        for (int i = 0; i < graphicsValues.length; i++)
+            {
+
+                screen.fill(255, 255, 255);
+                screen.drawRect(i * width, (int) (screen.getHeight() - (height * graphicsValues[i])), width,
+                                (int) (height * graphicsValues[i]));
+
+
+            }
+	        for (int i = 0; i < graphicsOutput.length; i++)
+            {
+
+                screen.fill(255, 255, 255);
+                screen.drawRect(i * width, (int) (screen.getHeight() - (height * graphicsOutput[i])), width,
+                                (int) (height * graphicsOutput[i]));
+
+
+            }
+	}
+	public void nextFrame() {
+        drawValues();
+        drawInfo();
+        int firstIndex;
+        int secondIndex;
+        int directionOrdinal;
+        if ( mov.peek() != null )
+            {
+                switch (mov.poll())
+                    {
+
+                        case COMPARE:
+                            graphComp++;
+                            firstIndex = indexes.poll();
+                            secondIndex = indexes.poll();
+                            directionOrdinal = indexes.poll();
+                            
+                            switch (Direction.values()[directionOrdinal]) {
+            				case IN_MAIN:
+            					screen.fill(0, 255, 0);
+                                screen.drawRect(firstIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                                                (int) (height * graphicsValues[firstIndex]));
+                                screen.drawRect(secondIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                                                (int) (height * graphicsValues[secondIndex]));
+            					break;
+            				case IN_OUTPUT://TODO split screen in half
+            					screen.fill(0, 255, 0);
+                                screen.drawRect(firstIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsOutput[firstIndex])), width,
+                                                (int) (height * graphicsValues[firstIndex]));
+                                screen.drawRect(secondIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsOutput[secondIndex])), width,
+                                                (int) (height * graphicsValues[secondIndex]));
+            					break;
+            				case MAIN_TO_OUTPUT:
+            					break;
+            				case OUTPUT_TO_MAIN:
+            					break;
+            				}
+                            break;
+                        case SWAP:
+                            graphMoves += 3;
+                            firstIndex = indexes.poll();
+                            secondIndex = indexes.poll();
+                            directionOrdinal = indexes.poll();
+                            
+                            //TODO change switch include move logic
+                            switch (Direction.values()[directionOrdinal]) {
+            				case IN_MAIN:
+            					screen.fill(0, 255, 0);
+                                screen.drawRect(firstIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                                                (int) (height * graphicsValues[firstIndex]));
+                                screen.drawRect(secondIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                                                (int) (height * graphicsValues[secondIndex]));
+            					break;
+            				case IN_OUTPUT://TODO split screen in half
+            					screen.fill(0, 255, 0);
+                                screen.drawRect(firstIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsOutput[firstIndex])), width,
+                                                (int) (height * graphicsValues[firstIndex]));
+                                screen.drawRect(secondIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsOutput[secondIndex])), width,
+                                                (int) (height * graphicsValues[secondIndex]));
+            					break;
+            				case MAIN_TO_OUTPUT:
+            					break;
+            				case OUTPUT_TO_MAIN:
+            					break;
+            				}
+                            //TODO include in switch
+                            int temp = graphicsValues[firstIndex];
+                            graphicsValues[firstIndex] = graphicsValues[secondIndex];
+                            graphicsValues[secondIndex] = temp;
+                            break;
+                        case MOVE:
+                        	graphMoves++;
+                        	firstIndex = indexes.poll();
+                            secondIndex = indexes.poll();
+                            directionOrdinal = indexes.poll();
+                            //TODO change switch to to moves
+                            switch (Direction.values()[directionOrdinal]) {
+            				case IN_MAIN:
+            					screen.fill(0, 255, 0);
+                                screen.drawRect(firstIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                                                (int) (height * graphicsValues[firstIndex]));
+                                screen.drawRect(secondIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                                                (int) (height * graphicsValues[secondIndex]));
+            					break;
+            				case IN_OUTPUT://TODO split screen in half
+            					screen.fill(0, 255, 0);
+                                screen.drawRect(firstIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsOutput[firstIndex])), width,
+                                                (int) (height * graphicsValues[firstIndex]));
+                                screen.drawRect(secondIndex * width,
+                                                (int) (screen.getHeight() - (height * graphicsOutput[secondIndex])), width,
+                                                (int) (height * graphicsValues[secondIndex]));
+            					break;
+            				case MAIN_TO_OUTPUT:
+            					break;
+            				case OUTPUT_TO_MAIN:
+            					break;
+            				}
+                            break;
+                        default:
+                            break;
+                    }
+            }
+    }
+
+    public synchronized void swap(int firstIndex, ArrayType fromArray, int secondIndex, ArrayType toArray) {
+        moves += 3;
+        AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
+        mov.add(Moves.SWAP);
+        indexes.add(firstIndex);
+        indexes.add(secondIndex);
+        indexes.add(direction.ordinal());
+
+        int temp = values[firstIndex];
+        values[firstIndex] = values[secondIndex];
+        values[secondIndex] = temp;
+
+    }
+
+	public synchronized int compare(int firstIndex, ArrayType fromArray, int secondIndex, ArrayType toArray) {
+		comparisons++;
+		AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
+		mov.add(Moves.COMPARE);
+		indexes.add(firstIndex);
+		indexes.add(secondIndex);
+		indexes.add(direction.ordinal());	//Adding the direction information
+		
+		switch (direction) {
+		case IN_MAIN:
+			return (values[firstIndex] - values[secondIndex]);
+		case IN_OUTPUT:
+			return (output[firstIndex] - output[secondIndex]);
+		//TODO add rest of the cases
+		default:
+			return 0;
+		}
+	}
+
+	public synchronized void move(int fromIndex, ArrayType fromArray, int toIndex, ArrayType toArray) {
+		moves++;
+		AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
+		
+		mov.add(Moves.MOVE);
+		indexes.add(fromIndex);
+		indexes.add(toIndex);
+		indexes.add(direction.ordinal());	//Adding the direction information
+	}
+
+	public void setNewArray(int[] theArray) {
+		super.initialize(screen, theArray);
+		reset();
+	}
+
+	private void reset() {
+		graphicsOutput = new int [graphicsValues.length];
+		output = new int [values.length];
+	}
+
+	@Override
+	public void drawInfo() {
+        screen.fill(255, 255, 255);
+        screen.text(algorithmName, 0, 10);
+        screen.text("Comparisons: " + graphComp, 0, 20);
+        screen.text("Moves: " + graphMoves, 0, 30);
+	}
+
+	protected AlgorithmCommand.Direction calculateDirection(ArrayType fromArray, ArrayType toArray) {
+		if (fromArray == toArray) {
+			if (fromArray == ArrayType.MAIN) {
+				return AlgorithmCommand.Direction.IN_MAIN;
+			} else {
+				return AlgorithmCommand.Direction.IN_OUTPUT;
+			}
+		} else {
+			if (fromArray == ArrayType.MAIN) {
+				return AlgorithmCommand.Direction.MAIN_TO_OUTPUT;
+			} else {
+				return AlgorithmCommand.Direction.OUTPUT_TO_MAIN;
+			}
+		}
+	}
+}
