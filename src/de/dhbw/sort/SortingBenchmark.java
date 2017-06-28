@@ -2,13 +2,19 @@ package de.dhbw.sort;
 
 import java.util.ArrayList;
 
-import de.dhbw.sort.algorithms.*;
+import de.dhbw.sort.algorithms.BubbleSort;
+import de.dhbw.sort.algorithms.CocktailShaker;
+import de.dhbw.sort.algorithms.HeapSort;
+import de.dhbw.sort.algorithms.InsertionSort;
+import de.dhbw.sort.algorithms.MergeSort;
+import de.dhbw.sort.algorithms.QuickSort;
+import de.dhbw.sort.algorithms.SelectionSort;
+import de.dhbw.sort.algorithms.SortingAlgorithm;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
+import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 //import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 import de.dhbw.sort.util.Statistics;
-import de.dhbw.sort.visualize.*;
-import processing.core.PGraphics;
 import de.dhbw.sort.visualize.Visualizer;
 import processing.core.PApplet;
 
@@ -78,6 +84,9 @@ public class SortingBenchmark {
 
         AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6),values);
         sorters.add(new QuickSort(quickHelper));
+        
+        AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7),values);
+        sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper)mergeHelper));
 
         for (SortingAlgorithm s : sorters)
             {

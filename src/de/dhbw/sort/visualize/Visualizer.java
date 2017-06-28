@@ -68,7 +68,7 @@ public class Visualizer extends PApplet {
     public void setup() {
         //Momentan w�rde ich das vergr��ern des Hauptfensters verbieten
         //surface.setResizable(true);
-        frameRate(1);
+        frameRate(40);
         initScreens();
     }
 
@@ -94,6 +94,7 @@ public class Visualizer extends PApplet {
 
                 screenValid[fullScreen] = false;
                 fullScreen = -1;
+                background(0);
             }
     }
 
