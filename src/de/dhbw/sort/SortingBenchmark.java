@@ -81,8 +81,8 @@ public class SortingBenchmark {
         AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6), values);
         sorters.add(new QuickSort(quickHelper));
 
-        AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
-        sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper) mergeHelper));
+//        AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
+//        sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper) mergeHelper));
 
         for (SortingAlgorithm s : sorters) {
             s.start();

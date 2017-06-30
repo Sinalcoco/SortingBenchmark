@@ -25,11 +25,14 @@ public abstract class AbstractGraphics {
 
     protected int borderColor = 0xFFcc9350;
 
-    public AbstractGraphics(PGraphics graphicsFullscreen, PGraphics graphics) {
+    public AbstractGraphics(PGraphics graphics, PGraphics graphicsFullscreen) {
         this.graphicsFullscreen = graphicsFullscreen;
         this.graphics = graphics;
         this.hScaling = graphicsFullscreen.height / graphics.height;
         this.vScaling = graphicsFullscreen.width / graphics.width;
+    }
+
+    protected AbstractGraphics() {
     }
 
     @Deprecated
@@ -46,7 +49,6 @@ public abstract class AbstractGraphics {
     }
 
 
-
     public void endDraw() {
         this.graphics.endDraw();
         this.graphicsFullscreen.endDraw();
@@ -54,11 +56,36 @@ public abstract class AbstractGraphics {
     }
 
 
+    public void drawBackground(int r, int g, int b) {
+        lock.lock();
+        try {
+            startDraw();
+            this.graphics.background(borderColor);
+            this.graphicsFullscreen.background(borderColor);
+            this.graphics.fill(r, b, g);
+            this.graphicsFullscreen.fill(r, b, g);
+            this.graphics.rect(borderWidth, borderHeight, this.getWidth(), this.getHeight());
+            this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
+                    this.getHeight() * vScaling);
 
-    public abstract void drawBackground(int r, int g, int b);
+            endDraw();
+        } finally {
+            lock.unlock();
+        }
+    }
 
-    public abstract void fill(int r, int g, int b);
+    public void fill(int r, int g, int b) {
+        lock.lock();
+        try {
+            startDraw();
+            this.graphics.fill(r, g, b);
+            this.graphicsFullscreen.fill(r, g, b);
 
+            endDraw();
+        } finally {
+            lock.unlock();
+        }
+    }
     public PImage getGraphics(boolean fullscreen) {
         lock.lock();
         try {
@@ -99,5 +126,22 @@ public abstract class AbstractGraphics {
 
     public void setBorderColor(int borderColor) {
         this.borderColor = borderColor;
+    }
+
+    public int[] getNextFrame(boolean fullscreen) {
+        if (fullscreen) {
+            return this.framesFullscreen.poll();
+        } else {
+            return this.frames.poll();
+        }
+
+    }
+
+    public Object peek(boolean fullscreen){
+        if (fullscreen) {
+            return this.framesFullscreen.peek();
+        } else {
+            return this.frames.peek();
+        }
     }
 }

@@ -19,7 +19,7 @@ public class Visualizer extends PApplet {
     private int fWidth;
     private int fHeight;
     private boolean[] screenValid;
-    private Graphics[] screens;
+    private AbstractGraphics[] screens;
     private PImage display;
     private PImage displayFullscreen;
 
@@ -33,35 +33,25 @@ public class Visualizer extends PApplet {
         this.fHeight = height / columnCount;
 
 
-        screens = new Graphics[rowCount * columnCount];
+        screens = new AbstractGraphics[rowCount * columnCount];
         screenValid = new boolean[screens.length];
 
-        screens = new Graphics[rowCount * columnCount];
 
 
     }
-
-    public Graphics getScreen(int index) {
-        screenValid[index] = true;
-        return screens[index];
-    }
-
-//    public Graphics getNextScreen(){
-//
-//    }
 
     public void initScreens() {
 
 
         for (int i = 0; i < screens.length; i++) {
-            initScreen(i);
+            screens[i] = new DummyGraphics(this.createGraphics(fWidth, fHeight), this.createGraphics(width, height));
         }
     }
 
     private void initScreen(int theIndex) {
 
 
-        screens[theIndex] = new Graphics(createGraphics(fWidth, fHeight), this.createGraphics(width, height));
+        screens[theIndex] = new Graphics(this.createGraphics(fWidth, fHeight), this.createGraphics(width, height));
     }
 
     public void setup() {
@@ -104,6 +94,7 @@ public class Visualizer extends PApplet {
             background(0);
         }
     }
+
     public void draw() {
 //        System.out.println(this.frameRate);
         // Wenn keines im fullScreen Modus ist zeichne einfach alle normal
@@ -113,13 +104,13 @@ public class Visualizer extends PApplet {
             {
 
                 try {
-                    if (screens[i].frames.peek() != null) {
+                    if (screens[i].peek(false) != null) {
                         display.loadPixels();
-                        display.pixels = screens[i].frames.poll();
+                        display.pixels =  screens[i].getNextFrame(false);
                         display.updatePixels();
                         image(display, (i % rowCount) * (fWidth),
                                 (i / rowCount) * (fHeight));
-                        screens[i].framesFullscreen.poll();
+                        screens[i].getNextFrame(true);
                     }
 
                 } catch (Exception e) {
@@ -128,20 +119,20 @@ public class Visualizer extends PApplet {
             }
         } else {
             try {
-                if (screens[fullScreen].framesFullscreen.peek() != null) {
+                if (screens[fullScreen].peek(true) != null) {
 
                     displayFullscreen.loadPixels();
-                    displayFullscreen.pixels = screens[fullScreen].framesFullscreen.poll();
+                    displayFullscreen.pixels = screens[fullScreen].getNextFrame(true);
                     displayFullscreen.updatePixels();
                     image(displayFullscreen, 0, 0);
-                    screens[fullScreen].framesFullscreen.poll();
+//                    screens[fullScreen].framesFullscreen.poll();
 
                 }
 
                 image(displayFullscreen, 0, 0);
                 for (int i = 0; i < screens.length; i++) {
-                    screens[i].frames.poll();
-                    screens[i].framesFullscreen.poll();
+                    screens[i].getNextFrame(false);
+                    screens[i].getNextFrame(true);
 
                 }
             } catch (Exception e) {
@@ -156,7 +147,9 @@ public class Visualizer extends PApplet {
         return screens.length;
     }
 
-    public boolean isValid(int i) {
-        return screenValid[i];
+
+    public Graphics getScreen(int index) {
+        initScreen(index);
+        return (Graphics) screens[index];
     }
 }

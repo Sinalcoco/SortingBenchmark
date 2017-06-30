@@ -15,7 +15,7 @@ import processing.core.PImage;
 public class Graphics extends AbstractGraphics {
 
     public Graphics(PGraphics graphics, PGraphics graphicsFullscreen) {
-        super(graphicsFullscreen, graphics);
+        super(graphics, graphicsFullscreen);
 
 
     }
@@ -60,37 +60,37 @@ public class Graphics extends AbstractGraphics {
 
     }
 
-    @Override
-    public void drawBackground(int r, int g, int b) {
-        lock.lock();
-        try {
-            startDraw();
-            this.graphics.background(borderColor);
-            this.graphicsFullscreen.background(borderColor);
-            this.graphics.fill(r, b, g);
-            this.graphicsFullscreen.fill(r, b, g);
-            this.graphics.rect(borderWidth, borderHeight, this.getWidth(), this.getHeight());
-            this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
-                    this.getHeight() * vScaling);
+//    @Override
+//    public void drawBackground(int r, int g, int b) {
+//        lock.lock();
+//        try {
+//            startDraw();
+//            this.graphics.background(borderColor);
+//            this.graphicsFullscreen.background(borderColor);
+//            this.graphics.fill(r, b, g);
+//            this.graphicsFullscreen.fill(r, b, g);
+//            this.graphics.rect(borderWidth, borderHeight, this.getWidth(), this.getHeight());
+//            this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
+//                    this.getHeight() * vScaling);
+//
+//            endDraw();
+//        } finally {
+//            lock.unlock();
+//        }
+//    }
 
-            endDraw();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    public void fill(int r, int g, int b) {
-        lock.lock();
-        try {
-            startDraw();
-            this.graphics.fill(r, g, b);
-            this.graphicsFullscreen.fill(r, g, b);
-
-            endDraw();
-        } finally {
-            lock.unlock();
-        }
-    }
+//    public void fill(int r, int g, int b) {
+//        lock.lock();
+//        try {
+//            startDraw();
+//            this.graphics.fill(r, g, b);
+//            this.graphicsFullscreen.fill(r, g, b);
+//
+//            endDraw();
+//        } finally {
+//            lock.unlock();
+//        }
+//    }
 
 
     @Override
