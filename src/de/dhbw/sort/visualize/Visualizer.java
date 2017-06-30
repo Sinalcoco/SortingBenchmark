@@ -1,9 +1,6 @@
 package de.dhbw.sort.visualize;
 
-import de.dhbw.sort.SortingBenchmark;
-import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import processing.core.PApplet;
-import processing.core.PGraphics;
 import processing.core.PImage;
 
 /**
@@ -91,7 +88,7 @@ public class Visualizer extends PApplet {
 
             screenValid[fullScreen] = false;
             fullScreen = -1;
-            background(0);
+//            background(0);
         }
     }
 

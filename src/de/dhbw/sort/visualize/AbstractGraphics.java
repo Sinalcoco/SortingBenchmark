@@ -73,6 +73,24 @@ public abstract class AbstractGraphics {
             lock.unlock();
         }
     }
+    
+    public void drawBackground(int rgb) {
+        lock.lock();
+        try {
+            startDraw();
+            this.graphics.background(borderColor);
+            this.graphicsFullscreen.background(borderColor);
+            this.graphics.fill(rgb);
+            this.graphicsFullscreen.fill(rgb);
+            this.graphics.rect(borderWidth, borderHeight, this.getWidth(), this.getHeight());
+            this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
+                    this.getHeight() * vScaling);
+
+            endDraw();
+        } finally {
+            lock.unlock();
+        }
+    }
 
     public void fill(int r, int g, int b) {
         lock.lock();
