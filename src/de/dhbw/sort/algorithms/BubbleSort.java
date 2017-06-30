@@ -8,7 +8,7 @@ public class BubbleSort extends SortingAlgorithm
   public BubbleSort(AbstractAlgorithmHelper theHelper)
   {
     helper = theHelper;
-    helper.setName("de.dhbw.sort.algorithms.BubbleSort");
+    helper.setAlgorithmName("BubbleSort");
   }
   
   public void initialize()

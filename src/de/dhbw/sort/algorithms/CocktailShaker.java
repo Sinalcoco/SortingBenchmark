@@ -10,7 +10,7 @@ public class CocktailShaker extends SortingAlgorithm //<>// //<>// //<>//
   public CocktailShaker(AbstractAlgorithmHelper theHelper)
   {
     helper = theHelper;
-    helper.setName("ShakerSort");
+    helper.setAlgorithmName("ShakerSort");
   }
 
   public void initialize()

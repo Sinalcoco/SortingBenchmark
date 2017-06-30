@@ -11,7 +11,7 @@ public class MergeSort extends SortingAlgorithm
   {
     helper = theHelper;
     super.helper = theHelper;
-    helper.setName("de.dhbw.sort.algorithms.MergeSort");
+    helper.setAlgorithmName("MergeSort");
   }
 
   public void initialize()

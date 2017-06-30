@@ -11,7 +11,7 @@ public class SelectionSort extends SortingAlgorithm
   public SelectionSort(AbstractAlgorithmHelper theHelper)
   {
     helper = theHelper;
-    helper.setName("de.dhbw.sort.algorithms.SelectionSort");
+    helper.setAlgorithmName("SelectionSort");
   }
 
   public void initialize()

@@ -21,7 +21,7 @@ public class Graphics {
     private boolean finished;
     private float borderWidth = 10;
     private float borderHeight = 10;
-    private int borderColor = 0xFFFF00;
+    private int borderColor = 0xFFcc9350;
     public ReentrantLock lock = new ReentrantLock();
 
     public LinkedBlockingQueue<int[]> frames = new LinkedBlockingQueue<>(100);

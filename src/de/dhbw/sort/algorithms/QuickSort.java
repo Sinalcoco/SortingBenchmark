@@ -6,7 +6,7 @@ public class QuickSort extends SortingAlgorithm {
 
 	public QuickSort(AbstractAlgorithmHelper theHelper) {
 		helper = theHelper;
-		helper.setName("de.dhbw.sort.algorithms.QuickSort");
+		helper.setAlgorithmName("QuickSort");
 	}
 
 	public void initialize() {

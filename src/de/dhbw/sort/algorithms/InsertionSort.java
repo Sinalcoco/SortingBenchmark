@@ -9,7 +9,7 @@ public class InsertionSort extends SortingAlgorithm
   public InsertionSort(AbstractAlgorithmHelper theHelper)
   {
     helper = theHelper;
-    helper.setName("de.dhbw.sort.algorithms.InsertionSort");
+    helper.setAlgorithmName("InsertionSort");
   }
 
   public void initialize()

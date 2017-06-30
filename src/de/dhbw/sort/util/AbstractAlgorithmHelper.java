@@ -9,7 +9,7 @@ import de.dhbw.sort.visualize.Graphics;
 import processing.core.PApplet;
 
 
-public abstract class AbstractAlgorithmHelper {
+public abstract class AbstractAlgorithmHelper extends Thread{
     protected int[] values;
     protected int[] graphicsValues = values;
 
@@ -40,7 +40,14 @@ public abstract class AbstractAlgorithmHelper {
         this.screen = screen;
     }
 
-    ;
+    public void run(){
+        long l ;
+        while (true){
+//            l = System.currentTimeMillis();
+            this.nextFrame();
+//            System.out.println(System.currentTimeMillis()-l);
+        }
+    }
 
     public void setPGrafics(Graphics grafics) {
         this.grafics = grafics;
@@ -138,7 +145,7 @@ public abstract class AbstractAlgorithmHelper {
         notify();
     }
 
-    public void setName(String theName) {
+    public void setAlgorithmName(String theName) {
         algorithmName = theName;
     }
 
@@ -153,7 +160,7 @@ public abstract class AbstractAlgorithmHelper {
         return moves;
     }
 
-    public String getName() {
+    public String getAlgorithemName() {
         return algorithmName;
     }
 

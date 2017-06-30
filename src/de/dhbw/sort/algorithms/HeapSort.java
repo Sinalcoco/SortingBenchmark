@@ -7,7 +7,7 @@ public class HeapSort extends SortingAlgorithm {
 
 	public HeapSort(AbstractAlgorithmHelper theHelper) {
 		helper = theHelper;
-		helper.setName("de.dhbw.sort.algorithms.HeapSort");
+		helper.setAlgorithmName("HeapSort");
 	}
 
 	public void initialize() {

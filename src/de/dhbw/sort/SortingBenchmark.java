@@ -23,7 +23,7 @@ public class SortingBenchmark {
 
     private static Statistics stats;
     private static ArrayList<SortingAlgorithm> sorters;
-    private static final int AMOUNT_OF_VALUES = 100;
+    private static final int AMOUNT_OF_VALUES = 10;
     private static final boolean ascending = false;
     private static final boolean frameByFrame = false;
     private static boolean advance = true;
@@ -33,16 +33,14 @@ public class SortingBenchmark {
 
         visualizer = new Visualizer(1200, 600, 3, 3);
         PApplet.runSketch(new String[]{""}, visualizer);
-        try
-            {
-                // Es muss gewartet werden, bis PApplet die setup() Methode von
-                // Visualizer aufgerufen hat.
-                Thread.sleep(1000);
-            } catch (InterruptedException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        try {
+            // Es muss gewartet werden, bis PApplet die setup() Methode von
+            // Visualizer aufgerufen hat.
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         final int AMOUNT = visualizer.getGridNumber();
 
 //        final int STATS_ID = 4;
@@ -51,16 +49,14 @@ public class SortingBenchmark {
 
 
         int[] values;
-        if (ascending)
-            {
-                values = randomIntArray(run);
-            } else
-            {
-                run = AMOUNT_OF_VALUES;
-                values = randomIntArray(run);
-                // values = sortedIntArray(run);
-                // values = invertedIntArray(run);
-            }
+        if (ascending) {
+            values = randomIntArray(run);
+        } else {
+            run = AMOUNT_OF_VALUES;
+            values = randomIntArray(run);
+            // values = sortedIntArray(run);
+            // values = invertedIntArray(run);
+        }
 
         // stats = new Statistics();
 
@@ -76,44 +72,44 @@ public class SortingBenchmark {
         sorters.add(new CocktailShaker(cocktailHelper));
 
 
-        AbstractAlgorithmHelper selektionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(3),values);
+        AbstractAlgorithmHelper selektionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(3), values);
         sorters.add(new SelectionSort(selektionHelper));
 
-        AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(5),values);
+        AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(5), values);
         sorters.add(new HeapSort(heapHelper));
 
-        AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6),values);
+        AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6), values);
         sorters.add(new QuickSort(quickHelper));
 
-        AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7),values);
-        sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper)mergeHelper));
+        AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
+        sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper) mergeHelper));
 
-        for (SortingAlgorithm s : sorters)
-            {
-                s.start();
-                s.helper().nextFrame();
-            }
+        for (SortingAlgorithm s : sorters) {
+            s.start();
+                s.helper().start();
+        }
 
-                while (true)
-                    {
-                                for (SortingAlgorithm s : sorters)
-//                        for (int i = 0; i < 2; i++)
-                        {
+//        long l;
+//        while (true) {
+//            l = System.currentTimeMillis();
+//            for (SortingAlgorithm s : sorters){
+////            for (int i = 0; i < 1; i++) {
+//
+//
+////            sorters.get(i).helper().nextFrame();
+//            s.helper().nextFrame();
+//
+//
+//            }
+//            System.out.println(System.currentTimeMillis() - l);
+//        }
+
+}
 
 
-
-                                        s.helper().nextFrame();
-
-
-                                    }
-                    }
-
-    }
-
-
-    public enum State {
-        WAIT, GO
-    }
+public enum State {
+    WAIT, GO
+}
 
     public void setup() {
 
@@ -127,33 +123,29 @@ public class SortingBenchmark {
 
     public int[] invertedIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
-        for (int i = 0; i < array.length; i++)
-            {
-                array[i] = array.length - i;
-            }
+        for (int i = 0; i < array.length; i++) {
+            array[i] = array.length - i;
+        }
         return array;
     }
 
     public int[] sortedIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
-        for (int i = 1; i <= array.length; i++)
-            {
-                array[i - 1] = i;
-            }
+        for (int i = 1; i <= array.length; i++) {
+            array[i - 1] = i;
+        }
         return array;
     }
 
     public static int[] randomIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
-        for (int i = 1; i <= array.length; i++)
-            {
-                int index = (int) (Math.random() * array.length);
-                while (array[index] != 0)
-                    {
-                        index = (int) (Math.random() * array.length);
-                    }
-                array[index] = i;
+        for (int i = 1; i <= array.length; i++) {
+            int index = (int) (Math.random() * array.length);
+            while (array[index] != 0) {
+                index = (int) (Math.random() * array.length);
             }
+            array[index] = i;
+        }
 
         return array;
     }
