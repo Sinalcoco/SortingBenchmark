@@ -12,8 +12,8 @@ import processing.core.PImage;
 public class Visualizer extends PApplet {
     int fullScreen = -1;
 
-    private int width = 200;
-    private int height = 600;
+    private int width = 600;
+    private int height = 1200;
     private int rowCount = 3;
     private int columnCount = 3;
     private int fWidth;
@@ -23,14 +23,14 @@ public class Visualizer extends PApplet {
     private PImage display;
     private PImage displayFullscreen;
 
-    public Visualizer(int width, int height, int rowCount, int columnCount) {
-        this.width = width;
-        this.height = height;
+    public Visualizer(int width, int height, double zoom, int rowCount, int columnCount) {
+        this.width = (int)(width*zoom);
+        this.height = (int)(height*zoom);
         this.rowCount = rowCount;
         this.columnCount = columnCount;
 
-        this.fWidth = width / rowCount;
-        this.fHeight = height / columnCount;
+        this.fWidth = this.width / rowCount;
+        this.fHeight = this.height / columnCount;
 
 
         screens = new AbstractGraphics[rowCount * columnCount];
@@ -64,7 +64,7 @@ public class Visualizer extends PApplet {
         displayFullscreen = createImage(width, height, PApplet.RGB);
         try {
 
-            Thread.sleep(1000);
+            Thread.sleep(10000);
             System.out.println(screens[1].frames.size());
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -96,7 +96,7 @@ public class Visualizer extends PApplet {
     }
 
     public void draw() {
-//        System.out.println(this.frameRate);
+        System.out.println(this.frameRate);
         // Wenn keines im fullScreen Modus ist zeichne einfach alle normal
         if (fullScreen == -1) {
             for (int i = 0; i < screens.length; i++)

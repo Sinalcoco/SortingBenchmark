@@ -2,19 +2,13 @@ package de.dhbw.sort;
 
 import java.util.ArrayList;
 
-import de.dhbw.sort.algorithms.BubbleSort;
-import de.dhbw.sort.algorithms.CocktailShaker;
-import de.dhbw.sort.algorithms.HeapSort;
-import de.dhbw.sort.algorithms.InsertionSort;
-import de.dhbw.sort.algorithms.MergeSort;
-import de.dhbw.sort.algorithms.QuickSort;
-import de.dhbw.sort.algorithms.SelectionSort;
-import de.dhbw.sort.algorithms.SortingAlgorithm;
+import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
 import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 //import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 import de.dhbw.sort.util.Statistics;
+import de.dhbw.sort.visualize.AbstractGraphics;
 import de.dhbw.sort.visualize.Visualizer;
 import processing.core.PApplet;
 
@@ -23,7 +17,7 @@ public class SortingBenchmark {
 
     private static Statistics stats;
     private static ArrayList<SortingAlgorithm> sorters;
-    private static final int AMOUNT_OF_VALUES = 10;
+    private static final int AMOUNT_OF_VALUES = 20;
     private static final boolean ascending = false;
     private static final boolean frameByFrame = false;
     private static boolean advance = true;
@@ -31,7 +25,7 @@ public class SortingBenchmark {
 
     public static void main(String[] args) {
 
-        visualizer = new Visualizer(1200, 600, 3, 3);
+        visualizer = new Visualizer(1200, 600,1.5, 3, 3);
         PApplet.runSketch(new String[]{""}, visualizer);
         try {
             // Es muss gewartet werden, bis PApplet die setup() Methode von
@@ -61,7 +55,8 @@ public class SortingBenchmark {
         // stats = new Statistics();
 
         sorters = new ArrayList<SortingAlgorithm>();
-        AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(0), values);
+
+                AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(0), values);
         sorters.add(new BubbleSort(bubbleHelper));
 
         AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(1), values);
@@ -78,31 +73,36 @@ public class SortingBenchmark {
         AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(5), values);
         sorters.add(new HeapSort(heapHelper));
 
+
+
         AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6), values);
         sorters.add(new QuickSort(quickHelper));
 
-//        AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
-//        sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper) mergeHelper));
+////        AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
+////        sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper) mergeHelper));
+
+        AbstractAlgorithmHelper CombHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(8),values);
+        sorters.add(new CombSort(CombHelper));
 
         for (SortingAlgorithm s : sorters) {
             s.start();
-                s.helper().start();
+//                s.helper().start();
         }
 
 //        long l;
-//        while (true) {
+        while (true) {
 //            l = System.currentTimeMillis();
-//            for (SortingAlgorithm s : sorters){
-////            for (int i = 0; i < 1; i++) {
-//
-//
-////            sorters.get(i).helper().nextFrame();
-//            s.helper().nextFrame();
-//
-//
-//            }
+            for (SortingAlgorithm s : sorters){
+//            for (int i = 0; i < 1; i++) {
+
+
+//            sorters.get(i).helper().nextFrame();
+            s.helper().nextFrame();
+
+
+            }
 //            System.out.println(System.currentTimeMillis() - l);
-//        }
+        }
 
 }
 

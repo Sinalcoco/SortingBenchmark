@@ -25,5 +25,10 @@ public class BubbleSort extends SortingAlgorithm
           helper.swap(i, i+1);
       }
     }
+    try {
+      this.wait();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 }
