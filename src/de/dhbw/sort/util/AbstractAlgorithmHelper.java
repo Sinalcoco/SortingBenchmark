@@ -1,10 +1,8 @@
 package de.dhbw.sort.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import de.dhbw.sort.SortingBenchmark;
 import de.dhbw.sort.visualize.Graphics;
 import processing.core.PApplet;
 
@@ -14,6 +12,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
     protected int[] graphicsValues = values;
 
     protected int comparisons;
+    protected int swaps;
     protected int moves;
 
     protected ArrayList<AlgorithmCommand> commands;
@@ -24,7 +23,6 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 
     protected int viewX, viewY, viewWidth, viewHeight;
 
-    protected SortingBenchmark.State state;
 
     protected Graphics screen;
     protected Graphics grafics;
@@ -34,6 +32,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 
     protected LinkedBlockingQueue<Moves> mov = new LinkedBlockingQueue();
     protected LinkedBlockingQueue<Integer> indexes = new LinkedBlockingQueue();
+    private int liableHeight = 40;
 
 
     protected AbstractAlgorithmHelper(Graphics screen) {
@@ -72,7 +71,6 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         moves = 0;
         commands = new ArrayList<AlgorithmCommand>();
         ready = true;
-        state = SortingBenchmark.State.WAIT;
         int big = 0;
         for (int a : values)
             {
@@ -83,7 +81,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
             }
 
         width = screen.getWidth() / values.length;
-        height = (screen.getHeight()-30) / big;
+        height = (screen.getHeight()- liableHeight) / big;
 
     }
 
@@ -121,6 +119,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 
     public synchronized void swap(int firstIndex, int secondIndex) {
         moves += 3;
+        swaps++;
         mov.add(Moves.SWAP);
         indexes.add(firstIndex);
         indexes.add(secondIndex);
@@ -140,10 +139,6 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         return ready;
     }
 
-    public synchronized void setState(SortingBenchmark.State theState) {
-        state = theState;
-        notify();
-    }
 
     public void setAlgorithmName(String theName) {
         algorithmName = theName;

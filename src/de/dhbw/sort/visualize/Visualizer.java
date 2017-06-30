@@ -62,13 +62,13 @@ public class Visualizer extends PApplet {
 
         display = createImage(fWidth, fHeight, PApplet.RGB);
         displayFullscreen = createImage(width, height, PApplet.RGB);
-        try {
-
-            Thread.sleep(10000);
-            System.out.println(screens[1].frames.size());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//
+//            Thread.sleep(10000);
+//            System.out.println(screens[1].frames.size());
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void settings() {

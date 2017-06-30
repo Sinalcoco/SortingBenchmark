@@ -9,6 +9,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     private Graphics valuesView;
     private int grafMoves = 0;
     private int gravComp = 0;
+    private int gravSwaps = 0;
 
 
     public InPlaceAlgorithmHelper(Graphics screen, int[] theArray) {
@@ -71,6 +72,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                     break;
                 case SWAP:
                     grafMoves += 3;
+                    gravSwaps++;
                     firstIndex = indexes.poll();
                     secondIndex = indexes.poll();
 
@@ -107,11 +109,12 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     public void drawInfo() {
         screen.fill(0,0,0);
-        screen.drawRect(0,0,screen.getWidth(),30);
+        screen.drawRect(0,0,screen.getWidth(),40);
         screen.fill(255, 255, 255);
         screen.text(algorithmName, 0, 10);
         screen.text("Comparisons: " + gravComp, 0, 20);
-        screen.text("Moves: " + grafMoves, 0, 30);
+        screen.text("Swaps: " + gravSwaps, 0, 30);
+        screen.text("Moves: " + grafMoves, 0, 40);
 
     }
 

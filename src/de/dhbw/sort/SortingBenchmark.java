@@ -47,9 +47,9 @@ public class SortingBenchmark {
             values = randomIntArray(run);
         } else {
             run = AMOUNT_OF_VALUES;
-            values = randomIntArray(run);
-            // values = sortedIntArray(run);
-            // values = invertedIntArray(run);
+//            values = randomIntArray(run);
+//             values = sortedIntArray(run);
+             values = invertedIntArray(run);
         }
 
         // stats = new Statistics();
@@ -107,21 +107,8 @@ public class SortingBenchmark {
 }
 
 
-public enum State {
-    WAIT, GO
-}
 
-    public void setup() {
-
-
-    }
-
-    public void keyPressed() {
-        advance = true;
-    }
-
-
-    public int[] invertedIntArray(int amountOfInts) {
+    public static int[] invertedIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
         for (int i = 0; i < array.length; i++) {
             array[i] = array.length - i;
@@ -129,7 +116,7 @@ public enum State {
         return array;
     }
 
-    public int[] sortedIntArray(int amountOfInts) {
+    public static int[] sortedIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
         for (int i = 1; i <= array.length; i++) {
             array[i - 1] = i;
