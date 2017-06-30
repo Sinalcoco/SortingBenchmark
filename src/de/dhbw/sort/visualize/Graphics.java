@@ -19,9 +19,9 @@ public class Graphics {
     private float vScaling;
     private float hScaling;
     private boolean finished;
-    private int borderWidth = 10;
-    private int borderHeight = 10;
-    private int borderColor = 0xFF00FFFF;
+    private float borderWidth = 10;
+    private float borderHeight = 10;
+    private int borderColor = 0xFFFF00;
     public ReentrantLock lock = new ReentrantLock();
 
     public LinkedBlockingQueue<int[]> frames = new LinkedBlockingQueue<>(100);
@@ -51,7 +51,7 @@ public class Graphics {
         }
     }
 
-    public void drawRect(int x, int y, int width, int height) {
+    public void drawRect(float x, float y, float width, float height) {
         lock.lock();
         try {
             x = x + borderWidth;
@@ -81,7 +81,7 @@ public class Graphics {
 
     }
 
-    public void drawEllipse(int x, int y, int width, int height) {
+    public void drawEllipse(float x, float y, float width, float height) {
         lock.lock();
         try {
             x = x + borderWidth;
@@ -149,7 +149,7 @@ public class Graphics {
         return this.getGraphics(false);
     }
 
-    public void text(String text, int x, int y) {
+    public void text(String text, float x, float y) {
         lock.lock();
         try {
             x = x + borderWidth;
@@ -165,12 +165,12 @@ public class Graphics {
 
     }
 
-    public int getWidth() {
-        return this.graphics.width - 2 * borderWidth;
+    public float getWidth() {
+        return (this.graphics.width - 2 * borderWidth);
     }
 
-    public int getHeight() {
-        return this.graphics.height - 2 * borderHeight;
+    public float getHeight() {
+        return (this.graphics.height - 2 * borderHeight);
     }
 
     public void setHelper(AbstractAlgorithmHelper abstractAlgorithmHelper) {
@@ -182,14 +182,14 @@ public class Graphics {
         try {
             this.graphics.loadPixels();
 
-            this.frames.put(Arrays.copyOf(this.graphics.pixels,this.graphics.pixels.length));
+            this.frames.put(Arrays.copyOf(this.graphics.pixels, this.graphics.pixels.length));
         } catch (Exception e) {
             e.printStackTrace();
 
         }
         try {
             this.graphicsFullscreen.loadPixels();
-            this.framesFullscreen.put(Arrays.copyOf(this.graphicsFullscreen.pixels,this.graphicsFullscreen.pixels.length));
+            this.framesFullscreen.put(Arrays.copyOf(this.graphicsFullscreen.pixels, this.graphicsFullscreen.pixels.length));
         } catch (Exception e) {
             e.printStackTrace();
         }

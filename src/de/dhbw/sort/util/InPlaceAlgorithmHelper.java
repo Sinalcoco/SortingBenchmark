@@ -14,6 +14,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     public InPlaceAlgorithmHelper(Graphics screen, int[] theArray) {
         super(screen, theArray);
         screen.setHelper(this);
+        this.drawValues();
     }
 
     @Override
@@ -23,19 +24,33 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         for (int i = 0; i < graphicsValues.length; i++) {
 
             screen.fill(255, 255, 255);
-            screen.drawRect(i * width, (int) (screen.getHeight() - (height * graphicsValues[i])), width,
-                    (int) (height * graphicsValues[i]));
+            screen.drawRect(i * width, screen.getHeight() - (height * graphicsValues[i]), width,
+                    (height * graphicsValues[i]));
 
 
         }
     }
 
+    private void blackout(int index) {
+        screen.fill(0, 0, 0);
+        screen.drawRect(index*width,0,width,screen.getHeight());
+    }
 
+    private void reDraw(int index){
+        blackout(index);
+        screen.fill(255, 255, 255);
+        screen.drawRect(index * width,
+             (screen.getHeight() - (height * graphicsValues[index])), width,
+               (height * graphicsValues[index]));
+
+    }
     public void nextFrame() {
-        drawValues();
-        drawInfo();
-        int firstIndex;
-        int secondIndex;
+
+
+
+
+        int firstIndex =0;
+        int secondIndex=0;
         if (mov.peek() != null) {
             switch (mov.poll()) {
 
@@ -44,26 +59,32 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                     firstIndex = indexes.poll();
                     secondIndex = indexes.poll();
 
+                    blackout(firstIndex);
+                    blackout(secondIndex);
+
                     screen.fill(0, 255, 0);
                     screen.drawRect(firstIndex * width,
-                            (int) (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
-                            (int) (height * graphicsValues[firstIndex]));
+                             (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                             (height * graphicsValues[firstIndex]));
                     screen.drawRect(secondIndex * width,
-                            (int) (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
-                            (int) (height * graphicsValues[secondIndex]));
+                             (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                             (height * graphicsValues[secondIndex]));
                     break;
                 case SWAP:
                     grafMoves += 3;
                     firstIndex = indexes.poll();
                     secondIndex = indexes.poll();
 
+                    blackout(firstIndex);
+                    blackout(secondIndex);
+
                     screen.fill(255, 0, 0);
                     screen.drawRect(firstIndex * width,
-                            (int) (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
-                            (int) (height * graphicsValues[firstIndex]));
+                             (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                             (height * graphicsValues[firstIndex]));
                     screen.drawRect(secondIndex * width,
-                            (int) (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
-                            (int) (height * graphicsValues[secondIndex]));
+                             (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                             (height * graphicsValues[secondIndex]));
 
                     int temp = graphicsValues[firstIndex];
                     graphicsValues[firstIndex] = graphicsValues[secondIndex];
@@ -78,11 +99,16 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
             }
 
         }
+        drawInfo();
         this.screen.addFrame();
+        reDraw(firstIndex);
+        reDraw(secondIndex);
 
     }
 
     public void drawInfo() {
+        screen.fill(0,0,0);
+        screen.drawRect(0,0,screen.getWidth(),30);
         screen.fill(255, 255, 255);
         screen.text(algorithmName, 0, 10);
         screen.text("Comparisons: " + gravComp, 0, 20);

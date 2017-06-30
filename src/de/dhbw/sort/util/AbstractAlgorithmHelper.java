@@ -29,8 +29,8 @@ public abstract class AbstractAlgorithmHelper {
     protected Graphics screen;
     protected Graphics grafics;
 
-    protected double height;
-    protected int width;
+    protected float height;
+    protected float width;
 
     protected LinkedBlockingQueue<Moves> mov = new LinkedBlockingQueue();
     protected LinkedBlockingQueue<Integer> indexes = new LinkedBlockingQueue();
@@ -76,7 +76,8 @@ public abstract class AbstractAlgorithmHelper {
             }
 
         width = screen.getWidth() / values.length;
-        height = screen.getHeight() / big;
+        height = (screen.getHeight()-30) / big;
+
     }
 
 

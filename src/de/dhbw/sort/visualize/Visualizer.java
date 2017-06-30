@@ -74,7 +74,7 @@ public class Visualizer extends PApplet {
         displayFullscreen = createImage(width, height, PApplet.RGB);
         try {
 
-            Thread.sleep(10000);
+            Thread.sleep(1000);
             System.out.println(screens[1].frames.size());
         } catch (InterruptedException e) {
             e.printStackTrace();
