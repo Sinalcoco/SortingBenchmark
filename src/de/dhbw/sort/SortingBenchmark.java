@@ -23,7 +23,7 @@ public class SortingBenchmark {
 
     private static Statistics stats;
     private static ArrayList<SortingAlgorithm> sorters;
-    private static final int AMOUNT_OF_VALUES = 10;
+    private static final int AMOUNT_OF_VALUES = 100;
     private static final boolean ascending = false;
     private static final boolean frameByFrame = false;
     private static boolean advance = true;
@@ -45,8 +45,8 @@ public class SortingBenchmark {
             }
         final int AMOUNT = visualizer.getGridNumber();
 
-        final int STATS_ID = 4;
-        Statistics stats = new Statistics(visualizer.getScreen(STATS_ID));
+//        final int STATS_ID = 4;
+//        Statistics stats = new Statistics(visualizer.getScreen(STATS_ID));
         int counter = 0;
 
 
@@ -84,7 +84,7 @@ public class SortingBenchmark {
 
         AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6),values);
         sorters.add(new QuickSort(quickHelper));
-        
+
         AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7),values);
         sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper)mergeHelper));
 
@@ -94,15 +94,19 @@ public class SortingBenchmark {
                 s.helper().nextFrame();
             }
 
-        //        while (true)
-        //            {
-        //                        for (SortingAlgorithm s : sorters)
-        //                            {
-        //                                s.helper().nextFrame();
-        //
-        //
-        //                            }
-        //            }
+                while (true)
+                    {
+                                for (SortingAlgorithm s : sorters)
+//                        for (int i = 0; i < 2; i++)
+                        {
+
+
+
+                                        s.helper().nextFrame();
+
+
+                                    }
+                    }
 
     }
 

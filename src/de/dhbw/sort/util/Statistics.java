@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import de.dhbw.sort.visualize.Graphics;
-import processing.core.PGraphics;
+import processing.core.*;
 
 public class Statistics {
 
@@ -52,20 +52,20 @@ public class Statistics {
 	
 	private void updateScreen()
 	{
-		int hSpacing = screen.getGraphics().width / (stats.size() + 1);
-		Integer [] keys = stats.keySet().toArray(new Integer [stats.keySet().size()]);
-		
-		screen.getGraphics().beginDraw();
-		screen.getGraphics().background(0);
-		
-		for (int i = 0; i < keys.length; i++)
-		{
-			for (Stat s : stats.get(keys[i]))
-			{
-				screen.getGraphics().ellipse(i * hSpacing + hSpacing, (screen.getGraphics().height - ((float)s.getOperations() / maxValue) * screen.getGraphics().height + 10), 10, 10);
-			}
-		}
-		screen.getGraphics().endDraw();
+//		int hSpacing = screen.getGraphics().width / (stats.size() + 1);
+//		Integer [] keys = stats.keySet().toArray(new Integer [stats.keySet().size()]);
+//
+//		screen.getGraphics().beginDraw();
+//		screen.getGraphics().background(0);
+//
+//		for (int i = 0; i < keys.length; i++)
+//		{
+//			for (Stat s : stats.get(keys[i]))
+//			{
+//				screen.getGraphics().ellipse(i * hSpacing + hSpacing, (screen.getGraphics().height - ((float)s.getOperations() / maxValue) * screen.getGraphics().height + 10), 10, 10);
+//			}
+//		}
+//		screen.getGraphics().endDraw();
 	}
 
 	public void printStatistic(int theRun) {
