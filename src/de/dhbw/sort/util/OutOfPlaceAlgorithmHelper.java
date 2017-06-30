@@ -21,7 +21,6 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 	public OutOfPlaceAlgorithmHelper(Graphics theScreen, int[] theArray) {
 		super(theScreen, theArray);
 		reset();
-		screen.setHelper(this);
 	}
 
 	public void drawValues() {

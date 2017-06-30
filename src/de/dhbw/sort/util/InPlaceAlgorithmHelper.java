@@ -13,7 +13,6 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     public InPlaceAlgorithmHelper(Graphics screen, int[] theArray) {
         super(screen, theArray);
-        screen.setHelper(this);
         this.drawValues();
     }
 

@@ -12,32 +12,15 @@ import processing.core.PImage;
 /**
  * Created by jbi on 20.06.2017.
  */
-public class Graphics {
-
-    private PGraphics graphics;
-    private PGraphics graphicsFullscreen;
-    private float vScaling;
-    private float hScaling;
-    private boolean finished;
-    private float borderWidth = 10;
-    private float borderHeight = 10;
-    private int borderColor = 0xFFcc9350;
-    public ReentrantLock lock = new ReentrantLock();
-
-    public LinkedBlockingQueue<int[]> frames = new LinkedBlockingQueue<>(100);
-    private AbstractAlgorithmHelper helper;
-    public LinkedBlockingQueue<int[]> framesFullscreen = new LinkedBlockingQueue<>(100);
+public class Graphics extends AbstractGraphics {
 
     public Graphics(PGraphics graphics, PGraphics graphicsFullscreen) {
-        this.graphics = graphics;
-        this.graphicsFullscreen = graphicsFullscreen;
-
-        hScaling = graphicsFullscreen.height / graphics.height;
-        vScaling = graphicsFullscreen.width / graphics.width;
+        super(graphicsFullscreen, graphics);
 
 
     }
 
+    @Override
     @Deprecated
     public void setGraphics(PGraphics graphics) {
 
@@ -45,12 +28,7 @@ public class Graphics {
 
     }
 
-    public void generateNextFrame() {
-        if (helper != null) {
-            this.helper.nextFrame();
-        }
-    }
-
+    @Override
     public void drawRect(float x, float y, float width, float height) {
         lock.lock();
         try {
@@ -61,26 +39,12 @@ public class Graphics {
             this.graphics.rect(x, y, width, height);
             this.graphicsFullscreen.rect(x * hScaling, y * vScaling, width * hScaling, height * vScaling);
 
-            endDraw();
         } finally {
             lock.unlock();
         }
     }
 
-    private void endDraw() {
-
-        this.graphics.endDraw();
-        this.graphicsFullscreen.endDraw();
-
-    }
-
-    private void startDraw() {
-
-        this.graphics.beginDraw();
-        this.graphicsFullscreen.beginDraw();
-
-    }
-
+    @Override
     public void drawEllipse(float x, float y, float width, float height) {
         lock.lock();
         try {
@@ -96,6 +60,7 @@ public class Graphics {
 
     }
 
+    @Override
     public void drawBackground(int r, int g, int b) {
         lock.lock();
         try {
@@ -125,30 +90,10 @@ public class Graphics {
         } finally {
             lock.unlock();
         }
-
     }
 
-    public PImage getGraphics(boolean fullscreen) {
-        lock.lock();
-        try {
-            if (fullscreen) {
-                return this.graphicsFullscreen.get();
-            } else {
-                return this.graphics.get();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
-        return null;
-    }
 
-    public PImage getGraphics() {
-
-        return this.getGraphics(false);
-    }
-
+    @Override
     public void text(String text, float x, float y) {
         lock.lock();
         try {
@@ -165,18 +110,8 @@ public class Graphics {
 
     }
 
-    public float getWidth() {
-        return (this.graphics.width - 2 * borderWidth);
-    }
 
-    public float getHeight() {
-        return (this.graphics.height - 2 * borderHeight);
-    }
-
-    public void setHelper(AbstractAlgorithmHelper abstractAlgorithmHelper) {
-        this.helper = abstractAlgorithmHelper;
-    }
-
+    @Override
     public void addFrame() {
 
         try {
