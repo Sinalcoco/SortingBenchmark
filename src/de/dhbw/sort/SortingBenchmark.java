@@ -24,7 +24,7 @@ public class SortingBenchmark {
 	private static final boolean ascending = true;
 	private static int start = 4;
 	private static int run = start;
-	private static int end = 10;
+	private static int end = 100;
 	private static final boolean FAST = true;
 	private static String [] algorithmNames = new String [9];
 
@@ -132,14 +132,17 @@ public class SortingBenchmark {
 					}
 				}
 				if (allDone) {
-					run++;
+					stats.addData("n-curve", run);
+					stats.addData("nlogn-curve", (int) (8*run*Math.log(run)));
+					stats.addData("0.5n2-curve", (int) (0.5*run*run));
+					stats.addData("n2-curve", (int) (run*run));
 					for (SortingAlgorithm s : sorters) {
 						stats.addData(s.helper().getAlgorithemName(),
 								s.helper().getMoves() + s.helper().getComparisons());
 						s.helper().setNewArray(randomIntArray(run));
 						s.reset();
 					}
-
+					run++;
 				}
 			}
 			// System.out.println(System.currentTimeMillis() - l);
