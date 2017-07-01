@@ -45,10 +45,6 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     }
     public void nextFrame() {
-
-
-
-
         int firstIndex =0;
         int secondIndex=0;
         if (mov.peek() != null) {
@@ -99,6 +95,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
             }
 
+        
         }
         drawInfo();
         this.screen.addFrame();
@@ -120,5 +117,9 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     public void setNewArray(int[] theArray) {
         initialize(screen, theArray);
+        mov.clear();
+        indexes.clear();
+        this.drawValues();
+        screen.addFrame();
     }
 }

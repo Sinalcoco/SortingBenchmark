@@ -2,6 +2,8 @@ package de.dhbw.sort;
 
 import java.util.ArrayList;
 
+import javax.sound.midi.Soundbank;
+
 import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
@@ -13,127 +15,147 @@ import de.dhbw.sort.visualize.Visualizer;
 import processing.core.PApplet;
 
 public class SortingBenchmark {
-    private static de.dhbw.sort.visualize.Visualizer visualizer;
+	private static de.dhbw.sort.visualize.Visualizer visualizer;
 
-    private static Statistics stats;
-    private static ArrayList<SortingAlgorithm> sorters;
-    private static final int AMOUNT_OF_VALUES = 20;
-    private static final boolean ascending = false;
-    private static final boolean frameByFrame = false;
-    private static boolean advance = true;
-    private static int run = 20;
+	private static Statistics stats;
+	private static ArrayList<SortingAlgorithm> sorters;
+	private static final int AMOUNT_OF_VALUES = 10;
 
-    public static void main(String[] args) {
+	private static final boolean ascending = true;
+	private static int start = 4;
+	private static int run = start;
+	private static int end = 10;
+	private static final boolean FAST = false;
 
-        visualizer = new Visualizer(1200, 600,1.5, 3, 3);
-        PApplet.runSketch(new String[]{""}, visualizer);
-        try {
-            // Es muss gewartet werden, bis PApplet die setup() Methode von
-            // Visualizer aufgerufen hat.
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        final int AMOUNT = visualizer.getGridNumber();
+	public static void main(String[] args) {
 
-//        final int STATS_ID = 4;
-//        Statistics stats = new Statistics(visualizer.getScreen(STATS_ID));
-        int counter = 0;
+		visualizer = new Visualizer(1200, 600, 1.5, 3, 3);
+		PApplet.runSketch(new String[] { "" }, visualizer);
+		try {
+			// Es muss gewartet werden, bis PApplet die setup() Methode von
+			// Visualizer aufgerufen hat.
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		final int AMOUNT = visualizer.getGridNumber();
 
+		final int STATS_ID = 4;
+		Statistics stats = new Statistics(visualizer.getScreen(STATS_ID));
+		int counter = 0;
 
-        int[] values;
-        if (ascending) {
-            values = randomIntArray(run);
-        } else {
-            run = AMOUNT_OF_VALUES;
-//            values = randomIntArray(run);
-//             values = sortedIntArray(run);
-             values = invertedIntArray(run);
-        }
+		int[] values;
+		if (ascending) {
+			values = randomIntArray(run);
+		} else {
+			run = AMOUNT_OF_VALUES;
+			// values = randomIntArray(run);
+			// values = sortedIntArray(run);
+			values = invertedIntArray(run);
+		}
 
-        // stats = new Statistics();
+		// stats = new Statistics();
 
-        sorters = new ArrayList<SortingAlgorithm>();
+		sorters = new ArrayList<SortingAlgorithm>();
 
-                AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(0), values);
-        sorters.add(new BubbleSort(bubbleHelper));
+		AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(0), values);
+		sorters.add(new BubbleSort(bubbleHelper));
 
-        AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(1), values);
-        sorters.add(new InsertionSort(insertionHelper));
+		AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(1), values);
+		sorters.add(new InsertionSort(insertionHelper));
 
+		AbstractAlgorithmHelper cocktailHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(2), values);
+		sorters.add(new CocktailShaker(cocktailHelper));
 
-        AbstractAlgorithmHelper cocktailHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(2), values);
-        sorters.add(new CocktailShaker(cocktailHelper));
+		AbstractAlgorithmHelper selektionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(3), values);
+		sorters.add(new SelectionSort(selektionHelper));
 
+		AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(5), values);
+		sorters.add(new HeapSort(heapHelper));
 
-        AbstractAlgorithmHelper selektionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(3), values);
-        sorters.add(new SelectionSort(selektionHelper));
+		AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6), values);
+		sorters.add(new QuickSort(quickHelper));
 
-        AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(5), values);
-        sorters.add(new HeapSort(heapHelper));
+		//// AbstractAlgorithmHelper mergeHelper = new
+		//// OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
+		//// sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper)
+		//// mergeHelper));
 
+		AbstractAlgorithmHelper CombHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(8), values);
+		sorters.add(new CombSort(CombHelper));
 
+		for (SortingAlgorithm s : sorters) {
+			s.start();
+			// s.helper().start();
+		}
 
-        AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6), values);
-        sorters.add(new QuickSort(quickHelper));
+		// long l;
+		boolean allDone;
+		while (true) {
+			allDone = true;
+			// l = System.currentTimeMillis();
+			for (SortingAlgorithm s : sorters) {
+				// for (int i = 0; i < 1; i++) {
 
-////        AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
-////        sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper) mergeHelper));
+				// sorters.get(i).helper().nextFrame();
+				s.helper().nextFrame();
+			}
 
-        AbstractAlgorithmHelper CombHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(8),values);
-        sorters.add(new CombSort(CombHelper));
+			if (ascending && run <= end) {
+				for (SortingAlgorithm s : sorters) {
+					if (FAST && !s.done() || !FAST && !s.helper().ready()) {
+						// When fast forwarding it only depends on the algorithm
+						// to finish
+						// When slow mode is active then the helper has to be
+						// reade i.e. all the actions have been converted to
+						// frames
+						allDone = false;
+					}
+				}
+				if (allDone) {
+					run++;
+					for (SortingAlgorithm s : sorters) {
+						stats.addData(s.helper().getAlgorithemName(),
+								s.helper().getMoves() + s.helper().getComparisons());
+						s.helper().setNewArray(randomIntArray(run));
+						s.reset();
+					}
 
-        for (SortingAlgorithm s : sorters) {
-            s.start();
-//                s.helper().start();
-        }
+				}
+			}
+			stats.updateScreen();
+			// System.out.println(System.currentTimeMillis() - l);
+		}
 
-//        long l;
-        while (true) {
-//            l = System.currentTimeMillis();
-            for (SortingAlgorithm s : sorters){
-//            for (int i = 0; i < 1; i++) {
+	}
 
+	public static int[] invertedIntArray(int amountOfInts) {
+		int[] array = new int[amountOfInts];
+		for (int i = 0; i < array.length; i++) {
+			array[i] = array.length - i;
+		}
+		return array;
+	}
 
-//            sorters.get(i).helper().nextFrame();
-            s.helper().nextFrame();
+	public static int[] sortedIntArray(int amountOfInts) {
+		int[] array = new int[amountOfInts];
+		for (int i = 1; i <= array.length; i++) {
+			array[i - 1] = i;
+		}
+		return array;
+	}
 
+	public static int[] randomIntArray(int amountOfInts) {
+		int[] array = new int[amountOfInts];
+		for (int i = 1; i <= array.length; i++) {
+			int index = (int) (Math.random() * array.length);
+			while (array[index] != 0) {
+				index = (int) (Math.random() * array.length);
+			}
+			array[index] = i;
+		}
 
-            }
-//            System.out.println(System.currentTimeMillis() - l);
-        }
-
-}
-
-
-
-    public static int[] invertedIntArray(int amountOfInts) {
-        int[] array = new int[amountOfInts];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = array.length - i;
-        }
-        return array;
-    }
-
-    public static int[] sortedIntArray(int amountOfInts) {
-        int[] array = new int[amountOfInts];
-        for (int i = 1; i <= array.length; i++) {
-            array[i - 1] = i;
-        }
-        return array;
-    }
-
-    public static int[] randomIntArray(int amountOfInts) {
-        int[] array = new int[amountOfInts];
-        for (int i = 1; i <= array.length; i++) {
-            int index = (int) (Math.random() * array.length);
-            while (array[index] != 0) {
-                index = (int) (Math.random() * array.length);
-            }
-            array[index] = i;
-        }
-
-        return array;
-    }
+		return array;
+	}
 }

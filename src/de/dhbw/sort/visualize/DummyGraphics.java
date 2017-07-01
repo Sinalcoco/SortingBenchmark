@@ -40,6 +40,12 @@ public class DummyGraphics extends AbstractGraphics {
 	public void drawEllipse(float x, float y, float width, float height) {
 		throw new UnsupportedOperationException("Can't Draw on Dummy");
 	}
+	
+	@Override
+    public void drawLine(float x1, float y1, float x2, float y2)
+    {
+		throw new UnsupportedOperationException("Can't Draw on Dummy");
+    }
 
 	@Override
 	public void drawBackground(int r, int g, int b) {

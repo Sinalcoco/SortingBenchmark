@@ -42,6 +42,8 @@ public abstract class AbstractGraphics {
 
     public abstract void drawEllipse(float x, float y, float width, float height);
 
+    public abstract void drawLine(float x1, float y1, float x2, float y2);
+
     public void startDraw() {
         this.graphics.beginDraw();
         this.graphicsFullscreen.beginDraw();
@@ -104,6 +106,20 @@ public abstract class AbstractGraphics {
             lock.unlock();
         }
     }
+
+	public void stroke(int r, int g, int b) {
+		 lock.lock();
+	        try {
+	            startDraw();
+	            this.graphics.stroke(r, g, b);
+	            this.graphicsFullscreen.stroke(r, g, b);
+
+	            endDraw();
+	        } finally {
+	            lock.unlock();
+	        }
+	}
+	
     public PImage getGraphics(boolean fullscreen) {
         lock.lock();
         try {
@@ -152,7 +168,6 @@ public abstract class AbstractGraphics {
         } else {
             return this.frames.poll();
         }
-
     }
 
     public Object peek(boolean fullscreen){

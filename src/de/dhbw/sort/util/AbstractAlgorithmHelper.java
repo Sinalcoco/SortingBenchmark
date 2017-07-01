@@ -136,7 +136,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
     }
 
     public boolean ready() {
-        return ready;
+        return mov.size() == 0;
     }
 
 
@@ -145,7 +145,6 @@ public abstract class AbstractAlgorithmHelper extends Thread{
     }
 
     public abstract void setNewArray(int[] theArray);
-
 
     public int getComparisons() {
         return comparisons;
@@ -158,5 +157,6 @@ public abstract class AbstractAlgorithmHelper extends Thread{
     public String getAlgorithemName() {
         return algorithmName;
     }
+
 
 }

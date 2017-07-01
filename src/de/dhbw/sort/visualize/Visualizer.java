@@ -1,5 +1,7 @@
 package de.dhbw.sort.visualize;
 
+import javax.sound.midi.Synthesizer;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -93,7 +95,7 @@ public class Visualizer extends PApplet {
     }
 
     public void draw() {
-        System.out.println(this.frameRate);
+//        System.out.println(this.frameRate);
         // Wenn keines im fullScreen Modus ist zeichne einfach alle normal
         if (fullScreen == -1) {
             for (int i = 0; i < screens.length; i++)
@@ -102,6 +104,7 @@ public class Visualizer extends PApplet {
 
                 try {
                     if (screens[i].peek(false) != null) {
+                    	System.out.println(screens[i].peek(false));
                         display.loadPixels();
                         display.pixels =  screens[i].getNextFrame(false);
                         display.updatePixels();

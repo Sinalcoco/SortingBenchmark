@@ -38,10 +38,5 @@ public class CombSort extends SortingAlgorithm {
                 ++i;
             }
         }while(!sorted);
-        try {
-            this.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
