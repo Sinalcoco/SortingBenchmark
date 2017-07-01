@@ -31,23 +31,54 @@ public class Statistics {
 
 	public void updateScreen() {
 		screen.drawBackground(0, 0, 0);
-		screen.stroke(255,255,255);
+		screen.stroke(255, 255, 255);
 		float hSpacing, x1, y1, x2, y2;
 		Set<String> algorithmNames = stats.keySet();
 		for (String algorithm : algorithmNames) {
 			ArrayList<Integer> values = stats.get(algorithm);
 			hSpacing = screen.getWidth() / (values.size() + 1);
-			for (int i = 0; i < values.size() - 1; i++)
-			{
+			for (int i = 0; i < values.size() - 1; i++) {
 				x1 = hSpacing + i * hSpacing;
-				y1 = screen.getHeight() - values.get(i) / maxValue * screen.getHeight() + 10; 
+				y1 = screen.getHeight() - values.get(i) / maxValue * screen.getHeight() + 10;
 
 				x2 = hSpacing + (i + 1) * hSpacing;
-				y2 = screen.getHeight() - values.get(i + 1) / maxValue * screen.getHeight() + 10; 
-				
+				y2 = screen.getHeight() - values.get(i + 1) / maxValue * screen.getHeight() + 10;
+
 				screen.drawLine(x1, y1, x2, y2);
 			}
 		}
+		screen.stroke(0, 0, 0);
+		screen.addFrame();
+	}
+
+	public void highlight(String theAlgorithmName) {
+		screen.drawBackground(0, 0, 0);
+		float hSpacing, x1, y1, x2, y2;
+		Set<String> algorithmNames = stats.keySet();
+		for (String algorithm : algorithmNames) {
+			if (algorithm == theAlgorithmName)
+			{
+				screen.stroke(0, 255, 0);
+				screen.strokeWeight(4);
+			}
+			else
+			{
+				screen.stroke(255, 255, 255);
+				screen.strokeWeight(1);
+			}
+			ArrayList<Integer> values = stats.get(algorithm);
+			hSpacing = screen.getWidth() / (values.size() + 1);
+			for (int i = 0; i < values.size() - 1; i++) {
+				x1 = hSpacing + i * hSpacing;
+				y1 = screen.getHeight() - values.get(i) / maxValue * screen.getHeight() + 10;
+
+				x2 = hSpacing + (i + 1) * hSpacing;
+				y2 = screen.getHeight() - values.get(i + 1) / maxValue * screen.getHeight() + 10;
+
+				screen.drawLine(x1, y1, x2, y2);
+			}
+		}
+		screen.stroke(0, 0, 0);
 		screen.addFrame();
 	}
 }

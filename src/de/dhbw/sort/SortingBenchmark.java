@@ -25,7 +25,8 @@ public class SortingBenchmark {
 	private static int start = 4;
 	private static int run = start;
 	private static int end = 10;
-	private static final boolean FAST = false;
+	private static final boolean FAST = true;
+	private static String [] algorithmNames = new String [9];
 
 	public static void main(String[] args) {
 
@@ -43,6 +44,7 @@ public class SortingBenchmark {
 
 		final int STATS_ID = 4;
 		Statistics stats = new Statistics(visualizer.getScreen(STATS_ID));
+		algorithmNames[STATS_ID] = "Statistic";
 		int counter = 0;
 
 		int[] values;
@@ -61,21 +63,27 @@ public class SortingBenchmark {
 
 		AbstractAlgorithmHelper bubbleHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(0), values);
 		sorters.add(new BubbleSort(bubbleHelper));
+		algorithmNames[0] = bubbleHelper.getAlgorithemName();
 
 		AbstractAlgorithmHelper insertionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(1), values);
 		sorters.add(new InsertionSort(insertionHelper));
+		algorithmNames[1] = insertionHelper.getAlgorithemName();
 
 		AbstractAlgorithmHelper cocktailHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(2), values);
 		sorters.add(new CocktailShaker(cocktailHelper));
+		algorithmNames[2] = cocktailHelper.getAlgorithemName();
 
 		AbstractAlgorithmHelper selektionHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(3), values);
 		sorters.add(new SelectionSort(selektionHelper));
+		algorithmNames[3] = selektionHelper.getAlgorithemName();
 
 		AbstractAlgorithmHelper heapHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(5), values);
 		sorters.add(new HeapSort(heapHelper));
+		algorithmNames[5] = heapHelper.getAlgorithemName();
 
 		AbstractAlgorithmHelper quickHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(6), values);
 		sorters.add(new QuickSort(quickHelper));
+		algorithmNames[6] = quickHelper.getAlgorithemName();
 
 		//// AbstractAlgorithmHelper mergeHelper = new
 		//// OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
@@ -84,6 +92,7 @@ public class SortingBenchmark {
 
 		AbstractAlgorithmHelper CombHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(8), values);
 		sorters.add(new CombSort(CombHelper));
+		algorithmNames[8] = CombHelper.getAlgorithemName();
 
 		for (SortingAlgorithm s : sorters) {
 			s.start();
@@ -100,6 +109,15 @@ public class SortingBenchmark {
 
 				// sorters.get(i).helper().nextFrame();
 				s.helper().nextFrame();
+			}
+			int mouseOverIndex = visualizer.getMouseOverIndex();
+			if (mouseOverIndex >= 0 && mouseOverIndex != STATS_ID)
+			{
+				stats.highlight(algorithmNames[mouseOverIndex]);
+			}
+			else
+			{
+			stats.updateScreen();
 			}
 
 			if (ascending && run <= end) {
@@ -124,7 +142,6 @@ public class SortingBenchmark {
 
 				}
 			}
-			stats.updateScreen();
 			// System.out.println(System.currentTimeMillis() - l);
 		}
 

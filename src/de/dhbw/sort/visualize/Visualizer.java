@@ -1,7 +1,5 @@
 package de.dhbw.sort.visualize;
 
-import javax.sound.midi.Synthesizer;
-
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -21,6 +19,7 @@ public class Visualizer extends PApplet {
     private AbstractGraphics[] screens;
     private PImage display;
     private PImage displayFullscreen;
+    private int mouseOverIndex = -1;
 
     public Visualizer(int width, int height, double zoom, int rowCount, int columnCount) {
         this.width = (int)(width*zoom);
@@ -95,6 +94,7 @@ public class Visualizer extends PApplet {
     }
 
     public void draw() {
+    	interpretMouseOver();
 //        System.out.println(this.frameRate);
         // Wenn keines im fullScreen Modus ist zeichne einfach alle normal
         if (fullScreen == -1) {
@@ -104,7 +104,6 @@ public class Visualizer extends PApplet {
 
                 try {
                     if (screens[i].peek(false) != null) {
-                    	System.out.println(screens[i].peek(false));
                         display.loadPixels();
                         display.pixels =  screens[i].getNextFrame(false);
                         display.updatePixels();
@@ -143,7 +142,24 @@ public class Visualizer extends PApplet {
         }
     }
 
-    public int getGridNumber() {
+    private void interpretMouseOver() {
+    	// Ordne dem Mausclick ein Fenster zu und setzte es auf fullscreen.
+        if (fullScreen == -1) {
+            int index = mouseX / (fWidth);
+            index += (mouseY / (fHeight)) * rowCount;
+
+            mouseOverIndex = index;
+
+        } else {
+            mouseOverIndex = fullScreen;
+        }
+	}
+    public int getMouseOverIndex()
+    {
+    	return this.mouseOverIndex;
+    }
+
+	public int getGridNumber() {
         return screens.length;
     }
 
