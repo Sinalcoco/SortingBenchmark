@@ -63,6 +63,10 @@ public class Graphics extends AbstractGraphics {
 	public void drawLine(float x1, float y1, float x2, float y2) {
 		lock.lock();
 		try {
+			x1 += borderWidth;
+			y1 += borderHeight;
+			x2 += borderWidth;
+			y2 += borderHeight;
 			startDraw();
 			this.graphics.line(x1, y1, x2, y2);
 			this.graphicsFullscreen.line(x1 * hScaling, y1 * vScaling, x2 * hScaling, y2 * vScaling);
@@ -142,4 +146,5 @@ public class Graphics extends AbstractGraphics {
 			e.printStackTrace();
 		}
 	}
+
 }

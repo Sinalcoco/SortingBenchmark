@@ -130,6 +130,19 @@ public abstract class AbstractGraphics {
 		}
 	}
 
+	public void textAlign(int xPosition, int yPosition) {
+		lock.lock();
+		try {
+			startDraw();
+			graphics.textAlign(xPosition, yPosition);
+			graphicsFullscreen.textAlign(xPosition, yPosition);
+
+			endDraw();
+		} finally {
+			lock.unlock();
+		}
+	}
+
 	public PImage getGraphics(boolean fullscreen) {
 		lock.lock();
 		try {

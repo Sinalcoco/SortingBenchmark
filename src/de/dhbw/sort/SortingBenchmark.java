@@ -10,6 +10,7 @@ import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
 import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
+import de.dhbw.sort.util.StaticStatistics;
 //import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 import de.dhbw.sort.util.Statistics;
 import de.dhbw.sort.visualize.AbstractGraphics;
@@ -45,7 +46,7 @@ public class SortingBenchmark {
 		final int AMOUNT = visualizer.getGridNumber();
 
 		final int STATS_ID = 4;
-		Statistics stats = new Statistics(visualizer.getScreen(STATS_ID));
+		StaticStatistics stats = new StaticStatistics(visualizer.getScreen(STATS_ID), start, end, (float) (1.4 * end * end));
 		algorithmNames[STATS_ID] = "Statistic";
 		int counter = 0;
 
@@ -115,11 +116,14 @@ public class SortingBenchmark {
 					s.helper().nextFrame();
 				}
 			}
-			int mouseOverIndex = visualizer.getMouseOverIndex();
-			if (mouseOverIndex != oldIndex && mouseOverIndex >= 0 && mouseOverIndex != STATS_ID) {
-				oldIndex = mouseOverIndex;
-				stats.highlight(algorithmNames[mouseOverIndex]);
-			}
+			if (run > end)
+				stats.addFrame();
+//			int mouseOverIndex = visualizer.getMouseOverIndex();
+//			if (mouseOverIndex != oldIndex && mouseOverIndex >= 0 && mouseOverIndex != STATS_ID) {
+//				oldIndex = mouseOverIndex;
+//				System.out.println("TEST");
+//				stats.highlight(algorithmNames[mouseOverIndex]);
+//			}
 			if (ascending && run <= end) {
 				for (SortingAlgorithm s : sorters) {
 					if (FAST && !s.done() || !FAST && !s.helper().ready()) {
@@ -132,20 +136,19 @@ public class SortingBenchmark {
 					}
 				}
 				if (allDone) {
-					stats.addData("n-curve", run);
 					stats.addData("nlogn-curve", (int) (8 * run * Math.log(run)));
 					stats.addData("0.5n2-curve", (int) (0.5 * run * run));
-					stats.addData("n2-curve", (int) (run * run));
+					stats.addData("n2-curve", (int) (1.4 * run * run));
 					for (SortingAlgorithm s : sorters) {
 						stats.addData(s.helper().getAlgorithemName(),
 								s.helper().getMoves() + s.helper().getComparisons());
 						s.helper().setNewArray(randomIntArray(run));
 						s.reset();
 					}
+					stats.highlight((oldIndex >= 0)? algorithmNames[oldIndex] : "Dummy");
 					run++;
-					stats.highlight(algorithmNames[oldIndex]);
 				} else {
-					System.out.println("Too slow!");
+					System.out.println("The algorithm is taking longer than the loop");
 				}
 			}
 			// System.out.println(System.currentTimeMillis() - l);

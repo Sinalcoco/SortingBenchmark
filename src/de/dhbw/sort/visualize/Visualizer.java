@@ -86,7 +86,7 @@ public class Visualizer extends PApplet {
 
         } else {
             // War schon eins Vollbild setze die ansicht wieder zurueck
-
+        	background(0);
             screenValid[fullScreen] = false;
             fullScreen = -1;
 //            background(0);
