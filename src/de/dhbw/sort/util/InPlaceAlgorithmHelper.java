@@ -119,7 +119,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         initialize(screen, theArray);
         mov.clear();
         indexes.clear();
-        this.drawValues();
+        //TODO this.drawValues();
         screen.addFrame();
     }
 }

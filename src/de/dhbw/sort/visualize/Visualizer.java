@@ -168,4 +168,9 @@ public class Visualizer extends PApplet {
         initScreen(index);
         return (Graphics) screens[index];
     }
+
+	public SplitGraphics getSplitScreen(int theIndex) {
+		screens[theIndex] = new SplitGraphics(this.createGraphics(fWidth, fHeight), this.createGraphics(width, height));
+        return (SplitGraphics) screens[theIndex];
+	}
 }

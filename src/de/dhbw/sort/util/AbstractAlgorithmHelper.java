@@ -3,6 +3,7 @@ package de.dhbw.sort.util;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import de.dhbw.sort.visualize.AbstractGraphics;
 import de.dhbw.sort.visualize.Graphics;
 import processing.core.PApplet;
 
@@ -24,8 +25,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
     protected int viewX, viewY, viewWidth, viewHeight;
 
 
-    protected Graphics screen;
-    protected Graphics grafics;
+    protected AbstractGraphics screen;
 
     protected float height;
     protected float width;
@@ -35,8 +35,13 @@ public abstract class AbstractAlgorithmHelper extends Thread{
     private int liableHeight = 40;
 
 
-    protected AbstractAlgorithmHelper(Graphics screen) {
+    protected AbstractAlgorithmHelper() {
+    }
+    protected AbstractAlgorithmHelper(AbstractGraphics screen) {
         this.screen = screen;
+    }
+    public AbstractAlgorithmHelper(AbstractGraphics screen, int[] theArray) {
+    	initialize(screen, theArray);
     }
 
     public void run(){
@@ -48,17 +53,8 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         }
     }
 
-    public void setPGrafics(Graphics grafics) {
-        this.grafics = grafics;
-    }
 
-    ;
-
-    public AbstractAlgorithmHelper(Graphics screen, int[] theArray) {
-        initialize(screen, theArray);
-    }
-
-    protected void initialize(Graphics screen, int[] theArray) {
+    protected void initialize(AbstractGraphics screen, int[] theArray) {
         this.screen = screen;
 
 

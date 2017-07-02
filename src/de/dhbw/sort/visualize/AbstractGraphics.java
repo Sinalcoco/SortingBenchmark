@@ -85,7 +85,6 @@ public abstract class AbstractGraphics {
 			this.graphics.rect(borderWidth, borderHeight, this.getWidth(), this.getHeight());
 			this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
 					this.getHeight() * vScaling);
-
 			endDraw();
 		} finally {
 			lock.unlock();

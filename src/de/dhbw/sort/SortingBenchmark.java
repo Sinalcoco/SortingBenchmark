@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.sound.midi.Soundbank;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
@@ -22,11 +24,11 @@ public class SortingBenchmark {
 	private static final int AMOUNT_OF_VALUES = 10;
 
 	private static final boolean ascending = true;
-	private static int start = 4;
+	private static int start = 10;
 	private static int run = start;
 	private static int end = 100;
 	private static final boolean FAST = true;
-	private static String [] algorithmNames = new String [9];
+	private static String[] algorithmNames = new String[9];
 
 	public static void main(String[] args) {
 
@@ -85,10 +87,9 @@ public class SortingBenchmark {
 		sorters.add(new QuickSort(quickHelper));
 		algorithmNames[6] = quickHelper.getAlgorithemName();
 
-		//// AbstractAlgorithmHelper mergeHelper = new
-		//// OutOfPlaceAlgorithmHelper(visualizer.getScreen(7), values);
-		//// sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper)
-		//// mergeHelper));
+		AbstractAlgorithmHelper mergeHelper = new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(7), values);
+		sorters.add(new MergeSort((OutOfPlaceAlgorithmHelper) mergeHelper));
+		algorithmNames[7] = mergeHelper.getAlgorithemName();
 
 		AbstractAlgorithmHelper CombHelper = new InPlaceAlgorithmHelper(visualizer.getScreen(8), values);
 		sorters.add(new CombSort(CombHelper));
@@ -101,25 +102,24 @@ public class SortingBenchmark {
 
 		// long l;
 		boolean allDone;
+		int oldIndex = -1;
+		long timing = System.currentTimeMillis();
 		while (true) {
 			allDone = true;
 			// l = System.currentTimeMillis();
-			for (SortingAlgorithm s : sorters) {
-				// for (int i = 0; i < 1; i++) {
+			if (!FAST) {
+				for (SortingAlgorithm s : sorters) {
+					// for (int i = 0; i < 1; i++) {
 
-				// sorters.get(i).helper().nextFrame();
-				s.helper().nextFrame();
+					// sorters.get(i).helper().nextFrame();
+					s.helper().nextFrame();
+				}
 			}
 			int mouseOverIndex = visualizer.getMouseOverIndex();
-			if (mouseOverIndex >= 0 && mouseOverIndex != STATS_ID)
-			{
+			if (mouseOverIndex != oldIndex && mouseOverIndex >= 0 && mouseOverIndex != STATS_ID) {
+				oldIndex = mouseOverIndex;
 				stats.highlight(algorithmNames[mouseOverIndex]);
 			}
-			else
-			{
-			stats.updateScreen();
-			}
-
 			if (ascending && run <= end) {
 				for (SortingAlgorithm s : sorters) {
 					if (FAST && !s.done() || !FAST && !s.helper().ready()) {
@@ -133,9 +133,9 @@ public class SortingBenchmark {
 				}
 				if (allDone) {
 					stats.addData("n-curve", run);
-					stats.addData("nlogn-curve", (int) (8*run*Math.log(run)));
-					stats.addData("0.5n2-curve", (int) (0.5*run*run));
-					stats.addData("n2-curve", (int) (run*run));
+					stats.addData("nlogn-curve", (int) (8 * run * Math.log(run)));
+					stats.addData("0.5n2-curve", (int) (0.5 * run * run));
+					stats.addData("n2-curve", (int) (run * run));
 					for (SortingAlgorithm s : sorters) {
 						stats.addData(s.helper().getAlgorithemName(),
 								s.helper().getMoves() + s.helper().getComparisons());
@@ -143,6 +143,9 @@ public class SortingBenchmark {
 						s.reset();
 					}
 					run++;
+					stats.highlight(algorithmNames[oldIndex]);
+				} else {
+					System.out.println("Too slow!");
 				}
 			}
 			// System.out.println(System.currentTimeMillis() - l);

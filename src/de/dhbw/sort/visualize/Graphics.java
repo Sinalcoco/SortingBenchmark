@@ -38,6 +38,7 @@ public class Graphics extends AbstractGraphics {
 			this.graphics.rect(x, y, width, height);
 			this.graphicsFullscreen.rect(x * hScaling, y * vScaling, width * hScaling, height * vScaling);
 
+			endDraw();
 		} finally {
 			lock.unlock();
 		}
