@@ -27,7 +27,7 @@ public class SortingBenchmark {
 	private static final boolean ascending = true;
 	private static int start = 10;
 	private static int run = start;
-	private static int end = 100;
+	private static int end = 400;
 	private static final boolean FAST = true;
 	private static String[] algorithmNames = new String[9];
 
@@ -46,7 +46,8 @@ public class SortingBenchmark {
 		final int AMOUNT = visualizer.getGridNumber();
 
 		final int STATS_ID = 4;
-		StaticStatistics stats = new StaticStatistics(visualizer.getScreen(STATS_ID), start, end, (float) (1.4 * end * end));
+		StaticStatistics stats = new StaticStatistics(visualizer.getScreen(STATS_ID), start, end,
+				(float) (1.4 * end * end));
 		algorithmNames[STATS_ID] = "Statistic";
 		int counter = 0;
 
@@ -116,14 +117,17 @@ public class SortingBenchmark {
 					s.helper().nextFrame();
 				}
 			}
-			if (run > end)
-				stats.addFrame();
-//			int mouseOverIndex = visualizer.getMouseOverIndex();
-//			if (mouseOverIndex != oldIndex && mouseOverIndex >= 0 && mouseOverIndex != STATS_ID) {
-//				oldIndex = mouseOverIndex;
-//				System.out.println("TEST");
-//				stats.highlight(algorithmNames[mouseOverIndex]);
-//			}
+			if (run > end) {
+				int mouseOverIndex = visualizer.getMouseOverIndex();
+				if (mouseOverIndex != oldIndex && mouseOverIndex >= 0 && mouseOverIndex != STATS_ID) {
+					oldIndex = mouseOverIndex;
+					stats.highlight(algorithmNames[mouseOverIndex]);
+				} else if (mouseOverIndex == oldIndex) {
+
+				} else {
+					stats.addFrame();
+				}
+			}
 			if (ascending && run <= end) {
 				for (SortingAlgorithm s : sorters) {
 					if (FAST && !s.done() || !FAST && !s.helper().ready()) {
@@ -145,10 +149,12 @@ public class SortingBenchmark {
 						s.helper().setNewArray(randomIntArray(run));
 						s.reset();
 					}
-					stats.highlight((oldIndex >= 0)? algorithmNames[oldIndex] : "Dummy");
+					stats.updateScreen();
 					run++;
+					timing = System.currentTimeMillis();
 				} else {
-					System.out.println("The algorithm is taking longer than the loop");
+					System.out.println(
+							"The algorithm is taking longer than the loop: " + (System.currentTimeMillis() - timing));
 				}
 			}
 			// System.out.println(System.currentTimeMillis() - l);
