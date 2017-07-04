@@ -186,15 +186,15 @@ public abstract class AbstractGraphics {
 
 	public int[] getNextFrame(boolean fullscreen) {
 		if (fullscreen) {
-			if (framesFullscreen.size() > 1)
+//			if (framesFullscreen.size() > 1)
 				return this.framesFullscreen.poll();
-			else
-				return this.framesFullscreen.peek();
+//			else
+//				return this.framesFullscreen.peek();
 		} else {
-			if (frames.size() > 1)
+//			if (frames.size() > 1)
 				return this.frames.poll();
-			else
-				return this.frames.peek();
+//			else
+//				return this.frames.peek();
 		}
 	}
 

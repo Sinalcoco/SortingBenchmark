@@ -4,7 +4,10 @@ import de.dhbw.sort.util.AbstractAlgorithmHelper;
 
 public class BubbleSort extends SortingAlgorithm
 {
-  
+  public BubbleSort() {
+    this.name = "BubbleSort";
+  }
+
   public BubbleSort(AbstractAlgorithmHelper theHelper)
   {
     helper = theHelper;

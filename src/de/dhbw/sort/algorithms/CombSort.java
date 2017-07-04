@@ -6,9 +6,8 @@ import de.dhbw.sort.util.AbstractAlgorithmHelper;
  * Created by jbi on 30.06.2017.
  */
 public class CombSort extends SortingAlgorithm {
-    public CombSort(AbstractAlgorithmHelper theHelper) {
-        helper = theHelper;
-        helper.setAlgorithmName("CombSort");
+    public CombSort() {
+        this.name="CombSort";
     }
 
 

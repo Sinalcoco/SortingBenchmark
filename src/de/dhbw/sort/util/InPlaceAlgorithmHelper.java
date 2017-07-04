@@ -1,8 +1,8 @@
 package de.dhbw.sort.util;
 
+import de.dhbw.sort.algorithms.BubbleSort;
+import de.dhbw.sort.algorithms.SortingAlgorithm;
 import de.dhbw.sort.visualize.Graphics;
-
-import java.util.Arrays;
 
 public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
@@ -12,9 +12,8 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     private int gravSwaps = 0;
 
 
-    public InPlaceAlgorithmHelper(Graphics screen, int[] theArray) {
-        super(screen, theArray);
-        this.drawValues();
+    public InPlaceAlgorithmHelper(Graphics screen, int[] theArray, SortingAlgorithm sort) {
+        super(screen, theArray,sort);
     }
 
     @Override
@@ -33,21 +32,22 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     private void blackout(int index) {
         screen.fill(0, 0, 0);
-        screen.drawRect(index*width,0,width,screen.getHeight());
+        screen.drawRect(index * width, 0, width, screen.getHeight());
     }
 
-    private void reDraw(int index){
+    private void reDraw(int index) {
         blackout(index);
         screen.fill(255, 255, 255);
         screen.drawRect(index * width,
-             (screen.getHeight() - (height * graphicsValues[index])), width,
-               (height * graphicsValues[index]));
+                (screen.getHeight() - (height * graphicsValues[index])), width,
+                (height * graphicsValues[index]));
 
     }
+
     public void nextFrame() {
-        int firstIndex =0;
-        int secondIndex=0;
-        if (mov.peek() != null) {
+        int firstIndex = 0;
+        int secondIndex = 0;
+        if (!ready && mov.peek() != null) {
             switch (mov.poll()) {
 
                 case COMPARE:
@@ -60,11 +60,11 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
                     screen.fill(0, 255, 0);
                     screen.drawRect(firstIndex * width,
-                             (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
-                             (height * graphicsValues[firstIndex]));
+                            (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                            (height * graphicsValues[firstIndex]));
                     screen.drawRect(secondIndex * width,
-                             (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
-                             (height * graphicsValues[secondIndex]));
+                            (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                            (height * graphicsValues[secondIndex]));
                     break;
                 case SWAP:
                     grafMoves += 3;
@@ -77,11 +77,11 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
                     screen.fill(255, 0, 0);
                     screen.drawRect(firstIndex * width,
-                             (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
-                             (height * graphicsValues[firstIndex]));
+                            (screen.getHeight() - (height * graphicsValues[firstIndex])), width,
+                            (height * graphicsValues[firstIndex]));
                     screen.drawRect(secondIndex * width,
-                             (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
-                             (height * graphicsValues[secondIndex]));
+                            (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
+                            (height * graphicsValues[secondIndex]));
 
                     int temp = graphicsValues[firstIndex];
                     graphicsValues[firstIndex] = graphicsValues[secondIndex];
@@ -89,13 +89,17 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                     break;
                 case MOVE:
                     break;
+                case READY:
+                    this.ready = true;
+
+                    break;
                 default:
                     break;
 
 
             }
 
-        
+
         }
         drawInfo();
         this.screen.addFrame();
@@ -105,8 +109,8 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     }
 
     public void drawInfo() {
-        screen.fill(0,0,0);
-        screen.drawRect(0,0,screen.getWidth(),40);
+        screen.fill(0, 0, 0);
+        screen.drawRect(0, 0, screen.getWidth(), 40);
         screen.fill(255, 255, 255);
         screen.text(algorithmName, 0, 10);
         screen.text("Comparisons: " + gravComp, 0, 20);
@@ -115,11 +119,19 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     }
 
-    public void setNewArray(int[] theArray) {
-        initialize(screen, theArray);
-        mov.clear();
-        indexes.clear();
-        //TODO this.drawValues();
-        screen.addFrame();
+    public void resetAlgorithm(int[] theArray) {
+        super.resetAlgorithm(theArray);
+    }
+
+    @Override
+    public void resetHelper(int[] peek) {
+
+        gravSwaps = 0;
+        grafMoves = 0;
+        gravComp = 0;
+        super.resetHelper(peek);
+        ready  =false;
+
+
     }
 }
