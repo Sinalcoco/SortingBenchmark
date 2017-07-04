@@ -138,6 +138,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 
     public void setAlgorithmName(String theName) {
         algorithmName = theName;
+        drawInfo();
     }
 
     public abstract void setNewArray(int[] theArray);

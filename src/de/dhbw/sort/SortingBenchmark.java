@@ -20,7 +20,6 @@ import processing.core.PApplet;
 public class SortingBenchmark {
 	private static de.dhbw.sort.visualize.Visualizer visualizer;
 
-	private static Statistics stats;
 	private static ArrayList<SortingAlgorithm> sorters;
 	private static final int AMOUNT_OF_VALUES = 10;
 
@@ -28,8 +27,8 @@ public class SortingBenchmark {
 	private static int start = 10;
 	private static int run = start;
 	private static int end = 400;
-	private static final boolean FAST = true;
-	private static String[] algorithmNames = new String[9];
+	private static boolean FAST = true;
+	private static String[] algorithmNames;
 
 	public static void main(String[] args) {
 
@@ -44,6 +43,7 @@ public class SortingBenchmark {
 			e.printStackTrace();
 		}
 		final int AMOUNT = visualizer.getGridNumber();
+		algorithmNames = new String[AMOUNT];
 
 		final int STATS_ID = 4;
 		StaticStatistics stats = new StaticStatistics(visualizer.getScreen(STATS_ID), start, end,
@@ -109,7 +109,7 @@ public class SortingBenchmark {
 		while (true) {
 			allDone = true;
 			// l = System.currentTimeMillis();
-			if (!FAST) {
+			if (!FAST || run > end) {
 				for (SortingAlgorithm s : sorters) {
 					// for (int i = 0; i < 1; i++) {
 
@@ -125,7 +125,7 @@ public class SortingBenchmark {
 				} else if (mouseOverIndex == oldIndex) {
 
 				} else {
-					stats.addFrame();
+					//stats.addFrame();
 				}
 			}
 			if (ascending && run <= end) {
@@ -143,18 +143,23 @@ public class SortingBenchmark {
 					stats.addData("nlogn-curve", (int) (8 * run * Math.log(run)));
 					stats.addData("0.5n2-curve", (int) (0.5 * run * run));
 					stats.addData("n2-curve", (int) (1.4 * run * run));
+					int [] newValues = randomIntArray(run);
 					for (SortingAlgorithm s : sorters) {
 						stats.addData(s.helper().getAlgorithemName(),
 								s.helper().getMoves() + s.helper().getComparisons());
-						s.helper().setNewArray(randomIntArray(run));
+						s.helper().setNewArray(newValues);
 						s.reset();
 					}
 					stats.updateScreen();
 					run++;
-					timing = System.currentTimeMillis();
+					if (run > end)
+					{
+						for(SortingAlgorithm s : sorters)
+						{
+							s.helper().drawValues();
+						}
+					}
 				} else {
-					System.out.println(
-							"The algorithm is taking longer than the loop: " + (System.currentTimeMillis() - timing));
 				}
 			}
 			// System.out.println(System.currentTimeMillis() - l);

@@ -25,6 +25,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 		reset();
 		splitScreen = splitGraphics;
 		this.drawValues();
+		splitGraphics.addFrame();
 	}
 
 	public void drawValues() {
@@ -234,6 +235,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 	public void setNewArray(int[] theArray) {
 		super.initialize(splitScreen, theArray);
 		reset();
+		splitScreen.addFrame();
 	}
 
 	private void reset() {
