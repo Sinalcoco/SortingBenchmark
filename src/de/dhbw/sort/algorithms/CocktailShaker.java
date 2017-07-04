@@ -7,10 +7,9 @@ public class CocktailShaker extends SortingAlgorithm //<>// //<>// //<>//
   int leftBorder, rightBorder, consecutiveSorted;
   boolean goingRight;
 
-  public CocktailShaker(AbstractAlgorithmHelper theHelper)
+  public CocktailShaker( )
   {
-    helper = theHelper;
-    helper.setAlgorithmName("ShakerSort");
+    this.name = "ShakerSort";
   }
 
   public void initialize()

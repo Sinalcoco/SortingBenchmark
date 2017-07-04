@@ -56,13 +56,26 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         this.sort.setHelper(this);
     }
 
-    public void run(){
+
+
+    public synchronized void run(){
+
         startSorter();
         this.drawValues();
+
+
+
         long l ;
         while (true){
 //            l = System.currentTimeMillis();
             this.nextFrame();
+            if (this.isReady()){
+                try {
+                    this.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 //            System.out.println(System.currentTimeMillis()-l);
         }
     }
@@ -106,16 +119,16 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         commands.add(new AlgorithmCommand(AlgorithmCommand.Action.HIGHLIGHT, theIndex, theColor.hashCode()));
     }
 
-    public synchronized int compare(int firstIndex, int secondIndex) {
-        comparisons++;
-        mov.add(Moves.COMPARE);
-        indexes.add(firstIndex);
-        indexes.add(secondIndex);
+    public  int compare(int firstIndex, int secondIndex) {
+        this.comparisons++;
+        this.mov.add(Moves.COMPARE);
+        this.indexes.add(firstIndex);
+        this.indexes.add(secondIndex);
 
-        return (values[firstIndex] - values[secondIndex]);
+        return (this.values[firstIndex] - this.values[secondIndex]);
     }
 
-    public synchronized void move(int fromIndex, int toIndex) {
+    public  void move(int fromIndex, int toIndex) {
         moves++;
         mov.add(Moves.MOVE);
         indexes.add(fromIndex);
@@ -126,7 +139,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 
     }
 
-    public synchronized void swap(int firstIndex, int secondIndex) {
+    public  void swap(int firstIndex, int secondIndex) {
         moves += 3;
         swaps++;
         mov.add(Moves.SWAP);

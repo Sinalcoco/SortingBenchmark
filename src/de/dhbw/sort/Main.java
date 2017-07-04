@@ -1,7 +1,6 @@
 package de.dhbw.sort;
 
-import de.dhbw.sort.algorithms.BubbleSort;
-import de.dhbw.sort.algorithms.CombSort;
+import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
 import de.dhbw.sort.visualize.Visualizer;
@@ -17,10 +16,10 @@ public class Main {
     private static int heigth = 600;
     private static int rows = 3;
     private static int colums = 3;
-    private static boolean threaded = false;
+    private static boolean threaded = true;
     private static int[] values;
 
-    private static int amountOfValues = 10;
+    private static int amountOfValues = 5;
 
     private static ArrayList<AbstractAlgorithmHelper> helpers = new ArrayList<>();
 
@@ -44,9 +43,17 @@ public class Main {
         initStatistiks();
         initHelper();
 
+        boolean allDone = true;
+
         if (threaded) {
             for (AbstractAlgorithmHelper helper : helpers) {
                 helper.start();
+            }
+
+            if(allDone){
+                for (AbstractAlgorithmHelper h:helpers) {
+
+                }
             }
 
         } else {
@@ -83,6 +90,9 @@ public class Main {
     private static void initHelper() {
 
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new BubbleSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new InsertionSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CocktailShaker()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new SelectionSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CombSort()));
 
 
