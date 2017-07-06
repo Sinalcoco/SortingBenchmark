@@ -12,8 +12,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public abstract class AbstractGraphics {
 	public ReentrantLock lock = new ReentrantLock();
-	public LinkedBlockingQueue<int[]> frames = new LinkedBlockingQueue<>(100);
-	public LinkedBlockingQueue<int[]> framesFullscreen = new LinkedBlockingQueue<>(100);
+	public LinkedBlockingQueue<int[]> frames = new LinkedBlockingQueue<>(50);
+	public LinkedBlockingQueue<int[]> framesFullscreen = new LinkedBlockingQueue<>(50);
 
 	protected PGraphics graphics;
 	protected PGraphics graphicsFullscreen;
@@ -53,7 +53,6 @@ public abstract class AbstractGraphics {
 	public void endDraw() {
 		this.graphics.endDraw();
 		this.graphicsFullscreen.endDraw();
-
 	}
 
 	public void drawBackground(int r, int g, int b) {
@@ -68,7 +67,7 @@ public abstract class AbstractGraphics {
 			this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
 					this.getHeight() * vScaling);
 
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -85,7 +84,7 @@ public abstract class AbstractGraphics {
 			this.graphics.rect(borderWidth, borderHeight, this.getWidth(), this.getHeight());
 			this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
 					this.getHeight() * vScaling);
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -98,7 +97,7 @@ public abstract class AbstractGraphics {
 			this.graphics.fill(r, g, b);
 			this.graphicsFullscreen.fill(r, g, b);
 
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -111,7 +110,7 @@ public abstract class AbstractGraphics {
 			this.graphics.stroke(r, g, b);
 			this.graphicsFullscreen.stroke(r, g, b);
 
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -124,7 +123,7 @@ public abstract class AbstractGraphics {
 			this.graphics.strokeWeight(weight);
 			this.graphicsFullscreen.strokeWeight(weight);
 
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -137,7 +136,7 @@ public abstract class AbstractGraphics {
 			graphics.textAlign(xPosition, yPosition);
 			graphicsFullscreen.textAlign(xPosition, yPosition);
 
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -185,6 +184,7 @@ public abstract class AbstractGraphics {
 	}
 
 	public int[] getNextFrame(boolean fullscreen) {
+		System.out.println(frames.size());
 		if (fullscreen) {
 //			if (framesFullscreen.size() > 1)
 				return this.framesFullscreen.poll();

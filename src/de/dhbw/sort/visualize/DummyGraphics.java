@@ -69,12 +69,18 @@ public class DummyGraphics extends AbstractGraphics {
 
 	@Override
 	public int[] getNextFrame(boolean fullscreen) {
+		//TODO review performance
 		if (fullscreen) {
-			graphicsFullscreen.loadPixels();
-			return Arrays.copyOf(graphicsFullscreen.pixels, graphicsFullscreen.pixels.length);
+			return graphicsFullscreen.pixels;
 		} else {
-			graphics.loadPixels();
-			return Arrays.copyOf(graphics.pixels, graphics.pixels.length);
+			return graphics.pixels;
 		}
+//		if (fullscreen) {
+//			graphicsFullscreen.loadPixels();
+//			return Arrays.copyOf(graphicsFullscreen.pixels, graphicsFullscreen.pixels.length);
+//		} else {
+//			graphics.loadPixels();
+//			return Arrays.copyOf(graphics.pixels, graphics.pixels.length);
+//		}
 	}
 }

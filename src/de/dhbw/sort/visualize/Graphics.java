@@ -38,7 +38,7 @@ public class Graphics extends AbstractGraphics {
 			this.graphics.rect(x, y, width, height);
 			this.graphicsFullscreen.rect(x * hScaling, y * vScaling, width * hScaling, height * vScaling);
 
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -53,7 +53,7 @@ public class Graphics extends AbstractGraphics {
 			startDraw();
 			this.graphics.ellipse(x, y, width, height);
 			this.graphicsFullscreen.ellipse(x * hScaling, y * vScaling, width * hScaling, height * vScaling);
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -70,7 +70,7 @@ public class Graphics extends AbstractGraphics {
 			startDraw();
 			this.graphics.line(x1, y1, x2, y2);
 			this.graphicsFullscreen.line(x1 * hScaling, y1 * vScaling, x2 * hScaling, y2 * vScaling);
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -120,7 +120,7 @@ public class Graphics extends AbstractGraphics {
 			this.graphics.text(text, x, y);
 			this.graphicsFullscreen.textSize(this.graphics.textSize * vScaling);
 			this.graphicsFullscreen.text(text, x * hScaling, y * vScaling);
-			endDraw();
+//			endDraw();
 		} finally {
 			lock.unlock();
 		}
@@ -129,7 +129,7 @@ public class Graphics extends AbstractGraphics {
 
 	@Override
 	public void addFrame() {
-
+		endDraw();
 		try {
 			this.graphics.loadPixels();
 
