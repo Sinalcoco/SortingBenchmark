@@ -14,7 +14,7 @@ public abstract class SortingAlgorithm extends Thread {
 		while (true) {
 			if (!done) {
 				initialize();
-				sort();
+				this.sort();
 				this.helper().ready();
 				done = true;
 			} else {

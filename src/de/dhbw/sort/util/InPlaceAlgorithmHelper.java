@@ -65,6 +65,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                     screen.drawRect(secondIndex * width,
                             (screen.getHeight() - (height * graphicsValues[secondIndex])), width,
                             (height * graphicsValues[secondIndex]));
+                    drawInfo();
                     break;
                 case SWAP:
                     grafMoves += 3;
@@ -86,6 +87,11 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                     int temp = graphicsValues[firstIndex];
                     graphicsValues[firstIndex] = graphicsValues[secondIndex];
                     graphicsValues[secondIndex] = temp;
+
+                    drawInfo();
+                    this.screen.addFrame();
+                    this.screen.addFrame();
+
                     break;
                 case MOVE:
                     break;
@@ -101,7 +107,6 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
 
         }
-        drawInfo();
         this.screen.addFrame();
         reDraw(firstIndex);
         reDraw(secondIndex);

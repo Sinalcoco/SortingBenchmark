@@ -5,9 +5,9 @@ import de.dhbw.sort.util.AbstractAlgorithmHelper;
 public class HeapSort extends SortingAlgorithm {
 	int currentIndex;
 
-	public HeapSort(AbstractAlgorithmHelper theHelper) {
-		helper = theHelper;
-		helper.setAlgorithmName("HeapSort");
+	public HeapSort() {
+
+		this.name="HeapSort";
 	}
 
 	public void initialize() {

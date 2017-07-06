@@ -3,6 +3,7 @@ package de.dhbw.sort;
 import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
+import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 import de.dhbw.sort.visualize.Visualizer;
 import processing.core.PApplet;
 
@@ -16,7 +17,7 @@ public class Main {
     private static int heigth = 600;
     private static int rows = 3;
     private static int colums = 3;
-    private static boolean threaded = false;
+    private static boolean threaded = true;
     private static int[] values;
 
     private static int amountOfValues = 80;
@@ -94,6 +95,8 @@ public class Main {
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CocktailShaker()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new SelectionSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CombSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new HeapSort()));
+        helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(helpers.size()),values,new MergeSort()));
 
 
     }

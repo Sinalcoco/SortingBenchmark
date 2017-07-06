@@ -12,8 +12,8 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public abstract class AbstractGraphics {
 	public ReentrantLock lock = new ReentrantLock();
-	public LinkedBlockingQueue<int[]> frames = new LinkedBlockingQueue<>(50);
-	public LinkedBlockingQueue<int[]> framesFullscreen = new LinkedBlockingQueue<>(50);
+	public LinkedBlockingQueue<int[]> frames = new LinkedBlockingQueue<>(15);
+	public LinkedBlockingQueue<int[]> framesFullscreen = new LinkedBlockingQueue<>(15);
 
 	protected PGraphics graphics;
 	protected PGraphics graphicsFullscreen;
@@ -24,6 +24,7 @@ public abstract class AbstractGraphics {
 	protected float borderHeight = 10;
 
 	protected int borderColor = 0xFFcc9350;
+	public boolean dr;
 
 	public AbstractGraphics(PGraphics graphics, PGraphics graphicsFullscreen) {
 		this.graphicsFullscreen = graphicsFullscreen;
@@ -184,17 +185,17 @@ public abstract class AbstractGraphics {
 	}
 
 	public int[] getNextFrame(boolean fullscreen) {
-		System.out.println(frames.size());
+//		System.out.println(frames.size());
 		if (fullscreen) {
-//			if (framesFullscreen.size() > 1)
+			if (framesFullscreen.size() > 1)
 				return this.framesFullscreen.poll();
-//			else
-//				return this.framesFullscreen.peek();
+			else
+				return this.framesFullscreen.peek();
 		} else {
-//			if (frames.size() > 1)
+			if (frames.size() > 1)
 				return this.frames.poll();
-//			else
-//				return this.frames.peek();
+			else
+				return this.frames.peek();
 		}
 	}
 

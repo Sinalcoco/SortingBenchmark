@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 //import de.dhbw.sort.SortingBenchmark;
+import de.dhbw.sort.algorithms.SortingAlgorithm;
 import de.dhbw.sort.util.AlgorithmCommand.Direction;
 import de.dhbw.sort.visualize.Graphics;
 import de.dhbw.sort.visualize.SplitGraphics;
@@ -21,8 +22,10 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     private int graphComp = 0;
     private SplitGraphics splitScreen;
 
-    public OutOfPlaceAlgorithmHelper(SplitGraphics splitGraphics, int[] theArray) {
-        super(splitGraphics, theArray);
+
+    public OutOfPlaceAlgorithmHelper(SplitGraphics splitGraphics, int[] theArray, SortingAlgorithm sort) {
+        super(splitGraphics, theArray,sort);
+
         splitScreen = splitGraphics;
         output = new int[values.length];
         graphicsOutput  = Arrays.copyOf(output,output.length);

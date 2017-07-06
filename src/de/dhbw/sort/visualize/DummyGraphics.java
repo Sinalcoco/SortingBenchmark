@@ -21,8 +21,10 @@ public class DummyGraphics extends AbstractGraphics {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		super.drawBackground(0xff508acc);
-
+//		super.drawBackground(0xff508acc);
+		super.drawBackground(0);
+		this.endDraw();
+        this.dr = false;
 	}
 
 	@Override
@@ -69,10 +71,14 @@ public class DummyGraphics extends AbstractGraphics {
 
 	@Override
 	public int[] getNextFrame(boolean fullscreen) {
+
 		//TODO review performance
 		if (fullscreen) {
-			return graphicsFullscreen.pixels;
+			this.dr = false;
+		    return graphicsFullscreen.pixels;
+
 		} else {
+			this.dr = true;
 			return graphics.pixels;
 		}
 //		if (fullscreen) {
