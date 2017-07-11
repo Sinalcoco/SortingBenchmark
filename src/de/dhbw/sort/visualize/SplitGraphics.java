@@ -125,7 +125,7 @@ public class SplitGraphics extends AbstractGraphics{
 			x = x + borderWidth;
 			y = y + borderHeight;
 			startDraw();
-
+			this.graphics.text(text, x * hScaling, y * vScaling);
 			this.graphicsFullscreen.textSize(this.graphics.textSize * vScaling);
 			this.graphicsFullscreen.text(text, x * hScaling, y * vScaling);
 			endDraw();

@@ -31,6 +31,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         splitScreen = splitGraphics;
         output = new int[values.length];
         graphicsOutput  = Arrays.copyOf(output,output.length);
+        height /= 2;
         this.drawValues();
         splitGraphics.addFrame();
     }
@@ -146,7 +147,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                                     (splitScreen.getTopHeight() - (height * graphicsValues[secondIndex])), width,
                                     (height * graphicsValues[secondIndex]));
                             break;
-                        case IN_OUTPUT:// TODO split splitScreen in half
+                        case IN_OUTPUT:
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getBottomHeight() - (height * graphicsOutput[firstIndex])), width,
                                     (height * graphicsValues[firstIndex]));
