@@ -154,6 +154,11 @@ public class SplitGraphics extends AbstractGraphics{
 		}
 	}
 
+
+	public float getHeight(int i) {
+		return getHeight() / 2;
+	}
+
 	public float getTopHeight() {
 		return getHeight() / 2;
 	}

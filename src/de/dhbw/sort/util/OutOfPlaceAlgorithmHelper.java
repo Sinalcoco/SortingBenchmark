@@ -30,7 +30,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         algorithmName = "No name set!";
         splitScreen = splitGraphics;
         output = new int[values.length];
-        graphicsOutput  = Arrays.copyOf(output,output.length);
+        graphicsOutput = Arrays.copyOf(output, output.length);
         height /= 2;
         this.drawValues();
         splitGraphics.addFrame();
@@ -53,8 +53,32 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         }
     }
 
+
+    private void blackout(int index, int i) {
+        screen.fill(0, 0, 0);
+        if (i == 0) {
+            splitScreen.drawRect(index * width, liableHeight, width, splitScreen.getTopHeight() - liableHeight);
+        } else {
+            splitScreen.drawRectBottom(index * width, liableHeight, width, splitScreen.getTopHeight() - liableHeight);
+        }
+
+
+    }
+
+
+    protected void reDraw(int index, int i) {
+        screen.fill(255, 255, 255);
+        if (i == 0) {
+            blackout(index, i);
+            splitScreen.drawRect(index * width, liableHeight, width, splitScreen.getTopHeight() - liableHeight);
+        } else {
+            blackout(index, i);
+            splitScreen.drawRectBottom(index * width, liableHeight, width, splitScreen.getTopHeight() - liableHeight);
+        }
+    }
+
     public void nextFrame() {
-        drawValues();
+//        drawValues();
         drawInfo();
         int firstIndex;
         int secondIndex;
@@ -70,6 +94,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
                     switch (Direction.values()[directionOrdinal]) {
                         case IN_MAIN:
+                            blackout(firstIndex,0);
+                            blackout(secondIndex,0);
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getTopHeight() - (height * graphicsValues[firstIndex])), width,
                                     (height * graphicsValues[firstIndex]));
@@ -78,6 +104,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                                     (height * graphicsValues[secondIndex]));
                             break;
                         case IN_OUTPUT:// TODO split splitScreen in half
+                            blackout(firstIndex,1);
+                            blackout(secondIndex,1);
                             splitScreen.drawRectBottom(firstIndex * width,
                                     (splitScreen.getBottomHeight() - (height * graphicsOutput[firstIndex])), width,
                                     (height * graphicsOutput[firstIndex]));
@@ -140,6 +168,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                     // TODO change switch to to moves
                     switch (Direction.values()[directionOrdinal]) {
                         case IN_MAIN:
+                            blackout(firstIndex,0);
+                            blackout(secondIndex,0);
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getTopHeight() - (height * graphicsValues[firstIndex])), width,
                                     (height * graphicsValues[firstIndex]));
@@ -148,6 +178,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                                     (height * graphicsValues[secondIndex]));
                             break;
                         case IN_OUTPUT:
+                            blackout(firstIndex,1);
+                            blackout(secondIndex,1);
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getBottomHeight() - (height * graphicsOutput[firstIndex])), width,
                                     (height * graphicsValues[firstIndex]));
@@ -156,6 +188,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                                     (height * graphicsValues[secondIndex]));
                             break;
                         case MAIN_TO_OUTPUT:
+//                            blackout(firstIndex,0);
+//                            blackout(secondIndex,1);
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getTopHeight() - (height * graphicsValues[firstIndex])), width,
                                     (height * graphicsValues[firstIndex]));
@@ -167,6 +201,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                             graphicsValues[firstIndex] = 0;
                             break;
                         case OUTPUT_TO_MAIN:
+                            blackout(secondIndex,0);
+                            blackout(firstIndex,1);
                             splitScreen.drawRectBottom(firstIndex * width,
                                     (splitScreen.getBottomHeight() - (height * graphicsOutput[firstIndex])), width,
                                     (height * graphicsOutput[firstIndex]));
@@ -253,6 +289,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     @Override
     public void drawInfo() {
+        screen.fill(0, 0, 0);
+        screen.drawRect(0, 0, splitScreen.getWidth(), 40);
         splitScreen.fill(255, 255, 255);
         splitScreen.text(algorithmName, 0, 10);
         splitScreen.text("Comparisons: " + graphComp, 0, 20);
@@ -284,4 +322,6 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         graphicsOutput = new int[graphicsValues.length];
         height /= 2;
     }
+
+
 }
