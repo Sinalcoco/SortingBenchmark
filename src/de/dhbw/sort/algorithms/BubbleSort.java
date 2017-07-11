@@ -4,13 +4,10 @@ import de.dhbw.sort.util.AbstractAlgorithmHelper;
 
 public class BubbleSort extends SortingAlgorithm
 {
-  
-  public BubbleSort(AbstractAlgorithmHelper theHelper)
-  {
-    helper = theHelper;
-    helper.setAlgorithmName("BubbleSort");
+  public BubbleSort() {
+    this.name = "BubbleSort";
   }
-  
+
   public void initialize()
   {
   }
@@ -21,14 +18,10 @@ public class BubbleSort extends SortingAlgorithm
     {
       for (int i = 0; i < b; i++)
       {
-        if (helper.compare(i, i+1) > 0)
+        if (helper.compare(i, i+1) > 0) {
           helper.swap(i, i+1);
+        }
       }
-    }
-    try {
-      this.wait();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
     }
   }
 }

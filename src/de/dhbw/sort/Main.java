@@ -53,7 +53,7 @@ public class Main {
 
             if(allDone){
                 for (AbstractAlgorithmHelper h:helpers) {
-                    //TODO 
+
                 }
             }
 
@@ -96,12 +96,12 @@ public class Main {
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new SelectionSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CombSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new HeapSort()));
-//        helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(helpers.size()),values,new MergeSort()));
+        helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(helpers.size()),values,new MergeSort()));
 
 
     }
 
-    private static int[] invertedIntArray(int amountOfInts) {
+    public static int[] invertedIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
         for (int i = 0; i < array.length; i++) {
             array[i] = array.length - i;
@@ -109,7 +109,7 @@ public class Main {
         return array;
     }
 
-    private static int[] sortedIntArray(int amountOfInts) {
+    public static int[] sortedIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
         for (int i = 1; i <= array.length; i++) {
             array[i - 1] = i;
@@ -117,7 +117,7 @@ public class Main {
         return array;
     }
 
-    private static int[] randomIntArray(int amountOfInts) {
+    public static int[] randomIntArray(int amountOfInts) {
         int[] array = new int[amountOfInts];
         for (int i = 1; i <= array.length; i++) {
             int index = (int) (Math.random() * array.length);

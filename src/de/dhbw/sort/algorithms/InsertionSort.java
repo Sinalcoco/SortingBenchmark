@@ -6,10 +6,9 @@ public class InsertionSort extends SortingAlgorithm
 {
   int currentIndex;
 
-  public InsertionSort(AbstractAlgorithmHelper theHelper)
+  public InsertionSort()
   {
-    helper = theHelper;
-    helper.setAlgorithmName("InsertionSort");
+    this.name ="InsertionSort";
   }
 
   public void initialize()

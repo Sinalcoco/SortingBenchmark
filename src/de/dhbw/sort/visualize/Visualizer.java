@@ -19,6 +19,7 @@ public class Visualizer extends PApplet {
     private AbstractGraphics[] screens;
     private PImage display;
     private PImage displayFullscreen;
+    private int mouseOverIndex = -1;
 
     public Visualizer(int width, int height, double zoom, int rowCount, int columnCount) {
         this.width = (int)(width*zoom);
@@ -52,9 +53,10 @@ public class Visualizer extends PApplet {
     }
 
     public void setup() {
+    	Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         //Momentan w�rde ich das vergr��ern des Hauptfensters verbieten
         //surface.setResizable(true);
-        frameRate(30);
+        frameRate(100);
         initScreens();
 
         display = createImage(fWidth, fHeight, PApplet.RGB);
@@ -85,7 +87,7 @@ public class Visualizer extends PApplet {
 
         } else {
             // War schon eins Vollbild setze die ansicht wieder zurueck
-
+        	background(0);
             screenValid[fullScreen] = false;
             fullScreen = -1;
 //            background(0);
@@ -93,7 +95,8 @@ public class Visualizer extends PApplet {
     }
 
     public void draw() {
-        System.out.println(this.frameRate);
+    	interpretMouseOver();
+//        System.out.println(this.frameRate);
         // Wenn keines im fullScreen Modus ist zeichne einfach alle normal
         if (fullScreen == -1) {
             for (int i = 0; i < screens.length; i++)
@@ -101,7 +104,7 @@ public class Visualizer extends PApplet {
             {
 
                 try {
-                    if (screens[i].peek(false) != null) {
+                    if (!screens[i].dr ||screens[i].peek(false) != null) {
                         display.loadPixels();
                         display.pixels =  screens[i].getNextFrame(false);
                         display.updatePixels();
@@ -128,9 +131,8 @@ public class Visualizer extends PApplet {
 
                 image(displayFullscreen, 0, 0);
                 for (int i = 0; i < screens.length; i++) {
-                    screens[i].getNextFrame(false);
-                    screens[i].getNextFrame(true);
-
+                        screens[i].getNextFrame(false);
+                        screens[i].getNextFrame(true);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -140,7 +142,24 @@ public class Visualizer extends PApplet {
         }
     }
 
-    public int getGridNumber() {
+    private void interpretMouseOver() {
+    	// Ordne dem Mausclick ein Fenster zu und setzte es auf fullscreen.
+        if (fullScreen == -1) {
+            int index = mouseX / (fWidth);
+            index += (mouseY / (fHeight)) * rowCount;
+
+            mouseOverIndex = index;
+
+        } else {
+            mouseOverIndex = fullScreen;
+        }
+	}
+    public int getMouseOverIndex()
+    {
+    	return this.mouseOverIndex;
+    }
+
+	public int getGridNumber() {
         return screens.length;
     }
 
@@ -149,4 +168,9 @@ public class Visualizer extends PApplet {
         initScreen(index);
         return (Graphics) screens[index];
     }
+
+	public SplitGraphics getSplitScreen(int theIndex) {
+		screens[theIndex] = new SplitGraphics(this.createGraphics(fWidth, fHeight), this.createGraphics(width, height));
+        return (SplitGraphics) screens[theIndex];
+	}
 }

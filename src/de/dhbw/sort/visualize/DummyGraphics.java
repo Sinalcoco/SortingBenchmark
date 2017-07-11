@@ -21,8 +21,10 @@ public class DummyGraphics extends AbstractGraphics {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		super.drawBackground(0xff508acc);
-
+//		super.drawBackground(0xff508acc);
+		super.drawBackground(0);
+		this.endDraw();
+        this.dr = false;
 	}
 
 	@Override
@@ -40,6 +42,12 @@ public class DummyGraphics extends AbstractGraphics {
 	public void drawEllipse(float x, float y, float width, float height) {
 		throw new UnsupportedOperationException("Can't Draw on Dummy");
 	}
+	
+	@Override
+    public void drawLine(float x1, float y1, float x2, float y2)
+    {
+		throw new UnsupportedOperationException("Can't Draw on Dummy");
+    }
 
 	@Override
 	public void drawBackground(int r, int g, int b) {
@@ -63,12 +71,22 @@ public class DummyGraphics extends AbstractGraphics {
 
 	@Override
 	public int[] getNextFrame(boolean fullscreen) {
+
+		//TODO review performance
 		if (fullscreen) {
-			graphicsFullscreen.loadPixels();
-			return Arrays.copyOf(graphicsFullscreen.pixels, graphicsFullscreen.pixels.length);
+			this.dr = false;
+		    return graphicsFullscreen.pixels;
+
 		} else {
-			graphics.loadPixels();
-			return Arrays.copyOf(graphics.pixels, graphics.pixels.length);
+			this.dr = true;
+			return graphics.pixels;
 		}
+//		if (fullscreen) {
+//			graphicsFullscreen.loadPixels();
+//			return Arrays.copyOf(graphicsFullscreen.pixels, graphicsFullscreen.pixels.length);
+//		} else {
+//			graphics.loadPixels();
+//			return Arrays.copyOf(graphics.pixels, graphics.pixels.length);
+//		}
 	}
 }

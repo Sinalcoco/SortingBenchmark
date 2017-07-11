@@ -8,10 +8,9 @@ public class SelectionSort extends SortingAlgorithm
   int smallestIndex;
 
 
-  public SelectionSort(AbstractAlgorithmHelper theHelper)
+  public SelectionSort( )
   {
-    helper = theHelper;
-    helper.setAlgorithmName("SelectionSort");
+    this.name = "SelectionSort";
   }
 
   public void initialize()

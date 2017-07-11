@@ -9,78 +9,96 @@ import processing.core.*;
 
 public class Statistics {
 
-	private class Stat {
-		String name;
-		int operations;
-
-		Stat(String theAlgorithmName, int theOperationCount) {
-			name = theAlgorithmName;
-			operations = theOperationCount;
-		}
-		
-		public int getOperations()
-		{
-			return operations;
-		}
-		
-		public String toString()
-		{
-			return name + ": " + operations + " operations.";
-		}
-	}
-
-	HashMap<Integer, ArrayList<Stat>> stats;
+	HashMap<String, ArrayList<Integer>> stats = new HashMap<>();
+	float maxValue;
 	Graphics screen;
-	int maxValue;
+	private int run = 0;
 
 	public Statistics(Graphics theScreen) {
 		screen = theScreen;
-		stats = new HashMap<Integer, ArrayList<Stat>>();
 		maxValue = 0;
 	}
 
-	public void addData(int theRun, String theAlgorithmName, int theOperationCount) {
-		if (stats.get(theRun) == null) {
-			stats.put(theRun, new ArrayList<Stat>());
+	public void addData(String theAlgorithmName, int theOperationCount) {
+		ArrayList<Integer> values = stats.get(theAlgorithmName);
+		if (values == null) {
+			values = new ArrayList<Integer>();
 		}
-		ArrayList<Stat> list = stats.get(theRun);
+		values.add(theOperationCount);
+		stats.put(theAlgorithmName, values);
 		if (theOperationCount > maxValue)
 			maxValue = theOperationCount;
-		list.add(new Stat(theAlgorithmName, theOperationCount));
-		updateScreen();
+
+		
 	}
-	
-	private void updateScreen()
-	{
-//		int hSpacing = screen.getGraphics().width / (stats.size() + 1);
-//		Integer [] keys = stats.keySet().toArray(new Integer [stats.keySet().size()]);
+
+	public void updateScreen() {
+//		screen.drawBackground(0, 0, 0);
+//		screen.stroke(255, 255, 255);
+//		float hSpacing, x1, y1, x2, y2;
+//		Set<String> algorithmNames = stats.keySet();
+//		for (String algorithm : algorithmNames) {
+//			ArrayList<Integer> values = stats.get(algorithm);
+//			hSpacing = screen.getWidth() / (values.size() + 1);
+//			for (int i = 0; i < values.size() - 1; i++) {
+//				x1 = hSpacing + i * hSpacing;
+//				y1 = screen.getHeight() - values.get(i) / maxValue * screen.getHeight() + 10;
 //
-//		screen.getGraphics().beginDraw();
-//		screen.getGraphics().background(0);
+//				x2 = hSpacing + (i + 1) * hSpacing;
+//				y2 = screen.getHeight() - values.get(i + 1) / maxValue * screen.getHeight() + 10;
 //
-//		for (int i = 0; i < keys.length; i++)
-//		{
-//			for (Stat s : stats.get(keys[i]))
-//			{
-//				screen.getGraphics().ellipse(i * hSpacing + hSpacing, (screen.getGraphics().height - ((float)s.getOperations() / maxValue) * screen.getGraphics().height + 10), 10, 10);
+//				screen.drawLine(x1, y1, x2, y2);
 //			}
 //		}
-//		screen.getGraphics().endDraw();
+//		screen.stroke(0, 0, 0);
+//		screen.addFrame();
+		highlight("dummy");
 	}
 
-	public void printStatistic(int theRun) {
-		System.out.println("Statistics of the " + theRun + ". run");
-		ArrayList<Stat> list = stats.get(theRun);
-		if (list == null)
-			System.out.println("No data yet.");
-		else
-		{
-			for (Stat s : list)
-				System.out.println('\t' + s.toString());
+	public void highlight(String theAlgorithmName) {
+		screen.drawBackground(0, 0, 0);
+		float hSpacing, x1, y1, x2, y2;
+		Set<String> algorithmNames = stats.keySet();
+		for (String algorithm : algorithmNames) {
+			if (algorithm == theAlgorithmName)
+			{
+				screen.stroke(0, 255, 0);
+				screen.strokeWeight(4);
+			}else if (algorithm == "n-curve")
+			{
+				screen.stroke(0, 255, 255);
+				screen.strokeWeight(1);
+			}else if (algorithm == "nlogn-curve")
+			{
+				screen.stroke(255, 255, 0);
+				screen.strokeWeight(1);
+			}else if (algorithm == "0.5n2-curve")
+			{
+				screen.stroke(125, 0, 130);
+				screen.strokeWeight(1);
+			}else if (algorithm == "n2-curve")
+			{
+				screen.stroke(255, 0, 0);
+				screen.strokeWeight(1);
+			}
+			else
+			{
+				screen.stroke(255, 255, 255);
+				screen.strokeWeight(1);
+			}
+			ArrayList<Integer> values = stats.get(algorithm);
+			hSpacing = screen.getWidth() / (values.size() + 1);
+			for (int i = 0; i < values.size() - 1; i++) {
+				x1 = hSpacing + i * hSpacing;
+				y1 = screen.getHeight() - values.get(i) / maxValue * screen.getHeight() + 10;
+
+				x2 = hSpacing + (i + 1) * hSpacing;
+				y2 = screen.getHeight() - values.get(i + 1) / maxValue * screen.getHeight() + 10;
+
+				screen.drawLine(x1, y1, x2, y2);
+			}
 		}
-	}
-
-	public void setScreen(Graphics theScreen) {
-		screen = theScreen;
+		screen.stroke(0, 0, 0);
+		screen.addFrame();
 	}
 }

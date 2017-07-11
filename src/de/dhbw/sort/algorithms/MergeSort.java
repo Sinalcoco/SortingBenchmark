@@ -1,5 +1,6 @@
 package de.dhbw.sort.algorithms;
 
+import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 
 //import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
@@ -7,19 +8,23 @@ import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 public class MergeSort extends SortingAlgorithm
 {
   OutOfPlaceAlgorithmHelper helper;
-  public MergeSort(OutOfPlaceAlgorithmHelper theHelper)
+  public MergeSort()
   {
-    helper = theHelper;
-    super.helper = theHelper;
-    helper.setAlgorithmName("MergeSort");
+
+    this.name = "MergeSort";
   }
 
+  public void setHelper(AbstractAlgorithmHelper helper){
+      this.helper = (OutOfPlaceAlgorithmHelper) helper;
+      super.helper = helper;
+  }
   public void initialize()
   {
   }
 
   public void sort() {
-        mergesort(0, helper.arrayLength() - 1);
+//      System.out.println("" + helper +"|"+ this.helper +"|"+ super.helper);
+        mergesort(0, this.helper.arrayLength() - 1);
     }
 
     private void mergesort(int low, int high) {
@@ -37,7 +42,6 @@ public class MergeSort extends SortingAlgorithm
     }
 
     private void merge(int low, int middle, int high) {
-
         // Copy both parts into the helper array
         for (int i = low; i <= high; i++) {
             //helper[i] = numbers[i];
