@@ -42,7 +42,6 @@ public class MergeSort extends SortingAlgorithm
     }
 
     private void merge(int low, int middle, int high) {
-
         // Copy both parts into the helper array
         for (int i = low; i <= high; i++) {
             //helper[i] = numbers[i];

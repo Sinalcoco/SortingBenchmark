@@ -7,6 +7,8 @@ import processing.core.PImage;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+
 /**
  * Created by jbi on 30.06.2017.
  */
@@ -31,6 +33,7 @@ public abstract class AbstractGraphics {
 		this.graphics = graphics;
 		this.hScaling = graphicsFullscreen.height / graphics.height;
 		this.vScaling = graphicsFullscreen.width / graphics.width;
+		dr = true;
 	}
 
 	protected AbstractGraphics() {

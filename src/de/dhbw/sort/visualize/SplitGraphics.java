@@ -1,5 +1,6 @@
 package de.dhbw.sort.visualize;
 
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 
 import processing.core.PGraphics;
@@ -118,11 +119,13 @@ public class SplitGraphics extends AbstractGraphics{
 	@Override
 	public void text(String text, float x, float y) {
 		lock.lock();
+		if (text == null)
+			throw new IllegalArgumentException("Der zu zeichnende Text darf nicht null sein.");
 		try {
 			x = x + borderWidth;
 			y = y + borderHeight;
 			startDraw();
-			this.graphics.text(text, x, y);
+
 			this.graphicsFullscreen.textSize(this.graphics.textSize * vScaling);
 			this.graphicsFullscreen.text(text, x * hScaling, y * vScaling);
 			endDraw();
@@ -134,7 +137,6 @@ public class SplitGraphics extends AbstractGraphics{
 
 	@Override
 	public void addFrame() {
-
 		try {
 			this.graphics.loadPixels();
 

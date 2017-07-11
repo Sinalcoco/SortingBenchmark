@@ -24,8 +24,10 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
 
     public OutOfPlaceAlgorithmHelper(SplitGraphics splitGraphics, int[] theArray, SortingAlgorithm sort) {
-        super(splitGraphics, theArray,sort);
-
+        super(splitGraphics, theArray);
+        this.sort = sort;
+        sort.setHelper(this);
+        algorithmName = "No name set!";
         splitScreen = splitGraphics;
         output = new int[values.length];
         graphicsOutput  = Arrays.copyOf(output,output.length);
@@ -183,7 +185,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         splitScreen.addFrame();
     }
 
-    public synchronized void swap(int firstIndex, ArrayType fromArray, int secondIndex, ArrayType toArray) {
+    public void swap(int firstIndex, ArrayType fromArray, int secondIndex, ArrayType toArray) {
         moves += 3;
         AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
         mov.add(Moves.SWAP);
@@ -197,7 +199,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
     }
 
-    public synchronized int compare(int firstIndex, ArrayType fromArray, int secondIndex, ArrayType toArray) {
+    public int compare(int firstIndex, ArrayType fromArray, int secondIndex, ArrayType toArray) {
         comparisons++;
         AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
         mov.add(Moves.COMPARE);
@@ -216,7 +218,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         }
     }
 
-    public synchronized void move(int fromIndex, ArrayType fromArray, int toIndex, ArrayType toArray) {
+    public void move(int fromIndex, ArrayType fromArray, int toIndex, ArrayType toArray) {
         moves++;
         AlgorithmCommand.Direction direction = calculateDirection(fromArray, toArray);
 
