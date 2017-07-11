@@ -17,7 +17,7 @@ public class Main {
     private static int heigth = 600;
     private static int rows = 3;
     private static int colums = 3;
-    private static boolean threaded = false;
+    private static boolean threaded = true;
     private static int[] values;
 
     private static int amountOfValues = 20;

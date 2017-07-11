@@ -12,7 +12,7 @@ import de.dhbw.sort.visualize.Graphics;
 import processing.core.PApplet;
 
 
-public abstract class AbstractAlgorithmHelper extends Thread{
+public abstract class AbstractAlgorithmHelper extends Thread {
     protected int[] values;
     protected int[] graphicsValues = values;
 
@@ -22,7 +22,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 
     protected ArrayList<AlgorithmCommand> commands;
 
-    protected boolean ready =false;
+    protected boolean ready = false;
 
     protected String algorithmName;
 
@@ -43,33 +43,33 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 
     protected AbstractAlgorithmHelper() {
     }
+
     protected AbstractAlgorithmHelper(AbstractGraphics screen) {
         this.screen = screen;
     }
+
     public AbstractAlgorithmHelper(AbstractGraphics screen, int[] theArray) {
-    	initialize(screen, theArray);
+        initialize(screen, theArray);
     }
 
     protected AbstractAlgorithmHelper(AbstractGraphics screen, int[] theArray, SortingAlgorithm sort) {
-        this(screen,theArray);
+        this(screen, theArray);
         this.sort = sort;
         this.sort.setHelper(this);
     }
 
 
-
-    public synchronized void run(){
+    public synchronized void run() {
 
         startSorter();
         this.drawValues();
 
 
-
-        long l ;
-        while (true){
+        long l;
+        while (true) {
 //            l = System.currentTimeMillis();
             this.nextFrame();
-            if (this.isReady()){
+            if (this.isReady()) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
@@ -94,19 +94,16 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         moves = 0;
         commands = new ArrayList<AlgorithmCommand>();
         int big = 0;
-        for (int a : values)
-            {
-                if (a > big)
-                    {
-                        big = a;
-                    }
+        for (int a : values) {
+            if (a > big) {
+                big = a;
             }
+        }
 
         width = screen.getWidth() / values.length;
-        height = (screen.getHeight()- liableHeight) / big;
+        height = (screen.getHeight() - liableHeight) / big;
 
     }
-
 
 
     public abstract void drawValues();
@@ -119,7 +116,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         commands.add(new AlgorithmCommand(AlgorithmCommand.Action.HIGHLIGHT, theIndex, theColor.hashCode()));
     }
 
-    public  int compare(int firstIndex, int secondIndex) {
+    public int compare(int firstIndex, int secondIndex) {
         this.comparisons++;
         this.mov.add(Moves.COMPARE);
         this.indexes.add(firstIndex);
@@ -128,7 +125,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         return (this.values[firstIndex] - this.values[secondIndex]);
     }
 
-    public  void move(int fromIndex, int toIndex) {
+    public void move(int fromIndex, int toIndex) {
         moves++;
         mov.add(Moves.MOVE);
         indexes.add(fromIndex);
@@ -139,7 +136,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 
     }
 
-    public  void swap(int firstIndex, int secondIndex) {
+    public void swap(int firstIndex, int secondIndex) {
         moves += 3;
         swaps++;
         mov.add(Moves.SWAP);
@@ -167,7 +164,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
 //        drawInfo();
     }
 
-    public void resetAlgorithm(int[] theArray){
+    public void resetAlgorithm(int[] theArray) {
 
 
         values = new int[theArray.length];
@@ -176,7 +173,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         comparisons = 0;
         moves = 0;
 
-        
+
     }
 
     public int getComparisons() {
@@ -192,7 +189,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
     }
 
 
-    public void resetHelper(int[] peek){
+    public void resetHelper(int[] peek) {
 
         this.graphicsValues = Arrays.copyOf(peek, peek.length);
 
@@ -209,7 +206,7 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         this.ready = false;
     }
 
-    public  void ready(){
+    public void ready() {
         try {
             this.mov.put(Moves.READY);
 
@@ -218,7 +215,21 @@ public abstract class AbstractAlgorithmHelper extends Thread{
         }
     }
 
-    public void startSorter(){
+    public void startSorter() {
         this.sort.start();
+    }
+
+    protected void blackout(int index) {
+        screen.fill(0, 0, 0);
+        screen.drawRect(index * width, liableHeight, width, screen.getHeight() - liableHeight);
+    }
+
+    protected void reDraw(int index) {
+        blackout(index);
+        screen.fill(255, 255, 255);
+        screen.drawRect(index * width,
+                (screen.getHeight() - (height * graphicsValues[index])), width,
+                (height * graphicsValues[index]));
+
     }
 }
