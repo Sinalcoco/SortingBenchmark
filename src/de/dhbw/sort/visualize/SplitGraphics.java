@@ -7,11 +7,15 @@ import processing.core.PGraphics;
 
 public class SplitGraphics extends AbstractGraphics{
 
-	private float half;
+	private int [] heights;
 	
-	public SplitGraphics(PGraphics graphics, PGraphics graphicsFullscreen) {
+	public SplitGraphics(PGraphics graphics, PGraphics graphicsFullscreen, int amountOfSplits) {
 		super(graphics, graphicsFullscreen);
-		half = graphics.height / 2;
+		heights = new int[amountOfSplits];
+		for (int i = 0; i < amountOfSplits; i++)
+		{
+			heights[i] = graphics.height / amountOfSplits;
+		}
 	}
 
 	@Override
@@ -21,7 +25,7 @@ public class SplitGraphics extends AbstractGraphics{
 		this.graphics = graphics;
 
 	}
-
+	@Deprecated
 	@Override
 	public void drawRect(float x, float y, float width, float height) {
 		lock.lock();
@@ -38,11 +42,17 @@ public class SplitGraphics extends AbstractGraphics{
 			lock.unlock();
 		}
 	}
-	public void drawRectBottom(float x, float y, float width, float height) {
+	public void drawRect(float x, float y, float width, float height, int index) {
 		lock.lock();
 		try {
 			x = x + borderWidth;
-			y = y + half;
+			y = y + borderHeight;
+			
+			for (int i = 0; i < index; i++)
+			{
+				y += heights[i];
+			}
+			
 			startDraw();
 
 			this.graphics.rect(x, y, width, height);
@@ -132,6 +142,28 @@ public class SplitGraphics extends AbstractGraphics{
 		} finally {
 			lock.unlock();
 		}
+	}
+	public void text(String text, float x, float y, int index) {
+		lock.lock();
+		if (text == null)
+			throw new IllegalArgumentException("Der zu zeichnende Text darf nicht null sein.");
+		try {
+			x = x + borderWidth;
+			y = y + borderHeight;
+			
+			for (int i = 0; i < index; i++)
+			{
+				y += heights[i];
+			}
+			
+			startDraw();
+			this.graphics.text(text, x, y);
+			this.graphicsFullscreen.textSize(this.graphics.textSize * vScaling);
+			this.graphicsFullscreen.text(text, x * hScaling, y * vScaling);
+			endDraw();
+		} finally {
+			lock.unlock();
+		}
 
 	}
 
@@ -156,14 +188,7 @@ public class SplitGraphics extends AbstractGraphics{
 
 
 	public float getHeight(int i) {
-		return getHeight() / 2;
+		return heights[i];
 	}
 
-	public float getTopHeight() {
-		return getHeight() / 2;
-	}
-
-	public float getBottomHeight() {
-		return getHeight() / 2;
-	}
 }
