@@ -31,6 +31,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 		output = new int[values.length];
 		graphicsOutput = Arrays.copyOf(output, output.length);
 		height /= 2;
+		height = (splitScreen.getHeight() / splitScreen.getAmountOfScreens() - liableHeight) / big;
 		this.drawValues();
 		splitGraphics.addFrame();
 	}

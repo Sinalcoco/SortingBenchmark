@@ -14,7 +14,7 @@ public class SplitGraphics extends AbstractGraphics{
 		heights = new int[amountOfSplits];
 		for (int i = 0; i < amountOfSplits; i++)
 		{
-			heights[i] = graphics.height / amountOfSplits;
+			heights[i] = (int) ((graphics.height / amountOfSplits) - borderHeight);
 		}
 	}
 
@@ -189,6 +189,10 @@ public class SplitGraphics extends AbstractGraphics{
 
 	public float getHeight(int i) {
 		return heights[i];
+	}
+
+	public float getAmountOfScreens() {
+		return heights.length;
 	}
 
 }

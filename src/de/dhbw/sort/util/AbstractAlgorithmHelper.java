@@ -37,7 +37,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
     protected LinkedBlockingQueue<Moves> mov = new LinkedBlockingQueue();
     protected LinkedBlockingQueue<Integer> indexes = new LinkedBlockingQueue();
     protected int liableHeight = 40;
-
+    protected int big = 0;
 
     protected SortingAlgorithm sort;
 
@@ -93,7 +93,6 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         comparisons = 0;
         moves = 0;
         commands = new ArrayList<AlgorithmCommand>();
-        int big = 0;
         for (int a : values) {
             if (a > big) {
                 big = a;
