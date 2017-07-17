@@ -20,7 +20,7 @@ public class Main {
     private static boolean threaded = true;
     private static int[] values;
 
-    private static int amountOfValues = 20;
+    private static int amountOfValues = 10;
 
     private static ArrayList<AbstractAlgorithmHelper> helpers = new ArrayList<>();
 
@@ -51,8 +51,8 @@ public class Main {
                 helper.start();
             }
 
-            if(allDone){
-                for (AbstractAlgorithmHelper h:helpers) {
+            if (allDone) {
+                for (AbstractAlgorithmHelper h : helpers) {
 
                 }
             }
@@ -96,7 +96,7 @@ public class Main {
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new SelectionSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CombSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new HeapSort()));
-        helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(helpers.size(), 2),values,new MergeSort()));
+        helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(helpers.size(), 2), values, new MergeSort()));
 
 
     }

@@ -1,19 +1,13 @@
 package de.dhbw.sort.util;
 
-import de.dhbw.sort.algorithms.BubbleSort;
 import de.dhbw.sort.algorithms.SortingAlgorithm;
 import de.dhbw.sort.visualize.Graphics;
 
 public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
-    private Graphics valuesView;
-    private int grafMoves = 0;
-    private int gravComp = 0;
-    private int gravSwaps = 0;
-
 
     public InPlaceAlgorithmHelper(Graphics screen, int[] theArray, SortingAlgorithm sort) {
-        super(screen, theArray,sort);
+        super(screen, theArray, sort);
     }
 
     @Override
@@ -31,7 +25,6 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     }
 
 
-
     public void nextFrame() {
         int firstIndex = 0;
         int secondIndex = 0;
@@ -39,7 +32,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
             switch (mov.poll()) {
 
                 case COMPARE:
-                    gravComp++;
+                    graphComparisons++;
                     firstIndex = indexes.poll();
                     secondIndex = indexes.poll();
 
@@ -55,8 +48,8 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                             (height * graphicsValues[secondIndex]));
                     break;
                 case SWAP:
-                    grafMoves += 3;
-                    gravSwaps++;
+                    graphMoves += 3;
+                    graphSwaps++;
                     firstIndex = indexes.poll();
                     secondIndex = indexes.poll();
 
@@ -88,12 +81,9 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                     break;
                 default:
                     break;
-
-
             }
-
-
         }
+
         this.screen.addFrame();
         reDraw(firstIndex);
         reDraw(secondIndex);
@@ -106,9 +96,9 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         screen.drawRect(0, 0, screen.getWidth(), 40);
         screen.fill(255, 255, 255);
         screen.text(algorithmName, 0, 10);
-        screen.text("Comparisons: " + gravComp, 0, 20);
-        screen.text("Swaps: " + gravSwaps, 0, 30);
-        screen.text("Moves: " + grafMoves, 0, 40);
+        screen.text("Comparisons: " + graphComparisons, 0, 20);
+        screen.text("Swaps: " + graphSwaps, 0, 30);
+        screen.text("Moves: " + graphMoves, 0, 40);
 
     }
 
@@ -119,11 +109,11 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     @Override
     public void resetHelper(int[] peek) {
 
-        gravSwaps = 0;
-        grafMoves = 0;
-        gravComp = 0;
+        graphSwaps = 0;
+        graphMoves = 0;
+        graphComparisons = 0;
         super.resetHelper(peek);
-        ready  =false;
+        ready = false;
 
 
     }

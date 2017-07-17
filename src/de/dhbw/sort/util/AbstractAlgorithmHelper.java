@@ -1,33 +1,32 @@
 package de.dhbw.sort.util;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import de.dhbw.sort.algorithms.SortingAlgorithm;
+import de.dhbw.sort.visualize.AbstractGraphics;
+import processing.core.PApplet;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import de.dhbw.sort.algorithms.SortingAlgorithm;
-import de.dhbw.sort.visualize.AbstractGraphics;
-import de.dhbw.sort.visualize.Graphics;
-import processing.core.PApplet;
 
 
 public abstract class AbstractAlgorithmHelper extends Thread {
     protected int[] values;
     protected int[] graphicsValues = values;
 
+    protected int liableHeight = 40;
+    protected int big = 0;
+    protected int moves;
     protected int comparisons;
     protected int swaps;
-    protected int moves;
+    protected int graphMoves = 0;
+    protected int graphComparisons = 0;
+    protected int graphSwaps = 0;
 
     protected ArrayList<AlgorithmCommand> commands;
 
     protected boolean ready = false;
 
     protected String algorithmName;
-
-    protected int viewX, viewY, viewWidth, viewHeight;
-
 
     protected AbstractGraphics screen;
 
@@ -36,8 +35,6 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
     protected LinkedBlockingQueue<Moves> mov = new LinkedBlockingQueue();
     protected LinkedBlockingQueue<Integer> indexes = new LinkedBlockingQueue();
-    protected int liableHeight = 40;
-    protected int big = 0;
 
     protected SortingAlgorithm sort;
 
@@ -65,9 +62,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         this.drawValues();
 
 
-        long l;
         while (true) {
-//            l = System.currentTimeMillis();
             this.nextFrame();
             if (this.isReady()) {
                 try {
@@ -76,7 +71,6 @@ public abstract class AbstractAlgorithmHelper extends Thread {
                     e.printStackTrace();
                 }
             }
-//            System.out.println(System.currentTimeMillis()-l);
         }
     }
 
@@ -111,10 +105,6 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
     public abstract void drawInfo();
 
-    public void highlight(int theIndex, ActionColor theColor) {
-        commands.add(new AlgorithmCommand(AlgorithmCommand.Action.HIGHLIGHT, theIndex, theColor.hashCode()));
-    }
-
     public int compare(int firstIndex, int secondIndex) {
         this.comparisons++;
         this.mov.add(Moves.COMPARE);
@@ -129,10 +119,6 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         mov.add(Moves.MOVE);
         indexes.add(fromIndex);
         indexes.add(toIndex);
-
-        //TODO do move stuff in array
-
-
     }
 
     public void swap(int firstIndex, int secondIndex) {
@@ -155,12 +141,6 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
     public boolean isReady() {
         return ready;
-    }
-
-
-    public void setAlgorithmName(String theName) {
-        algorithmName = theName;
-//        drawInfo();
     }
 
     public void resetAlgorithm(int[] theArray) {
@@ -187,6 +167,9 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         return algorithmName;
     }
 
+    public void setAlgorithmName(String theName) {
+        this.algorithmName = theName;
+    }
 
     public void resetHelper(int[] peek) {
 

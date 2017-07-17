@@ -1,39 +1,41 @@
 package de.dhbw.sort.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-//import de.dhbw.sort.SortingBenchmark;
 import de.dhbw.sort.algorithms.SortingAlgorithm;
 import de.dhbw.sort.util.AlgorithmCommand.Direction;
-import de.dhbw.sort.visualize.Graphics;
 import de.dhbw.sort.visualize.SplitGraphics;
-import processing.core.PApplet;
+import java.util.Arrays;
 
 public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
-    public enum ArrayType {
-        MAIN, OUTPUT
-    }
-
     private int[] output;
     private int[] graphicsOutput;
+
     private int graphMoves = 0;
     private int graphComp = 0;
+
     private SplitGraphics splitScreen;
 
-	public OutOfPlaceAlgorithmHelper(SplitGraphics splitGraphics, int[] theArray, SortingAlgorithm sort) {
-		super(splitGraphics, theArray);
-		this.sort = sort;
-		sort.setHelper(this);
-		algorithmName = "No name set!";
-		splitScreen = splitGraphics;
-		output = new int[values.length];
-		graphicsOutput = Arrays.copyOf(output, output.length);
-		height /= 2;
-		height = (splitScreen.getHeight() / splitScreen.getAmountOfScreens() - liableHeight) / big;this.drawValues();
-		splitGraphics.addFrame();
-	}
+    public OutOfPlaceAlgorithmHelper(SplitGraphics splitGraphics, int[] theArray, SortingAlgorithm sort) {
+        super(splitGraphics, theArray);
+
+        this.sort = sort;
+
+        this.sort.setHelper(this);
+        this.algorithmName = "No name set!";
+        this.splitScreen = splitGraphics;
+        this.output = new int[values.length];
+        this.graphicsOutput = Arrays.copyOf(output, output.length);
+
+        this.height = getHeight();
+
+        this.drawValues();
+
+        splitGraphics.addFrame();
+    }
+
+    private float getHeight() {
+        return (splitScreen.getHeight() / splitScreen.getAmountOfScreens() - liableHeight) / big;
+    }
 
     public void drawValues() {
         splitScreen.drawBackground(0, 0, 0);
@@ -156,7 +158,6 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                     graphicsValues[secondIndex] = temp;
                     break;
                 case MOVE:
-                    splitScreen.fill(255, 0, 0);
                     graphMoves++;
                     firstIndex = indexes.poll();
                     secondIndex = indexes.poll();
@@ -166,6 +167,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                         case IN_MAIN:
                             blackout(firstIndex, 0);
                             blackout(secondIndex, 0);
+                            splitScreen.fill(255, 0, 0);
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getHeight(0) - (height * graphicsValues[firstIndex])), width,
                                     (height * graphicsValues[firstIndex]), 0);
@@ -176,6 +178,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                         case IN_OUTPUT:
                             blackout(firstIndex, 1);
                             blackout(secondIndex, 1);
+                            splitScreen.fill(255, 0, 0);
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getHeight(1) - (height * graphicsOutput[firstIndex])), width,
                                     (height * graphicsValues[firstIndex]), 0);
@@ -186,6 +189,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                         case MAIN_TO_OUTPUT:
                             // blackout(firstIndex,0);
                             // blackout(secondIndex,1);
+                            splitScreen.fill(255, 0, 0);
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getHeight(0) - (height * graphicsValues[firstIndex])), width,
                                     (height * graphicsValues[firstIndex]), 0);
@@ -199,6 +203,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                         case OUTPUT_TO_MAIN:
                             blackout(secondIndex, 0);
                             blackout(firstIndex, 1);
+                            splitScreen.fill(255, 0, 0);
                             splitScreen.drawRect(firstIndex * width,
                                     (splitScreen.getHeight(1) - (height * graphicsOutput[firstIndex])), width,
                                     (height * graphicsOutput[firstIndex]), 1);
@@ -282,7 +287,6 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         splitScreen.addFrame();
     }
 
-
     @Override
     public void drawInfo() {
         screen.fill(0, 0, 0);
@@ -317,6 +321,10 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         super.resetHelper(peek);
         graphicsOutput = new int[graphicsValues.length];
         height /= 2;
+    }
+
+    public enum ArrayType {
+        MAIN, OUTPUT
     }
 
 }

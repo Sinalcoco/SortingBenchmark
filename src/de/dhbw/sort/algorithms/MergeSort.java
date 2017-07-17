@@ -3,26 +3,24 @@ package de.dhbw.sort.algorithms;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 
-//import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 
-public class MergeSort extends SortingAlgorithm
-{
-  OutOfPlaceAlgorithmHelper helper;
-  public MergeSort()
-  {
+public class MergeSort extends SortingAlgorithm {
+    OutOfPlaceAlgorithmHelper helper;
 
-    this.name = "MergeSort";
-  }
+    public MergeSort() {
 
-  public void setHelper(AbstractAlgorithmHelper helper){
-      this.helper = (OutOfPlaceAlgorithmHelper) helper;
-      super.helper = helper;
-  }
-  public void initialize()
-  {
-  }
+        this.name = "MergeSort";
+    }
 
-  public void sort() {
+    public void setHelper(AbstractAlgorithmHelper helper) {
+        this.helper = (OutOfPlaceAlgorithmHelper) helper;
+        super.helper = helper;
+    }
+
+    public void initialize() {
+    }
+
+    public void sort() {
 //      System.out.println("" + helper +"|"+ this.helper +"|"+ super.helper);
         mergesort(0, this.helper.arrayLength() - 1);
     }
@@ -55,7 +53,7 @@ public class MergeSort extends SortingAlgorithm
         // to the original array
         while (i <= middle && j <= high) {
             //if (helper[i] <= helper[j]) {
-              if (helper.compare(i, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT, j, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT) <= 0) {
+            if (helper.compare(i, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT, j, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT) <= 0) {
                 //numbers[k] = helper[i];
                 helper.move(i, OutOfPlaceAlgorithmHelper.ArrayType.OUTPUT, k, OutOfPlaceAlgorithmHelper.ArrayType.MAIN);
                 i++;

@@ -1,13 +1,11 @@
 package de.dhbw.sort.algorithms;
 
-import de.dhbw.sort.util.AbstractAlgorithmHelper;
-
 /**
  * Created by jbi on 30.06.2017.
  */
 public class CombSort extends SortingAlgorithm {
     public CombSort() {
-        this.name="CombSort";
+        this.name = "CombSort";
     }
 
 
@@ -21,21 +19,21 @@ public class CombSort extends SortingAlgorithm {
 
         int gap = helper.arrayLength();
         boolean sorted = false;
-        do{
+        do {
 
-            gap --;
+            gap--;
             if (gap <= 1) {
                 sorted = true;
             } else {
                 sorted = false;
             }
             int i = 0;
-            while(i+gap<helper.arrayLength()){
-                if(helper.compare(i, i + gap)>0){
-                    helper.swap(i,i+gap);
+            while (i + gap < helper.arrayLength()) {
+                if (helper.compare(i, i + gap) > 0) {
+                    helper.swap(i, i + gap);
                 }
                 ++i;
             }
-        }while(!sorted);
+        } while (!sorted);
     }
 }
