@@ -176,8 +176,49 @@ public class Visualizer extends PApplet {
         return (Graphics) screens[index];
     }
 
+    public Graphics getNextAvailibleScreen() throws NoScreenAvailableError {
+        for (int i = 0; i < screens.length; i++) {
+            AbstractGraphics g = screens[i];
+            if (g instanceof DummyGraphics) {
+                initScreen(i);
+                return (Graphics) screens[i];
+            } else {
+                throw new NoScreenAvailableError("No more Screens");
+            }
+        }
+
+        return null;
+    }
+
+
+    public SplitGraphics getNextAvailibleSplitScreen(int theAmountOfScreens) throws NoScreenAvailableError {
+
+
+        for (int i = 0; i < screens.length; i++) {
+            AbstractGraphics g = screens[i];
+            if (g instanceof DummyGraphics) {
+                screens[i] = new SplitGraphics(this.createGraphics(fWidth, fHeight), this.createGraphics(width, height), theAmountOfScreens);
+                return (SplitGraphics) screens[i];
+            } else {
+                throw new NoScreenAvailableError("No more Screens");
+            }
+        }
+
+        return null;
+    }
+
+
     public SplitGraphics getSplitScreen(int theIndex, int theAmountOfScreens) {
         screens[theIndex] = new SplitGraphics(this.createGraphics(fWidth, fHeight), this.createGraphics(width, height), theAmountOfScreens);
         return (SplitGraphics) screens[theIndex];
+    }
+
+    private class NoScreenAvailableError extends Throwable {
+        public NoScreenAvailableError() {
+        }
+
+        public NoScreenAvailableError(String message) {
+            super(message);
+        }
     }
 }
