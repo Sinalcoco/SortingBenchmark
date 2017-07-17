@@ -4,9 +4,8 @@ import de.dhbw.sort.util.AbstractAlgorithmHelper;
 
 public class QuickSort extends SortingAlgorithm {
 
-    public QuickSort(AbstractAlgorithmHelper theHelper) {
-        helper = theHelper;
-        helper.setAlgorithmName("QuickSort");
+    public QuickSort() {
+        this.name="Quicksort";
     }
 
     public void initialize() {

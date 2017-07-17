@@ -92,6 +92,7 @@ public class Main {
 
     private static void initHelper() {
 
+<<<<<<< HEAD
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new BubbleSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new InsertionSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new CocktailShaker()));
@@ -99,6 +100,18 @@ public class Main {
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new CombSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new HeapSort()));
         helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getNextAvailableSplitScreen(helpers.size(), 2), values, new MergeSort()));
+=======
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new BubbleSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new InsertionSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CocktailShaker()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new SelectionSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CombSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new HeapSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new QuickSort()));
+        helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(helpers.size(), 2), values, new MergeSort()));
+
+
+>>>>>>> branch 'master' of https://github.com/Sinalcoco/SortingBenchmark.git
     }
 
     public static int[] invertedIntArray(int amountOfInts) {
