@@ -176,7 +176,7 @@ public class Visualizer extends PApplet {
         return (Graphics) screens[index];
     }
 
-    public Graphics getNextAvailibleScreen() throws NoScreenAvailableError {
+    public Graphics getNextAvailableScreen() throws NoScreenAvailableError {
         for (int i = 0; i < screens.length; i++) {
             AbstractGraphics g = screens[i];
             if (g instanceof DummyGraphics) {
@@ -191,7 +191,7 @@ public class Visualizer extends PApplet {
     }
 
 
-    public SplitGraphics getNextAvailibleSplitScreen(int theAmountOfScreens) throws NoScreenAvailableError {
+    public SplitGraphics getNextAvailableSplitScreen(int theAmountOfScreens) throws NoScreenAvailableError {
 
 
         for (int i = 0; i < screens.length; i++) {
@@ -213,12 +213,5 @@ public class Visualizer extends PApplet {
         return (SplitGraphics) screens[theIndex];
     }
 
-    private class NoScreenAvailableError extends Throwable {
-        public NoScreenAvailableError() {
-        }
-
-        public NoScreenAvailableError(String message) {
-            super(message);
-        }
-    }
+   
 }
