@@ -37,6 +37,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
     protected LinkedBlockingQueue<Integer> indexes = new LinkedBlockingQueue();
 
     protected SortingAlgorithm sort;
+    private boolean algorithRady = false;
 
     protected AbstractAlgorithmHelper() {
     }
@@ -66,6 +67,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
             this.nextFrame();
             if (this.isReady()) {
                 try {
+//                    System.out.println(this.algorithmName+": Wait");
                     this.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -87,17 +89,39 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         comparisons = 0;
         moves = 0;
         commands = new ArrayList<AlgorithmCommand>();
-        for (int a : values) {
+        for (int a : graphicsValues) {
             if (a > big) {
                 big = a;
             }
         }
 
-        width = screen.getWidth() / values.length;
+        width = screen.getWidth() / graphicsValues.length;
         height = (screen.getHeight() - liableHeight) / big;
 
     }
 
+    public synchronized void resetGraphics(int[] b) {
+        graphMoves = 0;
+        graphComparisons = 0;
+        int l = b.length;
+        graphicsValues = new int[l];
+        PApplet.arrayCopy(b, graphicsValues);
+
+        for (int a : graphicsValues) {
+            if (a > big) {
+                big = a;
+            }
+        }
+
+        width = screen.getWidth() / graphicsValues.length;
+        height = (screen.getHeight() - liableHeight) / big;
+
+        this.drawValues();
+        this.drawInfo();
+        this.notify();
+        this.ready=false;
+
+    }
 
     public abstract void drawValues();
 
@@ -107,7 +131,9 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
     public int compare(int firstIndex, int secondIndex) {
         this.comparisons++;
-        this.mov.add(Moves.COMPARE);
+        if(!this.mov.add(Moves.COMPARE)){
+            System.out.println("lol");
+        }
         this.indexes.add(firstIndex);
         this.indexes.add(secondIndex);
 
@@ -143,7 +169,12 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         return ready;
     }
 
+    public boolean isAlgorithRady() {
+        return algorithRady;
+    }
+
     public void resetAlgorithm(int[] theArray) {
+        this.algorithRady=false;
 
 
         values = new int[theArray.length];
@@ -151,9 +182,11 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
         comparisons = 0;
         moves = 0;
+        this.sort.reset();
 
 
     }
+
 
     public int getComparisons() {
         return comparisons;
@@ -191,6 +224,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
     public void ready() {
         try {
             this.mov.put(Moves.READY);
+            this.algorithRady = true;
 
         } catch (InterruptedException e) {
             e.printStackTrace();

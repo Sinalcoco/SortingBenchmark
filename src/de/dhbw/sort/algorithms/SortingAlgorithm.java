@@ -14,12 +14,14 @@ public abstract class SortingAlgorithm extends Thread {
         while (true) {
             if (!done) {
                 initialize();
-                this.sort();
-                this.helper().ready();
+
+                    this.sort();
+
                 done = true;
+                this.helper().ready();
             } else {
                 try {
-                    wait();
+                    this.wait();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

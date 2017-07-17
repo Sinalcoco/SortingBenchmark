@@ -63,7 +63,7 @@ public class Visualizer extends PApplet {
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         //Momentan w�rde ich das vergr��ern des Hauptfensters verbieten
         //surface.setResizable(true);
-        frameRate(1);
+        frameRate(150);
         initScreens();
 
         display = createImage(fWidth, fHeight, PApplet.RGB);
@@ -182,12 +182,10 @@ public class Visualizer extends PApplet {
             if (g instanceof DummyGraphics) {
                 initScreen(i);
                 return (Graphics) screens[i];
-            } else {
-                throw new NoScreenAvailableError("No more Screens");
+
             }
         }
-
-        return null;
+        throw new NoScreenAvailableError("No more Screens");
     }
 
 
@@ -199,12 +197,10 @@ public class Visualizer extends PApplet {
             if (g instanceof DummyGraphics) {
                 screens[i] = new SplitGraphics(this.createGraphics(fWidth, fHeight), this.createGraphics(width, height), theAmountOfScreens);
                 return (SplitGraphics) screens[i];
-            } else {
-                throw new NoScreenAvailableError("No more Screens");
             }
         }
 
-        return null;
+        throw new NoScreenAvailableError("No more Screens");
     }
 
 
@@ -213,5 +209,5 @@ public class Visualizer extends PApplet {
         return (SplitGraphics) screens[theIndex];
     }
 
-   
+
 }

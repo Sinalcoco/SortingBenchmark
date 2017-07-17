@@ -11,7 +11,7 @@ public class InsertionSort extends SortingAlgorithm {
         currentIndex = 1;
     }
 
-    public void sort() {
+    public void sort(){
         for (int b = 0; b < helper.arrayLength() - 1; b++) {
             currentIndex = b + 1;
             while (currentIndex > 0 && helper.compare(currentIndex, currentIndex - 1) < 0) {
