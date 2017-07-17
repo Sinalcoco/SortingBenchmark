@@ -96,6 +96,7 @@ public class Main {
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new SelectionSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CombSort()));
         helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new HeapSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new QuickSort()));
         helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(helpers.size(), 2), values, new MergeSort()));
 
 
