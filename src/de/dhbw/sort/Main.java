@@ -4,6 +4,7 @@ import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
 import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
+import de.dhbw.sort.util.StaticStatistics;
 import de.dhbw.sort.visualize.Visualizer;
 import processing.core.PApplet;
 
@@ -86,19 +87,18 @@ public class Main {
     }
 
     private static void initStatistiks() {
+    	new StaticStatistics(visualizer.getScreen(5), amountOfValues, amountOfValues, (float) (1.4 * amountOfValues * amountOfValues));
     }
 
     private static void initHelper() {
 
-        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new BubbleSort()));
-        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new InsertionSort()));
-        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CocktailShaker()));
-        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new SelectionSort()));
-        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new CombSort()));
-        helpers.add(new InPlaceAlgorithmHelper(visualizer.getScreen(helpers.size()), values, new HeapSort()));
-        helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getSplitScreen(helpers.size(), 2), values, new MergeSort()));
-
-
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new BubbleSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new InsertionSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new CocktailShaker()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new SelectionSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new CombSort()));
+        helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(helpers.size()), values, new HeapSort()));
+        helpers.add(new OutOfPlaceAlgorithmHelper(visualizer.getNextAvailableSplitScreen(helpers.size(), 2), values, new MergeSort()));
     }
 
     public static int[] invertedIntArray(int amountOfInts) {
