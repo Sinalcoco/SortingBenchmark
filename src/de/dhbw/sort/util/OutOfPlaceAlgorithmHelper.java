@@ -21,7 +21,6 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         this.sort = sort;
 
         this.sort.setHelper(this);
-        this.algorithmName = "No name set!";
         this.splitScreen = splitGraphics;
         this.output = new int[values.length];
         this.graphicsOutput = Arrays.copyOf(output, output.length);

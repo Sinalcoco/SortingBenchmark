@@ -15,6 +15,7 @@ public class MergeSort extends SortingAlgorithm {
     public void setHelper(AbstractAlgorithmHelper helper) {
         this.helper = (OutOfPlaceAlgorithmHelper) helper;
         super.helper = helper;
+        this.helper.setAlgorithmName(this.name);
     }
 
     public void initialize() {
