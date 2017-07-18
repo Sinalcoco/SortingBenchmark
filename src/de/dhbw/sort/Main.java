@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -231,15 +230,16 @@ public class Main {
             String[] s;
 
             s = r.readLine().split(",");
+            if (s.length > 2) {
+                int[] a = new int[s.length];
 
-            int[] a = new int[s.length];
-
-            for (int i = 0; i < a.length; ++i) {
-//                if (!s[i].equals("")) {
-                    a[i] = Integer.valueOf(s[i]);
-//                }
+                for (int i = 0; i < a.length; ++i) {
+                    if (!s[i].equals("")) {
+                        a[i] = Integer.valueOf(s[i]);
+                    }
+                }
+                return a;
             }
-            return a;
 
         } catch (IOException e) {
             e.printStackTrace();
