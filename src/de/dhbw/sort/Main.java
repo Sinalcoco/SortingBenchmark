@@ -40,7 +40,7 @@ public class Main {
     private static Visualizer visualizer;
     private static int stepsice = 1;
     private static int maxvalues = 100;
-    private static final Path PATH = Paths.get("C:\\Users\\Simon\\Desktop\\temp");
+    private static final Path PATH = Paths.get("C:\\temp");
     
     private static StaticStatistics stats;
 
