@@ -39,8 +39,10 @@ public class Main {
     private static ArrayList<AbstractAlgorithmHelper> helpers = new ArrayList<>();
     private static Visualizer visualizer;
     private static int stepsice = 1;
-    private static int maxvalues = 10;
-    private static final Path PATH = Paths.get("out/temp");
+    private static int maxvalues = 100;
+    private static final Path PATH = Paths.get("C:\\temp");
+    
+    private static StaticStatistics stats;
 
 
     public static void main(String[] args) {
@@ -102,8 +104,10 @@ public class Main {
                         int[] ints = randomIntArray(amountOfValues);
                         writeArrayToFile(ints);
                         for (AbstractAlgorithmHelper h : helpers) {
+                        	stats.addData(h.getAlgorithmName(), h.getComparisons() + h.getMoves());
                             h.resetAlgorithm(ints);
                         }
+                        stats.updateScreen();
                     }
 
                 }
@@ -146,8 +150,8 @@ public class Main {
     }
 
     private static void initStatistiks() {
-        new StaticStatistics(visualizer.getScreen(4), amountOfValues, amountOfValues,
-                (float) (1.4 * amountOfValues * amountOfValues));
+        stats = new StaticStatistics(visualizer.getScreen(4), amountOfValues, maxvalues,
+                (float) (1.4 * maxvalues * maxvalues));
     }
 
     private static void initHelper() {
