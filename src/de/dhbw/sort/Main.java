@@ -3,14 +3,23 @@ package de.dhbw.sort;
 import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
-import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 import de.dhbw.sort.util.StaticStatistics;
 import de.dhbw.sort.visualize.NoScreenAvailableError;
 import de.dhbw.sort.visualize.Visualizer;
 import processing.core.PApplet;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.StandardOpenOption.APPEND;
 
 /**
  * Created by jbi on 04.07.2017.
@@ -31,9 +40,28 @@ public class Main {
     private static ArrayList<AbstractAlgorithmHelper> helpers = new ArrayList<>();
     private static Visualizer visualizer;
     private static int stepsice = 1;
-    private static int maxvalues = 50;
+    private static int maxvalues = 10;
+    private static final Path PATH = Paths.get("out/temp");
+
 
     public static void main(String[] args) {
+        if (Files.exists(PATH)) {
+            try {
+                Files.delete(PATH);
+                Files.createFile(PATH);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            try {
+                Files.createFile(PATH);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         visualizer = new Visualizer(width, heigth, 1, rows, colums);
         PApplet.runSketch(new String[]{""}, visualizer);
         // TODO wait notify cunstrukt to remove Thread.sleep() in Visualizer
@@ -172,17 +200,63 @@ public class Main {
     private static LinkedBlockingQueue<int[]> file = new LinkedBlockingQueue();
 
     private static void renmoveArrayFromfile() {
-        file.poll();
+        try {
+            BufferedReader r = Files.newBufferedReader(PATH);
+
+            String s;
+            r.readLine();
+            String ges = "";
+            while ((s = r.readLine()) != null) {
+                String[] b = s.split(",");
+                for (String d : b) {
+                    ges += d + ",";
+                }
+
+                ges += "\n";
+
+            }
+
+            BufferedWriter writer = Files.newBufferedWriter(PATH, UTF_8);
+            writer.append(ges + "\n");
+            writer.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static int[] readArrayFromFile() {
-        return file.peek();
+        try (BufferedReader r = Files.newBufferedReader(PATH)) {
+            String[] s;
+
+            s = r.readLine().split(",");
+
+            int[] a = new int[s.length];
+
+            for (int i = 0; i < a.length; ++i) {
+//                if (!s[i].equals("")) {
+                    a[i] = Integer.valueOf(s[i]);
+//                }
+            }
+            return a;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static void writeArrayToFile(int[] array) {
-        try {
-            file.put(array);
-        } catch (InterruptedException e) {
+        String s = "" + array[0];
+        for (int i = 1; i < array.length; ++i) {
+            s = s + "," + array[i];
+        }
+
+        try (BufferedWriter writer = Files.newBufferedWriter(PATH, UTF_8, APPEND)) {
+            writer.append(s + "\n");
+            writer.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

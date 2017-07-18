@@ -3,6 +3,7 @@ package de.dhbw.sort.util;
 import de.dhbw.sort.algorithms.SortingAlgorithm;
 import de.dhbw.sort.util.AlgorithmCommand.Direction;
 import de.dhbw.sort.visualize.SplitGraphics;
+
 import java.util.Arrays;
 
 public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
@@ -215,6 +216,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                             break;
                     }
                     break;
+                case READY:
+                    this.ready = true;
                 default:
                     break;
             }
@@ -281,9 +284,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     }
 
     public void resetAlgorithm(int[] theArray) {
-        output = new int[values.length];
-        this.drawValues();
-        splitScreen.addFrame();
+        output = new int[theArray.length];
+        super.resetAlgorithm(theArray);
     }
 
     @Override
@@ -313,13 +315,27 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
     }
 
     public void resetHelper(int[] peek) {
-
-        graphMoves = 0;
-        graphComp = 0;
-        graphComp = 0;
         super.resetHelper(peek);
-        graphicsOutput = new int[graphicsValues.length];
-        height /= 2;
+//        graphMoves = 0;
+//        graphComp = 0;
+//        graphComp = 0;
+//
+//        graphicsOutput = new int[graphicsValues.length];
+//        this.graphicsValues = Arrays.copyOf(peek, peek.length);
+//
+//        this.big = 0;
+//        for (int a : graphicsValues) {
+//            if (a > this.big) {
+//                this.big = a;
+//            }
+//        }
+//
+//        width = screen.getWidth() / graphicsValues.length;
+//        height= getHeight();
+//        this.drawValues();
+//        this.ready = false;
+//        this.notify();
+
     }
 
     public enum ArrayType {
