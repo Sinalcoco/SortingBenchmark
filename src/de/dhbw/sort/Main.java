@@ -30,7 +30,8 @@ public class Main {
     private static int colums = 3;
 
     private static boolean assending = true;
-    private static boolean threaded = false;
+    private static boolean threaded = true;
+    private static boolean visualice = false;
 
     private static int[] values;
 
@@ -38,8 +39,8 @@ public class Main {
 
     private static ArrayList<AbstractAlgorithmHelper> helpers = new ArrayList<>();
     private static Visualizer visualizer;
-    private static int stepsice = 1;
-    private static int maxvalues = 100;
+    private static int stepsice = 10;
+    private static int maxvalues = 200;
     private static final Path PATH = Paths.get("C:\\Users\\Public\\temp");
 
     private static StaticStatistics stats;
@@ -135,7 +136,7 @@ public class Main {
 
         }
         if (allGraphicsDone) {
-            if (readArrayFromFile() != null) {
+            if (visualice && readArrayFromFile() != null) {
                 for (AbstractAlgorithmHelper h : helpers) {
                     h.resetGraphics(readArrayFromFile());
                 }
