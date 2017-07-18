@@ -108,15 +108,13 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         super.resetAlgorithm(theArray);
     }
 
-    @Override
-    public void resetHelper(int[] peek) {
-
-        graphSwaps = 0;
-        graphMoves = 0;
-        graphComparisons = 0;
-        super.resetHelper(peek);
-        ready = false;
-        this.notify();
-
-    }
+//    @Override
+//    public void resetHelper(int[] peek) {
+//
+//
+//        super.resetHelper(peek);
+//        ready = false;
+//        this.notify();
+//
+//    }
 }

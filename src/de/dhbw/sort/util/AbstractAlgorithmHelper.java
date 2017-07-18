@@ -103,6 +103,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
     public synchronized void resetGraphics(int[] b) {
         graphMoves = 0;
         graphComparisons = 0;
+        graphSwaps = 0;
         int l = b.length;
         graphicsValues = new int[l];
         PApplet.arrayCopy(b, graphicsValues);
@@ -180,8 +181,9 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         values = new int[theArray.length];
         PApplet.arrayCopy(theArray, values);
 
-        comparisons = 0;
-        moves = 0;
+        this.comparisons = 0;
+        this.moves = 0;
+        this.swaps = 0;
         this.sort.reset();
 
 
@@ -217,6 +219,10 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
         width = screen.getWidth() / graphicsValues.length;
         height = (screen.getHeight() - liableHeight) / big;
+
+        this.graphComparisons = 0;
+        this.graphMoves = 0;
+        this.graphSwaps = 0;
         this.drawValues();
         this.ready = false;
     }
