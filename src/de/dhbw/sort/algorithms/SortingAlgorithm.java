@@ -28,7 +28,6 @@ public abstract class SortingAlgorithm extends Thread {
                 }
             }
         }
-//        System.out.println(this.name + ": DONE");
     }
 
     public abstract void initialize();

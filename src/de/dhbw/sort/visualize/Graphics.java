@@ -33,7 +33,6 @@ public class Graphics extends AbstractGraphics {
             this.graphics.rect(x, y, width, height);
             this.graphicsFullscreen.rect(x * hScaling, y * vScaling, width * hScaling, height * vScaling);
 
-//			endDraw();
         } finally {
             lock.unlock();
         }
@@ -48,7 +47,6 @@ public class Graphics extends AbstractGraphics {
             startDraw();
             this.graphics.ellipse(x, y, width, height);
             this.graphicsFullscreen.ellipse(x * hScaling, y * vScaling, width * hScaling, height * vScaling);
-//			endDraw();
         } finally {
             lock.unlock();
         }
@@ -65,45 +63,10 @@ public class Graphics extends AbstractGraphics {
             startDraw();
             this.graphics.line(x1, y1, x2, y2);
             this.graphicsFullscreen.line(x1 * hScaling, y1 * vScaling, x2 * hScaling, y2 * vScaling);
-//			endDraw();
         } finally {
             lock.unlock();
         }
     }
-
-    // @Override
-    // public void drawBackground(int r, int g, int b) {
-    // lock.lock();
-    // try {
-    // startDraw();
-    // this.graphics.background(borderColor);
-    // this.graphicsFullscreen.background(borderColor);
-    // this.graphics.fill(r, b, g);
-    // this.graphicsFullscreen.fill(r, b, g);
-    // this.graphics.rect(borderWidth, borderHeight, this.getWidth(),
-    // this.getHeight());
-    // this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight *
-    // vScaling, this.getWidth() * hScaling,
-    // this.getHeight() * vScaling);
-    //
-    // endDraw();
-    // } finally {
-    // lock.unlock();
-    // }
-    // }
-
-    // public void fill(int r, int g, int b) {
-    // lock.lock();
-    // try {
-    // startDraw();
-    // this.graphics.fill(r, g, b);
-    // this.graphicsFullscreen.fill(r, g, b);
-    //
-    // endDraw();
-    // } finally {
-    // lock.unlock();
-    // }
-    // }
 
     @Override
     public void text(String text, float x, float y) {
@@ -115,7 +78,6 @@ public class Graphics extends AbstractGraphics {
             this.graphics.text(text, x, y);
             this.graphicsFullscreen.textSize(this.graphics.textSize * vScaling);
             this.graphicsFullscreen.text(text, x * hScaling, y * vScaling);
-//			endDraw();
         } finally {
             lock.unlock();
         }

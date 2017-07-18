@@ -40,13 +40,6 @@ public abstract class AbstractAlgorithmHelper extends Thread {
     private boolean algorithRady = false;
     private boolean running = true;
 
-    protected AbstractAlgorithmHelper() {
-    }
-
-    protected AbstractAlgorithmHelper(AbstractGraphics screen) {
-        this.screen = screen;
-    }
-
     public AbstractAlgorithmHelper(AbstractGraphics screen, int[] theArray) {
         initialize(screen, theArray);
     }

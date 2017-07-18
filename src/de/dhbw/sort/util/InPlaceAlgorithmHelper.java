@@ -97,24 +97,11 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         screen.fill(0, 0, 0);
         screen.drawRect(0, 0, screen.getWidth(), 40);
         screen.fill(255, 255, 255);
-        screen.text(algorithmName + "                    ValueCount: " +this.graphicsValues.length, 0, 10);
+        screen.text(algorithmName + "                    ValueCount: " + this.graphicsValues.length, 0, 10);
         screen.text("Comparisons: " + graphComparisons, 0, 20);
         screen.text("Swaps: " + graphSwaps, 0, 30);
         screen.text("Moves: " + graphMoves, 0, 40);
 
     }
 
-    public void resetAlgorithm(int[] theArray) {
-        super.resetAlgorithm(theArray);
-    }
-
-//    @Override
-//    public void resetHelper(int[] peek) {
-//
-//
-//        super.resetHelper(peek);
-//        ready = false;
-//        this.notify();
-//
-//    }
 }

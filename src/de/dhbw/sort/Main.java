@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.APPEND;
@@ -230,7 +229,6 @@ public class Main {
         return array;
     }
 
-    private static LinkedBlockingQueue<int[]> file = new LinkedBlockingQueue();
 
     private static void renmoveArrayFromfile() {
         try {
@@ -257,7 +255,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        file.poll();
     }
 
     private static int[] readArrayFromFile() {
@@ -280,7 +277,6 @@ public class Main {
             e.printStackTrace();
         }
         return null;
-//        return file.peek();
     }
 
     private static void writeArrayToFile(int[] array) {
@@ -295,10 +291,5 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        try {
-//            file.put(array);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 }

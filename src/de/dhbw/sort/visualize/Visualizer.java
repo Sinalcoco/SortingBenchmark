@@ -97,13 +97,11 @@ public class Visualizer extends PApplet {
             background(0);
             screenValid[fullScreen] = false;
             fullScreen = -1;
-//            background(0);
         }
     }
 
     public void draw() {
         interpretMouseOver();
-//        System.out.println(this.frameRate);
         // Wenn keines im fullScreen Modus ist zeichne einfach alle normal
         if (fullScreen == -1) {
             for (int i = 0; i < screens.length; i++)
@@ -132,7 +130,6 @@ public class Visualizer extends PApplet {
                     displayFullscreen.pixels = screens[fullScreen].getNextFrame(true);
                     displayFullscreen.updatePixels();
                     image(displayFullscreen, 0, 0);
-//                    screens[fullScreen].framesFullscreen.poll();
 
                 }
 
@@ -144,8 +141,6 @@ public class Visualizer extends PApplet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //                        screens[fullScreen].setRenderd(true);
-            //                    }
         }
     }
 

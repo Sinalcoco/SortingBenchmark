@@ -19,7 +19,6 @@ public class DummyGraphics extends AbstractGraphics {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//		super.drawBackground(0xff508acc);
         super.drawBackground(0);
         this.endDraw();
         this.dr = false;
@@ -78,12 +77,5 @@ public class DummyGraphics extends AbstractGraphics {
             this.dr = true;
             return graphics.pixels;
         }
-//		if (fullscreen) {
-//			graphicsFullscreen.loadPixels();
-//			return Arrays.copyOf(graphicsFullscreen.pixels, graphicsFullscreen.pixels.length);
-//		} else {
-//			graphics.loadPixels();
-//			return Arrays.copyOf(graphics.pixels, graphics.pixels.length);
-//		}
     }
 }

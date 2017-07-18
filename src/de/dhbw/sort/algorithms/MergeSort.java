@@ -22,7 +22,6 @@ public class MergeSort extends SortingAlgorithm {
     }
 
     public void sort() {
-//      System.out.println("" + helper +"|"+ this.helper +"|"+ super.helper);
         mergesort(0, this.helper.arrayLength() - 1);
     }
 

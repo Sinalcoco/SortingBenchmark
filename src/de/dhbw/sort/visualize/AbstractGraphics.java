@@ -62,7 +62,6 @@ public abstract class AbstractGraphics {
             this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
                     this.getHeight() * vScaling);
 
-//			endDraw();
         } finally {
             lock.unlock();
         }
@@ -79,7 +78,6 @@ public abstract class AbstractGraphics {
             this.graphics.rect(borderWidth, borderHeight, this.getWidth(), this.getHeight());
             this.graphicsFullscreen.rect(borderWidth * hScaling, borderHeight * vScaling, this.getWidth() * hScaling,
                     this.getHeight() * vScaling);
-//			endDraw();
         } finally {
             lock.unlock();
         }
@@ -92,7 +90,6 @@ public abstract class AbstractGraphics {
             this.graphics.fill(r, g, b);
             this.graphicsFullscreen.fill(r, g, b);
 
-//			endDraw();
         } finally {
             lock.unlock();
         }
@@ -105,7 +102,6 @@ public abstract class AbstractGraphics {
             this.graphics.stroke(r, g, b);
             this.graphicsFullscreen.stroke(r, g, b);
 
-//			endDraw();
         } finally {
             lock.unlock();
         }
@@ -118,7 +114,6 @@ public abstract class AbstractGraphics {
             this.graphics.strokeWeight(weight);
             this.graphicsFullscreen.strokeWeight(weight);
 
-//			endDraw();
         } finally {
             lock.unlock();
         }
@@ -131,7 +126,6 @@ public abstract class AbstractGraphics {
             graphics.textAlign(xPosition, yPosition);
             graphicsFullscreen.textAlign(xPosition, yPosition);
 
-//			endDraw();
         } finally {
             lock.unlock();
         }
@@ -182,7 +176,6 @@ public abstract class AbstractGraphics {
     }
 
     public int[] getNextFrame(boolean fullscreen) {
-//		System.out.println(frames.size());
         if (fullscreen) {
             if (framesFullscreen.size() > 1)
                 return this.framesFullscreen.poll();
