@@ -19,7 +19,7 @@ public class StaticStatistics {
     private int xStep = 0;
 
     private float yDist = 0;
-    private int yValueStep = 50000;
+    private int yValueStep = 500;
     private int yStep = 0;
 
     public StaticStatistics(Graphics theScreen, float theXStart, float theXEnd, float theYEnd) {
