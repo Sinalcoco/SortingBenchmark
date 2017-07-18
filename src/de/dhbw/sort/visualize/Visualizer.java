@@ -63,7 +63,7 @@ public class Visualizer extends PApplet {
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         //Momentan w�rde ich das vergr��ern des Hauptfensters verbieten
         //surface.setResizable(true);
-        frameRate(10);
+        frameRate(150);
         initScreens();
 
         display = createImage(fWidth, fHeight, PApplet.RGB);

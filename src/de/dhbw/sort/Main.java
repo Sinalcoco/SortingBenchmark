@@ -30,7 +30,7 @@ public class Main {
     private static int colums = 3;
 
     private static boolean assending = true;
-    private static boolean threaded = true;
+    private static boolean threaded = false;
 
     private static int[] values;
 
@@ -40,8 +40,8 @@ public class Main {
     private static Visualizer visualizer;
     private static int stepsice = 1;
     private static int maxvalues = 100;
-    private static final Path PATH = Paths.get("C:\\temp");
-    
+    private static final Path PATH = Paths.get("C:\\Users\\Public\\temp");
+
     private static StaticStatistics stats;
 
 
@@ -88,37 +88,7 @@ public class Main {
                 helper.start();
             }
             while (assending) {
-                allDone = true;
-                allGraphicsDone = true;
-                for (AbstractAlgorithmHelper h : helpers) {
-                    if (!h.isAlgorithRady()) {
-                        allDone = false;
-                    }
-                    if (!h.isReady()) {
-                        allGraphicsDone = false;
-                    }
-                }
-                if (allDone) {
-                    if (!(amountOfValues == maxvalues)) {
-                        amountOfValues += stepsice;
-                        int[] ints = randomIntArray(amountOfValues);
-                        writeArrayToFile(ints);
-                        for (AbstractAlgorithmHelper h : helpers) {
-                        	stats.addData(h.getAlgorithmName(), h.getComparisons() + h.getMoves());
-                            h.resetAlgorithm(ints);
-                        }
-                        stats.updateScreen();
-                    }
-
-                }
-                if (allGraphicsDone) {
-                    if (readArrayFromFile() != null) {
-                        for (AbstractAlgorithmHelper h : helpers) {
-                            h.resetGraphics(readArrayFromFile());
-                        }
-                    }
-                    renmoveArrayFromfile();
-                }
+                accendLogic();
             }
 
 
@@ -130,9 +100,48 @@ public class Main {
                     // TODO new controle methed in helper
                     helper.nextFrame();
                 }
+                if (assending) {
+                    accendLogic();
+                }
             }
         }
 
+    }
+
+    private static void accendLogic() {
+        boolean allDone;
+        boolean allGraphicsDone;
+        allDone = true;
+        allGraphicsDone = true;
+        for (AbstractAlgorithmHelper h : helpers) {
+            if (!h.isAlgorithRady()) {
+                allDone = false;
+            }
+            if (!h.isReady()) {
+                allGraphicsDone = false;
+            }
+        }
+        if (allDone) {
+            if (!(amountOfValues == maxvalues)) {
+                amountOfValues += stepsice;
+                int[] ints = randomIntArray(amountOfValues);
+                writeArrayToFile(ints);
+                for (AbstractAlgorithmHelper h : helpers) {
+                    stats.addData(h.getAlgorithmName(), h.getComparisons() + h.getMoves());
+                    h.resetAlgorithm(ints);
+                }
+                stats.updateScreen();
+            }
+
+        }
+        if (allGraphicsDone) {
+            if (readArrayFromFile() != null) {
+                for (AbstractAlgorithmHelper h : helpers) {
+                    h.resetGraphics(readArrayFromFile());
+                }
+            }
+            renmoveArrayFromfile();
+        }
     }
 
     private static void startHelpers() {
