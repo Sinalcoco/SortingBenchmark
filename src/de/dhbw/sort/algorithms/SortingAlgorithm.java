@@ -6,12 +6,13 @@ public abstract class SortingAlgorithm extends Thread {
     protected String name;
     protected AbstractAlgorithmHelper helper;
     private boolean done = false;
+    private boolean running = true;
 
     public SortingAlgorithm() {
     }
 
     public synchronized void run() {
-        while (true) {
+        while (running) {
             if (!done) {
                 initialize();
 
@@ -27,6 +28,7 @@ public abstract class SortingAlgorithm extends Thread {
                 }
             }
         }
+//        System.out.println(this.name + ": DONE");
     }
 
     public abstract void initialize();
@@ -51,4 +53,8 @@ public abstract class SortingAlgorithm extends Thread {
         notify();
     }
 
+    public synchronized void end() {
+        this.running = false;
+        this.notify();
+    }
 }

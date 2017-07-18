@@ -31,19 +31,21 @@ public class Main {
 
     private static boolean assending = true;
     private static boolean threaded = true;
-    private static boolean visualice = false;
+    private static boolean visualice = true;
 
     private static int[] values;
 
     private static int amountOfValues = 3;
+    private static int amountOfGraphicsValues = 3;
 
     private static ArrayList<AbstractAlgorithmHelper> helpers = new ArrayList<>();
     private static Visualizer visualizer;
-    private static int stepsice = 10;
-    private static int maxvalues = 200;
+    private static int stepsice = 1;
+    private static int maxvalues = 10;
     private static final Path PATH = Paths.get("C:\\Users\\Public\\temp");
 
     private static StaticStatistics stats;
+    private static boolean running = true;
 
 
     public static void main(String[] args) {
@@ -88,8 +90,25 @@ public class Main {
             for (AbstractAlgorithmHelper helper : helpers) {
                 helper.start();
             }
-            while (assending) {
-                accendLogic();
+            while (running) {
+                if (assending) {
+                    accendLogic();
+                    if(amountOfValues == maxvalues){
+                        for (AbstractAlgorithmHelper h:helpers) {
+                            if(h.sortState() == Thread.State.WAITING)
+                                h.endSorter();
+                        }
+                    }
+
+                    if(amountOfGraphicsValues == maxvalues){
+                        for (AbstractAlgorithmHelper h:helpers) {
+                            if(h.getState() == Thread.State.WAITING)
+                                h.end();
+                        }
+                    }
+
+                }
+
             }
 
 
@@ -137,6 +156,7 @@ public class Main {
         }
         if (allGraphicsDone) {
             if (visualice && readArrayFromFile() != null) {
+                amountOfGraphicsValues += stepsice;
                 for (AbstractAlgorithmHelper h : helpers) {
                     h.resetGraphics(readArrayFromFile());
                 }
@@ -237,6 +257,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        file.poll();
     }
 
     private static int[] readArrayFromFile() {
@@ -259,6 +280,7 @@ public class Main {
             e.printStackTrace();
         }
         return null;
+//        return file.peek();
     }
 
     private static void writeArrayToFile(int[] array) {
@@ -273,5 +295,10 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        try {
+//            file.put(array);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 }

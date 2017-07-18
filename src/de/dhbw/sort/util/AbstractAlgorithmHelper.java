@@ -38,6 +38,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
     protected SortingAlgorithm sort;
     private boolean algorithRady = false;
+    private boolean running = true;
 
     protected AbstractAlgorithmHelper() {
     }
@@ -63,7 +64,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         this.drawValues();
 
 
-        while (true) {
+        while (running) {
             this.nextFrame();
             if (this.isReady()) {
                 try {
@@ -120,7 +121,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         this.drawValues();
         this.drawInfo();
         this.notify();
-        this.ready=false;
+        this.ready = false;
 
     }
 
@@ -132,7 +133,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
     public int compare(int firstIndex, int secondIndex) {
         this.comparisons++;
-        if(!this.mov.add(Moves.COMPARE)){
+        if (!this.mov.add(Moves.COMPARE)) {
             System.out.println("lol");
         }
         this.indexes.add(firstIndex);
@@ -175,7 +176,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
     }
 
     public void resetAlgorithm(int[] theArray) {
-        this.algorithRady=false;
+        this.algorithRady = false;
 
 
         values = new int[theArray.length];
@@ -253,5 +254,20 @@ public abstract class AbstractAlgorithmHelper extends Thread {
                 (screen.getHeight() - (height * graphicsValues[index])), width,
                 (height * graphicsValues[index]));
 
+    }
+
+    public void endSorter() {
+        if (sort.getState() == State.WAITING) {
+            this.sort.end();
+        }
+    }
+
+    public State sortState() {
+        return this.sort.getState();
+    }
+
+    public synchronized void end() {
+        this.running = false;
+        this.notify();
     }
 }
