@@ -63,7 +63,7 @@ public class Visualizer extends PApplet {
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         //Momentan w�rde ich das vergr��ern des Hauptfensters verbieten
         //surface.setResizable(true);
-        frameRate(150);
+        frameRate(1);
         initScreens();
 
         display = createImage(fWidth, fHeight, PApplet.RGB);
@@ -204,5 +204,24 @@ public class Visualizer extends PApplet {
         return (SplitGraphics) screens[theIndex];
     }
 
+    public void keyPressed() {
+        switch (this.key) {
+            case '+':
+                if (this.frameRate + 1.0 <= 100) {
+                    this.frameRate(frameRate += 1.0);
+                    System.out.println(frameRate);
+                }
+                break;
+            case '-':
+                if (this.frameRate - 1.0 >= 0) {
+                    this.frameRate(frameRate -= 1.0);
+                    System.out.println(frameRate);
+                }
+                break;
+            default:
+                break;
+
+        }
+    }
 
 }
