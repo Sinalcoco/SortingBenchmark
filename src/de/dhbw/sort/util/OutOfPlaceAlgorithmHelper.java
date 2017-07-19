@@ -314,27 +314,27 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         }
     }
 
-    public void resetHelper(int[] peek) {
-        super.resetHelper(peek);
-//        graphMoves = 0;
-//        graphComp = 0;
-//        graphComp = 0;
-//
-//        graphicsOutput = new int[graphicsValues.length];
-//        this.graphicsValues = Arrays.copyOf(peek, peek.length);
-//
-//        this.big = 0;
-//        for (int a : graphicsValues) {
-//            if (a > this.big) {
-//                this.big = a;
-//            }
-//        }
-//
-//        width = screen.getWidth() / graphicsValues.length;
-//        height= getHeight();
-//        this.drawValues();
-//        this.ready = false;
-//        this.notify();
+    public synchronized void resetGraphics(int[] peek) {
+//        super.resetHelper(peek);
+        graphMoves = 0;
+        graphComp = 0;
+        graphSwaps = 0;
+
+        this.graphicsValues = Arrays.copyOf(peek, peek.length);
+        this.graphicsOutput = new int[peek.length];
+
+        this.big = 0;
+        for (int a : graphicsValues) {
+            if (a > this.big) {
+                this.big = a;
+            }
+        }
+
+        width = screen.getWidth() / graphicsValues.length;
+        height= getHeight();
+        this.drawValues();
+        this.ready = false;
+        this.notify();
 
     }
 

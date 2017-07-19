@@ -3,6 +3,7 @@ package de.dhbw.sort;
 import de.dhbw.sort.algorithms.*;
 import de.dhbw.sort.util.AbstractAlgorithmHelper;
 import de.dhbw.sort.util.InPlaceAlgorithmHelper;
+import de.dhbw.sort.util.OutOfPlaceAlgorithmHelper;
 import de.dhbw.sort.util.StaticStatistics;
 import de.dhbw.sort.visualize.NoScreenAvailableError;
 import de.dhbw.sort.visualize.Visualizer;
@@ -192,8 +193,8 @@ public class Main {
             helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new SelectionSort()));
             helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new CombSort()));
             helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new HeapSort()));
-//            helpers.add(
-//                    new OutOfPlaceAlgorithmHelper(visualizer.getNextAvailableSplitScreen(2), values, new MergeSort()));
+            helpers.add(
+                    new OutOfPlaceAlgorithmHelper(visualizer.getNextAvailableSplitScreen(2), values, new MergeSort()));
         } catch (NoScreenAvailableError e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

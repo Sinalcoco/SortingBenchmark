@@ -200,26 +200,6 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         this.algorithmName = theName;
     }
 
-    public void resetHelper(int[] peek) {
-
-        this.graphicsValues = Arrays.copyOf(peek, peek.length);
-
-        int big = 0;
-        for (int a : graphicsValues) {
-            if (a > big) {
-                big = a;
-            }
-        }
-
-        width = screen.getWidth() / graphicsValues.length;
-        height = (screen.getHeight() - liableHeight) / big;
-
-        this.graphComparisons = 0;
-        this.graphMoves = 0;
-        this.graphSwaps = 0;
-        this.drawValues();
-        this.ready = false;
-    }
 
     public void ready() {
         try {
