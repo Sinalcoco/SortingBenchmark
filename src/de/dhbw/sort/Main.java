@@ -189,6 +189,7 @@ public class Main {
         try {
             helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new BubbleSort()));
             helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new InsertionSort()));
+            helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new QuickSort()));
             helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new CocktailShaker()));
             helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new SelectionSort()));
             helpers.add(new InPlaceAlgorithmHelper(visualizer.getNextAvailableScreen(), values, new CombSort()));

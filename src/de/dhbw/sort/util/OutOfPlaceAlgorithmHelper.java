@@ -293,7 +293,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         screen.fill(0, 0, 0);
         screen.drawRect(0, 0, splitScreen.getWidth(), 40);
         splitScreen.fill(255, 255, 255);
-        splitScreen.text(algorithmName, 0, 10);
+        screen.text(algorithmName + "                    ValueCount: " + this.graphicsValues.length, 0, 10);
         splitScreen.text("Comparisons: " + graphComp, 0, 20);
         splitScreen.text("Moves: " + graphMoves, 0, 30);
     }
