@@ -63,7 +63,7 @@ public class Visualizer extends PApplet {
         Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         //Momentan w�rde ich das vergr��ern des Hauptfensters verbieten
         //surface.setResizable(true);
-        frameRate(1);
+        frameRate(15);
         initScreens();
 
         display = createImage(fWidth, fHeight, PApplet.RGB);
@@ -109,14 +109,14 @@ public class Visualizer extends PApplet {
             {
 
                 try {
-                    if (!screens[i].dr || screens[i].peek(false) != null) {
+//                    if (!screens[i].dr || screens[i].peek(false) != null) {
                         display.loadPixels();
                         display.pixels = screens[i].getNextFrame(false);
                         display.updatePixels();
                         image(display, (i % rowCount) * (fWidth),
                                 (i / rowCount) * (fHeight));
                         screens[i].getNextFrame(true);
-                    }
+//                    }
 
                 } catch (Exception e) {
 
@@ -124,14 +124,14 @@ public class Visualizer extends PApplet {
             }
         } else {
             try {
-                if (screens[fullScreen].peek(true) != null) {
+//                if (screens[fullScreen].peek(true) != null) {
 
                     displayFullscreen.loadPixels();
                     displayFullscreen.pixels = screens[fullScreen].getNextFrame(true);
                     displayFullscreen.updatePixels();
                     image(displayFullscreen, 0, 0);
 
-                }
+//                }
 
                 image(displayFullscreen, 0, 0);
                 for (int i = 0; i < screens.length; i++) {
@@ -213,7 +213,7 @@ public class Visualizer extends PApplet {
                 }
                 break;
             case '-':
-                if (this.frameRate - 1.0 >= 0) {
+                if (this.frameRate - 1.0 > 0) {
                     this.frameRate(frameRate -= 1.0);
                     System.out.println(frameRate);
                 }

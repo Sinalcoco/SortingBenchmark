@@ -61,7 +61,7 @@ public class DummyGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void addFrame() {
+    public boolean addFrame() {
         throw new UnsupportedOperationException("Nothing can Change in Dummy");
     }
 

@@ -84,24 +84,4 @@ public class Graphics extends AbstractGraphics {
 
     }
 
-    @Override
-    public void addFrame() {
-        endDraw();
-        try {
-            this.graphics.loadPixels();
-
-            this.frames.put(Arrays.copyOf(this.graphics.pixels, this.graphics.pixels.length));
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-        try {
-            this.graphicsFullscreen.loadPixels();
-            this.framesFullscreen
-                    .put(Arrays.copyOf(this.graphicsFullscreen.pixels, this.graphicsFullscreen.pixels.length));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

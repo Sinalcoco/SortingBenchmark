@@ -41,7 +41,7 @@ public class Main {
     private static ArrayList<AbstractAlgorithmHelper> helpers = new ArrayList<>();
     private static Visualizer visualizer;
     private static int stepsice = 1;
-    private static int maxvalues = 10;
+    private static int maxvalues = 201;
     private static final Path PATH = Paths.get("C:\\Users\\Public\\temp");
 
     private static StaticStatistics stats;
@@ -155,10 +155,11 @@ public class Main {
 
         }
         if (allGraphicsDone) {
-            if (visualice && readArrayFromFile() != null) {
+            int[] readArrayFromFile = readArrayFromFile();
+			if (visualice && readArrayFromFile != null) {
                 amountOfGraphicsValues += stepsice;
                 for (AbstractAlgorithmHelper h : helpers) {
-                    h.resetGraphics(readArrayFromFile());
+                    h.resetGraphics(readArrayFromFile);
                 }
             }
             renmoveArrayFromfile();

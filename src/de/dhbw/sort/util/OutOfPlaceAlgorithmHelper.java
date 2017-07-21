@@ -221,7 +221,8 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
                 default:
                     break;
             }
-            splitScreen.addFrame();
+            while (!this.splitScreen.addFrame())
+    			;
             reDraw(firstIndex, 0);
             reDraw(firstIndex, 1);
             reDraw(secondIndex, 0);
