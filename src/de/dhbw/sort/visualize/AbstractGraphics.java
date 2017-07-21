@@ -136,6 +136,17 @@ public abstract class AbstractGraphics {
 			lock.unlock();
 		}
 	}
+	public void textSize(int theSize) {
+		lock.lock();
+		try {
+			startDraw();
+			graphics.textSize(theSize);
+			graphicsFullscreen.textSize(theSize);
+
+		} finally {
+			lock.unlock();
+		}
+	}
 
 	public PImage getGraphics(boolean fullscreen) {
 		lock.lock();

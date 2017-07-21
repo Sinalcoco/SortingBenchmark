@@ -70,6 +70,14 @@ public class StaticStatistics {
         ArrayList<Integer> values = stats.get(theAlgorithmName);
         if (values == null) {
             values = new ArrayList<Integer>();
+            
+            screen.fill((int) (50*stats.size() % 256), 123, 123);
+            screen.drawRect(screen.getWidth() - xOffset + 10, 2*yOffset + 10*stats.size() - 1, 8, 8);
+            
+            screen.textSize(5);
+            screen.textAlign(PApplet.RIGHT, PApplet.TOP);
+            screen.text(theAlgorithmName, screen.getWidth() - 5, 2 * yOffset + 10 * stats.size());
+            screen.textAlign(PApplet.LEFT, PApplet.BASELINE);
         }
         values.add(theOperationCount);
         stats.put(theAlgorithmName, values);
