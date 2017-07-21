@@ -35,13 +35,13 @@ public class Main {
 
     private static int[] values;
 
-    private static int amountOfValues = 3;
-    private static int amountOfGraphicsValues = 3;
+    private static int amountOfValues = 10;
+    private static int amountOfGraphicsValues = amountOfValues;
 
     private static ArrayList<AbstractAlgorithmHelper> helpers = new ArrayList<>();
     private static Visualizer visualizer;
     private static int stepsice = 1;
-    private static int maxvalues = 201;
+    private static int maxvalues = 200;
     private static final Path PATH = Paths.get("C:\\Users\\Public\\temp");
 
     private static StaticStatistics stats;

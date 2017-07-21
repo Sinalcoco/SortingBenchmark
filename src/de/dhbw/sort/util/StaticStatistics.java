@@ -19,7 +19,7 @@ public class StaticStatistics {
     private int xStep = 0;
 
     private float yDist = 0;
-    private int yValueStep = 500;
+    private int yValueStep = 1000;
     private int yStep = 0;
 
     public StaticStatistics(Graphics theScreen, float theXStart, float theXEnd, float theYEnd) {
@@ -38,6 +38,7 @@ public class StaticStatistics {
         screen.textAlign(PApplet.CENTER, PApplet.BASELINE);
         screen.text("Laufzeitverhalten", screen.getWidth() / 2, yOffset / 1);
 
+        screen.textSize(5);
         // screen.fill(100, 100, 100); //Optional
         screen.stroke(100, 100, 100);
 
@@ -45,11 +46,11 @@ public class StaticStatistics {
         screen.drawLine(xOffset, screen.getHeight() - yOffset, screen.getWidth() - xOffset,
                 screen.getHeight() - yOffset);
 
-        while (xDist < 40) {
+        while (xDist < 15) {
             xStep += xValueStep;
             xDist = (xStep * (screen.getWidth() - xOffset * 2)) / (xEnd - xStart);
         }
-        while (yDist < 40) {
+        while (yDist < 15) {
             yStep += yValueStep;
             yDist = (yStep * (screen.getHeight() - yOffset * 2)) / (yEnd);
         }
@@ -72,11 +73,10 @@ public class StaticStatistics {
             values = new ArrayList<Integer>();
             
             screen.fill((int) (50*stats.size() % 256), 123, 123);
-            screen.drawRect(screen.getWidth() - xOffset + 10, 2*yOffset + 10*stats.size() - 1, 8, 8);
+            screen.drawRect(screen.getWidth() - 15, 2*yOffset + 10*(stats.size()-1) - 1, 8, 8);
             
-            screen.textSize(5);
             screen.textAlign(PApplet.RIGHT, PApplet.TOP);
-            screen.text(theAlgorithmName, screen.getWidth() - 5, 2 * yOffset + 10 * stats.size());
+            screen.text(theAlgorithmName, screen.getWidth() - 20, 2 * yOffset + 10 * (stats.size()-1));
             screen.textAlign(PApplet.LEFT, PApplet.BASELINE);
         }
         values.add(theOperationCount);
