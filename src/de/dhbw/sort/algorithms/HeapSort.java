@@ -73,4 +73,9 @@ public class HeapSort extends SortingAlgorithm {
         }
     }
 
+	@Override
+	public int getColor() {
+		return 0xFF9666ff;
+	}
+
 }

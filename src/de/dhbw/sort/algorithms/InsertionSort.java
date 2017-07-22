@@ -21,4 +21,9 @@ public class InsertionSort extends SortingAlgorithm {
         }
     }
 
+	@Override
+	public int getColor() {
+		return 0xFFf27674;
+	}
+
 }

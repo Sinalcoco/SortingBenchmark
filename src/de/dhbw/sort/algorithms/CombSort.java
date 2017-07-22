@@ -36,4 +36,10 @@ public class CombSort extends SortingAlgorithm {
             }
         } while (!sorted);
     }
+
+
+	@Override
+	public int getColor() {
+		return 0xFFead533;
+	}
 }

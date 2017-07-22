@@ -18,4 +18,9 @@ public class BubbleSort extends SortingAlgorithm {
             }
         }
     }
+
+	@Override
+	public int getColor() {
+		return 0xFFd19bdd;
+	}
 }

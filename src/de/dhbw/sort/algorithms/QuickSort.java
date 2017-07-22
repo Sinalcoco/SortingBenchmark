@@ -38,4 +38,9 @@ public class QuickSort extends SortingAlgorithm {
         return leftIndex;
     }
 
+	@Override
+	public int getColor() {
+		return 0xFFff8a47;
+	}
+
 }

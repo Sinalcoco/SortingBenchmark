@@ -25,4 +25,9 @@ public class SelectionSort extends SortingAlgorithm {
         }
     }
 
+	@Override
+	public int getColor() {
+		return 0xFF72ccf9;
+	}
+
 }

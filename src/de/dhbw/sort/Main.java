@@ -147,9 +147,10 @@ public class Main {
                 int[] ints = randomIntArray(amountOfValues);
                 writeArrayToFile(ints);
                 for (AbstractAlgorithmHelper h : helpers) {
-                    stats.addData(h.getAlgorithmName(), h.getComparisons() + h.getMoves());
+                    stats.addData(h.getAlgorithmName(), h.getComparisons() + h.getMoves(), h.getAlgorithmColor());
                     h.resetAlgorithm(ints);
                 }
+                addReferenceData();
                 stats.updateScreen();
             }
 
@@ -166,7 +167,15 @@ public class Main {
         }
     }
 
-    private static void startHelpers() {
+    private static void addReferenceData() {
+    	int referenceColor = 0xFFFFFFFF;
+		stats.addData("O(n^2)", amountOfValues*amountOfValues, referenceColor);
+		stats.addData("O(c * n^2)", (int) (1.4 * amountOfValues*amountOfValues), referenceColor);
+		stats.addData("O(c * n*log(n))", (int) (7 * amountOfValues*Math.log(amountOfValues)), referenceColor);
+		stats.addData("O(n)", amountOfValues, referenceColor);
+	}
+
+	private static void startHelpers() {
         for (AbstractAlgorithmHelper helper : helpers) {
             // TODO new controle methed in helper
             helper.drawValues();

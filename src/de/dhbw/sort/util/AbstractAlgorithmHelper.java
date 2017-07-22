@@ -152,9 +152,13 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         int temp = values[firstIndex];
         values[firstIndex] = values[secondIndex];
         values[secondIndex] = temp;
-
     }
-
+    
+    //TODO implement for insertion sort
+//    public void swapWithMoves(int firstIndex, int secondIndex)
+//    {
+//    	 
+//    }
 
     public int arrayLength() {
         return values.length;
@@ -243,4 +247,8 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         this.running = false;
         this.notify();
     }
+
+	public int getAlgorithmColor() {
+		return this.sort.getColor();
+	}
 }

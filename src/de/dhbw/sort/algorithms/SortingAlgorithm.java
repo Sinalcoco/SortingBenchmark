@@ -38,6 +38,7 @@ public abstract class SortingAlgorithm extends Thread {
     }
 
     public abstract void sort();
+    public abstract int getColor();
 
     public AbstractAlgorithmHelper helper() {
         return helper;

@@ -79,4 +79,9 @@ public class MergeSort extends SortingAlgorithm {
         }
 
     }
+
+	@Override
+	public int getColor() {
+		return 0xFF7cffd7;
+	}
 }

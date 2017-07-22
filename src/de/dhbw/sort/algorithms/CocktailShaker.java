@@ -1,7 +1,7 @@
 package de.dhbw.sort.algorithms;
 
 
-public class CocktailShaker extends SortingAlgorithm //<>// //<>// //<>//
+public class CocktailShaker extends SortingAlgorithm
 {
     int leftBorder, rightBorder, consecutiveSorted;
     boolean goingRight;
@@ -50,5 +50,10 @@ public class CocktailShaker extends SortingAlgorithm //<>// //<>// //<>//
             }
         }
     }
+
+	@Override
+	public int getColor() {
+		return 0xFF9BE564;
+	}
 
 }

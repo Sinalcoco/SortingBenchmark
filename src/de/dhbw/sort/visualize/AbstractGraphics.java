@@ -1,5 +1,6 @@
 package de.dhbw.sort.visualize;
 
+import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
 
@@ -100,6 +101,17 @@ public abstract class AbstractGraphics {
 			lock.unlock();
 		}
 	}
+	public void fill(int theColor) {
+		lock.lock();
+		try {
+			startDraw();
+			this.graphics.fill(theColor);
+			this.graphicsFullscreen.fill(theColor);
+
+		} finally {
+			lock.unlock();
+		}
+	}
 
 	public void stroke(int r, int g, int b) {
 		lock.lock();
@@ -107,6 +119,18 @@ public abstract class AbstractGraphics {
 			startDraw();
 			this.graphics.stroke(r, g, b);
 			this.graphicsFullscreen.stroke(r, g, b);
+
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	public void stroke(int theColor) {
+		lock.lock();
+		try {
+			startDraw();
+			this.graphics.stroke(theColor);
+			this.graphicsFullscreen.stroke(theColor);
 
 		} finally {
 			lock.unlock();

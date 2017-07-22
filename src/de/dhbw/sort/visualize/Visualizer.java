@@ -1,6 +1,9 @@
 package de.dhbw.sort.visualize;
 
+import java.util.Arrays;
+
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 
 /**
