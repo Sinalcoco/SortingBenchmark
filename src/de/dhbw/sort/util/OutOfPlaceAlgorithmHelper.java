@@ -80,7 +80,7 @@ public class OutOfPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
         int secondIndex = 0;
         drawInfo();
         int directionOrdinal;
-        if (mov.peek() != null) {
+        if (!ready && mov.peek() != null) {
             switch (mov.poll()) {
                 case COMPARE:
                     graphComp++;

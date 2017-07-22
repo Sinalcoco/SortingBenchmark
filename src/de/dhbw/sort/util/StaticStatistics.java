@@ -89,6 +89,7 @@ public class StaticStatistics {
 	}
 
 	private void drawLegend() {
+		screen.stroke(0, 0, 0);
 		TreeMap<Integer, String> algorithmRanking = new TreeMap<>();
 
 		for (String algorithmName : stats.keySet()) {

@@ -26,7 +26,7 @@ public class InPlaceAlgorithmHelper extends AbstractAlgorithmHelper {
 
 		int firstIndex = 0;
 		int secondIndex = 0;
-		if (!ready && mov.peek() != null) {
+		if (!ready && mov.peek() != null && (indexes.size() > 1 || mov.peek() == Moves.READY)) {
 			switch (mov.poll()) {
 
 			case COMPARE:
