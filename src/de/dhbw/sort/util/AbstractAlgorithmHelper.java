@@ -5,7 +5,6 @@ import de.dhbw.sort.visualize.AbstractGraphics;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -39,6 +38,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
     protected SortingAlgorithm sort;
     private boolean algorithRady = false;
     private boolean running = true;
+    private int temp;
 
     public AbstractAlgorithmHelper(AbstractGraphics screen, int[] theArray) {
         initialize(screen, theArray);
@@ -126,9 +126,8 @@ public abstract class AbstractAlgorithmHelper extends Thread {
 
     public int compare(int firstIndex, int secondIndex) {
         this.comparisons++;
-        if (!this.mov.add(Moves.COMPARE)) {
-            System.out.println("lol");
-        }
+        this.mov.add(Moves.COMPARE);
+
         this.indexes.add(firstIndex);
         this.indexes.add(secondIndex);
 
@@ -140,6 +139,8 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         mov.add(Moves.MOVE);
         indexes.add(fromIndex);
         indexes.add(toIndex);
+        values[toIndex] = values[fromIndex];
+        values[fromIndex] = 0;
     }
 
     public void swap(int firstIndex, int secondIndex) {
@@ -153,7 +154,7 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         values[firstIndex] = values[secondIndex];
         values[secondIndex] = temp;
     }
-    
+
     //TODO implement for insertion sort
 //    public void swapWithMoves(int firstIndex, int secondIndex)
 //    {
@@ -248,7 +249,27 @@ public abstract class AbstractAlgorithmHelper extends Thread {
         this.notify();
     }
 
-	public int getAlgorithmColor() {
-		return this.sort.getColor();
-	}
+    public int getAlgorithmColor() {
+        return this.sort.getColor();
+    }
+
+    public void setTemp(int i) {
+        this.temp = values[i];
+        moves++;
+
+    }
+
+    public void loadTemp(int i) {
+        this.set(i, this.temp);
+    }
+
+    private void set(int i, int temp) {
+        moves++;
+        mov.add(Moves.SET);
+        indexes.add(i);
+        indexes.add(temp);
+        values[i] = temp;
+    }
+
+
 }

@@ -11,19 +11,30 @@ public class InsertionSort extends SortingAlgorithm {
         currentIndex = 1;
     }
 
-    public void sort(){
-        for (int b = 0; b < helper.arrayLength() - 1; b++) {
-            currentIndex = b + 1;
-            while (currentIndex > 0 && helper.compare(currentIndex, currentIndex - 1) < 0) {
-                helper.swap(currentIndex, currentIndex - 1);
+    public void sort() {
+        helper.setTemp(0);
+
+
+        for (int b = 1; b < helper.arrayLength(); b++) {
+            helper.setTemp(b);
+            currentIndex = b;
+            while (currentIndex > 0 && helper.compare(currentIndex - 1, b) > 0) {
+
                 currentIndex--;
             }
+            for(int i = b - 1; i >= currentIndex;i--)
+            {
+                helper.move(i, i+1);
+
+            }
+
+            helper.loadTemp(currentIndex);
         }
     }
 
-	@Override
-	public int getColor() {
-		return 0xFFf27674;
-	}
+    @Override
+    public int getColor() {
+        return 0xFFf27674;
+    }
 
 }

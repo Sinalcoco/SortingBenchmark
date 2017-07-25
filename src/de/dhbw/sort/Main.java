@@ -83,9 +83,8 @@ public class Main {
         initStatistiks();
         initHelper();
 
-        boolean allDone;
-        boolean allGraphicsDone;
-
+        boolean done = false;
+        boolean gDone = false;
         if (threaded) {
             for (AbstractAlgorithmHelper helper : helpers) {
                 helper.start();
@@ -93,18 +92,21 @@ public class Main {
             while (running) {
                 if (assending) {
                     accendLogic();
-                    if(amountOfValues == maxvalues){
-                        for (AbstractAlgorithmHelper h:helpers) {
-                            if(h.sortState() == Thread.State.WAITING)
+                    if (!done && amountOfValues == maxvalues) {
+                        for (AbstractAlgorithmHelper h : helpers) {
+                            if (h.sortState() == Thread.State.WAITING)
                                 h.endSorter();
+
                         }
+                        done = true;
                     }
 
-                    if(amountOfGraphicsValues == maxvalues){
-                        for (AbstractAlgorithmHelper h:helpers) {
-                            if(h.getState() == Thread.State.WAITING)
+                    if (!gDone && amountOfGraphicsValues == maxvalues) {
+                        for (AbstractAlgorithmHelper h : helpers) {
+                            if (h.getState() == Thread.State.WAITING)
                                 h.end();
                         }
+                        gDone = true;
                     }
 
                 }
@@ -157,7 +159,7 @@ public class Main {
         }
         if (allGraphicsDone) {
             int[] readArrayFromFile = readArrayFromFile();
-			if (visualice && readArrayFromFile != null) {
+            if (visualice && readArrayFromFile != null) {
                 amountOfGraphicsValues += stepsice;
                 for (AbstractAlgorithmHelper h : helpers) {
                     h.resetGraphics(readArrayFromFile);
